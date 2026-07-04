@@ -11,6 +11,8 @@ import string
 import re
 import hashlib
 import datetime
+import subprocess
+import platform
 from datetime import datetime, timedelta
 from colorama import init, Fore, Style, Back
 
@@ -21,40 +23,55 @@ os.system("clear" if os.name == "posix" else "cls")
 # 🔥 KONFIGURASI 🔥
 # ============================================
 
-VERSION = "VIP 2.0"
+VERSION = "MEGA 3.0"
 AUTHOR = "Alegra Ega"
 TELEGRAM = "@egaa_1"
-MASTER_PASSWORD = "9999"  # PERMANEN
+MASTER_PASSWORD = "9999"
 ADMIN_PASSWORD = "alegra ega"
-DATA_FILE = os.path.expanduser("~/.alegra_vip_data.json")
+DATA_FILE = os.path.expanduser("~/.alegra_mega_data.json")
 
 # ============================================
-# 🔥 BANNER 🔥
+# 🔥 BANNER SUPER VIP 🔥
 # ============================================
 
 def show_banner():
     os.system("clear" if os.name == "posix" else "cls")
     print(f"""
-{Fore.RED}╔══════════════════════════════════════════════════════════════════╗
-{Fore.RED}║                                                                      ║
-{Fore.RED}║  {Fore.YELLOW}    █████╗ ██╗     ███████╗ ██████╗ ██████╗  █████╗     {Fore.MAGENTA} ║
-{Fore.RED}║  {Fore.YELLOW}   ██╔══██╗██║     ██╔════╝██╔════╝ ██╔══██╗██╔══██╗    {Fore.MAGENTA} ║
-{Fore.RED}║  {Fore.YELLOW}   ███████║██║     █████╗  ██║  ███╗██████╔╝███████║    {Fore.MAGENTA} ║
-{Fore.RED}║  {Fore.YELLOW}   ██╔══██║██║     ██╔══╝  ██║   ██║██╔══██╗██╔══██║    {Fore.MAGENTA} ║
-{Fore.RED}║  {Fore.YELLOW}   ██║  ██║███████╗███████╗╚██████╔╝██║  ██║██║  ██║    {Fore.MAGENTA} ║
-{Fore.RED}║  {Fore.YELLOW}   ╚═╝  ╚═╝╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝    {Fore.MAGENTA} ║
-{Fore.RED}║                                                                      ║
-{Fore.RED}║  {Fore.CYAN}   ███████╗██████╗  █████╗ ███╗   ███╗                    {Fore.RED}║
-{Fore.RED}║  {Fore.CYAN}   ██╔════╝██╔══██╗██╔══██╗████╗ ████║                    {Fore.RED}║
-{Fore.RED}║  {Fore.CYAN}   ███████╗██████╔╝███████║██╔████╔██║                    {Fore.RED}║
-{Fore.RED}║  {Fore.CYAN}   ╚════██║██╔═══╝ ██╔══██║██║╚██╔╝██║                    {Fore.RED}║
-{Fore.RED}║  {Fore.CYAN}   ███████║██║     ██║  ██║██║ ╚═╝ ██║                    {Fore.RED}║
-{Fore.RED}║  {Fore.CYAN}   ╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝                    {Fore.RED}║
-{Fore.RED}║                                                                      ║
-{Fore.RED}║           {Fore.GREEN}📨 ALEGRA SPAM NGL - {Fore.YELLOW}{VERSION}{Fore.GREEN} 📨              {Fore.RED}║
-{Fore.RED}║              {Fore.MAGENTA}Script By : {AUTHOR}                       {Fore.RED}║
-{Fore.RED}║              {Fore.CYAN}Telegram : {TELEGRAM}                         {Fore.RED}║
-{Fore.RED}╚══════════════════════════════════════════════════════════════════╝
+{Fore.RED}╔══════════════════════════════════════════════════════════════════════════════╗
+{Fore.RED}║                                                                              ║
+{Fore.RED}║  {Fore.YELLOW}████████╗ ██████╗ ██████╗  ██████╗ ███████╗██╗  ██╗██╗ ██████╗ {Fore.MAGENTA} ║
+{Fore.RED}║  {Fore.YELLOW}╚══██╔══╝██╔═══██╗██╔══██╗██╔═══██╗██╔════╝██║  ██║██║██╔════╝ {Fore.MAGENTA} ║
+{Fore.RED}║  {Fore.YELLOW}   ██║   ██║   ██║██████╔╝██║   ██║███████╗███████║██║██║  ███╗{Fore.MAGENTA} ║
+{Fore.RED}║  {Fore.YELLOW}   ██║   ██║   ██║██╔══██╗██║   ██║╚════██║██╔══██║██║██║   ██║{Fore.MAGENTA} ║
+{Fore.RED}║  {Fore.YELLOW}   ██║   ╚██████╔╝██║  ██║╚██████╔╝███████║██║  ██║██║╚██████╔╝{Fore.MAGENTA} ║
+{Fore.RED}║  {Fore.YELLOW}   ╚═╝    ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚═╝ ╚═════╝ {Fore.MAGENTA} ║
+{Fore.RED}║                                                                              ║
+{Fore.RED}║  {Fore.CYAN}  █████╗ ██╗     ███████╗ ██████╗ ██████╗  █████╗               ║
+{Fore.RED}║  {Fore.CYAN} ██╔══██╗██║     ██╔════╝██╔════╝ ██╔══██╗██╔══██╗              ║
+{Fore.RED}║  {Fore.CYAN} ███████║██║     █████╗  ██║  ███╗██████╔╝███████║              ║
+{Fore.RED}║  {Fore.CYAN} ██╔══██║██║     ██╔══╝  ██║   ██║██╔══██╗██╔══██║              ║
+{Fore.RED}║  {Fore.CYAN} ██║  ██║███████╗███████╗╚██████╔╝██║  ██║██║  ██║              ║
+{Fore.RED}║  {Fore.CYAN} ╚═╝  ╚═╝╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝              ║
+{Fore.RED}║                                                                              ║
+{Fore.RED}║  {Fore.GREEN}███████╗██████╗  █████╗ ███╗   ███╗                              ║
+{Fore.RED}║  {Fore.GREEN}██╔════╝██╔══██╗██╔══██╗████╗ ████║                              ║
+{Fore.RED}║  {Fore.GREEN}███████╗██████╔╝███████║██╔████╔██║                              ║
+{Fore.RED}║  {Fore.GREEN}╚════██║██╔═══╝ ██╔══██║██║╚██╔╝██║                              ║
+{Fore.RED}║  {Fore.GREEN}███████║██║     ██║  ██║██║ ╚═╝ ██║                              ║
+{Fore.RED}║  {Fore.GREEN}╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝                              ║
+{Fore.RED}║                                                                              ║
+{Fore.RED}║           {Fore.YELLOW}██╗  ██╗██╗██████╗  ██████╗ ██╗   ██╗██╗                ║
+{Fore.RED}║           {Fore.YELLOW}██║  ██║██║██╔══██╗██╔═══██╗╚██╗ ██╔╝██║                ║
+{Fore.RED}║           {Fore.YELLOW}███████║██║██████╔╝██║   ██║ ╚████╔╝ ██║                ║
+{Fore.RED}║           {Fore.YELLOW}██╔══██║██║██╔═══╝ ██║   ██║  ╚██╔╝  ██║                ║
+{Fore.RED}║           {Fore.YELLOW}██║  ██║██║██║     ╚██████╔╝   ██║   ██║                ║
+{Fore.RED}║           {Fore.YELLOW}╚═╝  ╚═╝╚═╝╚═╝      ╚═════╝    ╚═╝   ╚═╝                ║
+{Fore.RED}║                                                                              ║
+{Fore.RED}║           {Fore.CYAN}📨 ALEGRA SPAM NGL - {Fore.YELLOW}{VERSION}{Fore.CYAN} 📨              ║
+{Fore.RED}║              {Fore.MAGENTA}Script By : {AUTHOR}                               ║
+{Fore.RED}║              {Fore.WHITE}Telegram : {TELEGRAM}                                 ║
+{Fore.RED}║              {Fore.GREEN}🔥 MEGA EDITION - SUPER VIP 🔥                        ║
+{Fore.RED}╚══════════════════════════════════════════════════════════════════════════════╝
 {Fore.RESET}
 """)
 
@@ -78,22 +95,17 @@ def save_data(data):
 def create_password(username, duration_hours):
     data = load_data()
     
-    # Cek apakah username sudah punya password aktif
     if username in data:
         expired = datetime.fromisoformat(data[username]['expired'])
         if expired > datetime.now():
             return None, "❌ Username sudah punya password aktif!"
     
-    # Generate password unik
     chars = string.ascii_letters + string.digits
     password = ''.join(random.choices(chars, k=8))
-    
-    # Hash password
     hashed = hashlib.sha256(password.encode()).hexdigest()
     
-    # Set expired
     if duration_hours == 0:
-        expired_time = datetime.now() + timedelta(days=365*100)  # Permanen
+        expired_time = datetime.now() + timedelta(days=365*100)
         durasi_text = "PERMANEN"
     else:
         expired_time = datetime.now() + timedelta(hours=duration_hours)
@@ -162,7 +174,7 @@ def spam_animation(i, total):
     sys.stdout.flush()
 
 # ============================================
-# 🔥 FUNGSI SPAM 🔥
+# 🔥 FUNGSI SPAM NGL 🔥
 # ============================================
 
 USER_AGENTS = [
@@ -274,6 +286,173 @@ def send_ngl_message(username, message, retry=0):
         return False, f"❌ ERROR: {str(e)[:30]}"
 
 # ============================================
+# 🔥 TOOLS BARU 🔥
+# ============================================
+
+def check_website():
+    """Tool 1: Cek Website Online/Offline"""
+    show_banner()
+    print(f"""
+{Fore.CYAN}╔════════════════════════════════════════════╗
+{Fore.CYAN}║     {Fore.YELLOW}🌐 CEK WEBSITE ONLINE/OFFLINE  {Fore.CYAN}║
+{Fore.CYAN}╚════════════════════════════════════════════╝
+{Fore.RESET}
+""")
+    url = input(f"{Fore.CYAN}[+] Masukkan URL: {Fore.WHITE}").strip()
+    if not url:
+        print(f"{Fore.RED}❌ URL tidak boleh kosong!")
+        time.sleep(1)
+        return
+    
+    if not url.startswith(('http://', 'https://')):
+        url = 'https://' + url
+    
+    try:
+        response = requests.get(url, timeout=10)
+        if response.status_code == 200:
+            print(f"{Fore.GREEN}✅ Website ONLINE! (Status: {response.status_code})")
+        else:
+            print(f"{Fore.YELLOW}⚠️ Website RESPOND (Status: {response.status_code})")
+    except:
+        print(f"{Fore.RED}❌ Website OFFLINE / TIDAK TERJANGKAU!")
+    
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def ip_lookup():
+    """Tool 2: Cek Info IP"""
+    show_banner()
+    print(f"""
+{Fore.CYAN}╔════════════════════════════════════════════╗
+{Fore.CYAN}║     {Fore.YELLOW}🔍 IP LOOKUP TOOL  {Fore.CYAN}║
+{Fore.CYAN}╚════════════════════════════════════════════╝
+{Fore.RESET}
+""")
+    ip = input(f"{Fore.CYAN}[+] Masukkan IP: {Fore.WHITE}").strip()
+    if not ip:
+        print(f"{Fore.RED}❌ IP tidak boleh kosong!")
+        time.sleep(1)
+        return
+    
+    try:
+        response = requests.get(f"http://ip-api.com/json/{ip}", timeout=10)
+        data = response.json()
+        if data['status'] == 'success':
+            print(f"{Fore.GREEN}📌 INFO IP {ip}:")
+            print(f"{Fore.WHITE}  • Negara  : {data.get('country', '-')}")
+            print(f"{Fore.WHITE}  • Kota    : {data.get('city', '-')}")
+            print(f"{Fore.WHITE}  • ISP     : {data.get('isp', '-')}")
+            print(f"{Fore.WHITE}  • Region  : {data.get('regionName', '-')}")
+            print(f"{Fore.WHITE}  • Timezone: {data.get('timezone', '-')}")
+        else:
+            print(f"{Fore.RED}❌ Gagal mendapatkan info IP!")
+    except:
+        print(f"{Fore.RED}❌ Error! Cek koneksi internet.")
+    
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def ping_tool():
+    """Tool 3: Ping Test"""
+    show_banner()
+    print(f"""
+{Fore.CYAN}╔════════════════════════════════════════════╗
+{Fore.CYAN}║     {Fore.YELLOW}📡 PING TEST  {Fore.CYAN}║
+{Fore.CYAN}╚════════════════════════════════════════════╝
+{Fore.RESET}
+""")
+    target = input(f"{Fore.CYAN}[+] Masukkan IP / Domain: {Fore.WHITE}").strip()
+    if not target:
+        print(f"{Fore.RED}❌ Target tidak boleh kosong!")
+        time.sleep(1)
+        return
+    
+    try:
+        response = os.system(f"ping -c 4 {target}")
+        print(f"{Fore.GREEN}✅ Ping selesai!")
+    except:
+        print(f"{Fore.RED}❌ Gagal melakukan ping!")
+    
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def dns_lookup():
+    """Tool 4: DNS Lookup"""
+    show_banner()
+    print(f"""
+{Fore.CYAN}╔════════════════════════════════════════════╗
+{Fore.CYAN}║     {Fore.YELLOW}🌐 DNS LOOKUP  {Fore.CYAN}║
+{Fore.CYAN}╚════════════════════════════════════════════╝
+{Fore.RESET}
+""")
+    domain = input(f"{Fore.CYAN}[+] Masukkan Domain: {Fore.WHITE}").strip()
+    if not domain:
+        print(f"{Fore.RED}❌ Domain tidak boleh kosong!")
+        time.sleep(1)
+        return
+    
+    try:
+        import socket
+        ip = socket.gethostbyname(domain)
+        print(f"{Fore.GREEN}✅ {domain} → {ip}")
+    except:
+        print(f"{Fore.RED}❌ Gagal resolve domain!")
+    
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def user_agent_gen():
+    """Tool 5: Generate User-Agent Random"""
+    show_banner()
+    print(f"""
+{Fore.CYAN}╔════════════════════════════════════════════╗
+{Fore.CYAN}║     {Fore.YELLOW}🎭 RANDOM USER-AGENT  {Fore.CYAN}║
+{Fore.CYAN}╚════════════════════════════════════════════╝
+{Fore.RESET}
+""")
+    agents = [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Safari/605.1.15",
+        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
+        "Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/20100101 Firefox/119.0",
+    ]
+    print(f"{Fore.GREEN}📌 Random User-Agent:")
+    print(f"{Fore.WHITE}{random.choice(agents)}")
+    
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def base64_tool():
+    """Tool 6: Encode/Decode Base64"""
+    show_banner()
+    print(f"""
+{Fore.CYAN}╔════════════════════════════════════════════╗
+{Fore.CYAN}║     {Fore.YELLOW}🔐 BASE64 ENCODE/DECODE  {Fore.CYAN}║
+{Fore.CYAN}╚════════════════════════════════════════════╝
+{Fore.RESET}
+""")
+    print(f"{Fore.GREEN}[1] {Fore.WHITE}Encode")
+    print(f"{Fore.GREEN}[2] {Fore.WHITE}Decode")
+    choice = input(f"{Fore.CYAN}Pilih: {Fore.WHITE}").strip()
+    
+    text = input(f"{Fore.CYAN}Masukkan teks: {Fore.WHITE}").strip()
+    if not text:
+        print(f"{Fore.RED}❌ Teks tidak boleh kosong!")
+        time.sleep(1)
+        return
+    
+    try:
+        import base64
+        if choice == '1':
+            result = base64.b64encode(text.encode()).decode()
+            print(f"{Fore.GREEN}✅ Hasil Encode: {Fore.WHITE}{result}")
+        elif choice == '2':
+            result = base64.b64decode(text).decode()
+            print(f"{Fore.GREEN}✅ Hasil Decode: {Fore.WHITE}{result}")
+        else:
+            print(f"{Fore.RED}❌ Pilihan tidak valid!")
+    except:
+        print(f"{Fore.RED}❌ Error! Pastikan input benar.")
+    
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+# ============================================
 # 🔥 TOOLS ADMIN 🔥
 # ============================================
 
@@ -282,7 +461,47 @@ def tools_admin():
         show_banner()
         print(f"""
 {Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}🛠️  TOOLS ADMIN - VIP EDITION  {Fore.CYAN}║
+{Fore.CYAN}║     {Fore.YELLOW}🛠️  TOOLS ADMIN - MEGA EDITION  {Fore.CYAN}║
+{Fore.CYAN}╚════════════════════════════════════════════╝
+{Fore.RESET}
+{Fore.GREEN}[1] {Fore.WHITE}👥 Manage User (Create/List/Delete)
+{Fore.GREEN}[2] {Fore.WHITE}🌐 Cek Website Online/Offline
+{Fore.GREEN}[3] {Fore.WHITE}🔍 IP Lookup
+{Fore.GREEN}[4] {Fore.WHITE}📡 Ping Test
+{Fore.GREEN}[5] {Fore.WHITE}🌐 DNS Lookup
+{Fore.GREEN}[6] {Fore.WHITE}🎭 Random User-Agent
+{Fore.GREEN}[7] {Fore.WHITE}🔐 Base64 Encode/Decode
+{Fore.GREEN}[8] {Fore.WHITE}🔙 Back
+{Fore.RESET}
+""")
+        choice = input(f"{Fore.CYAN}Pilih: {Fore.WHITE}").strip()
+        
+        if choice == '1':
+            admin_manage_user()
+        elif choice == '2':
+            check_website()
+        elif choice == '3':
+            ip_lookup()
+        elif choice == '4':
+            ping_tool()
+        elif choice == '5':
+            dns_lookup()
+        elif choice == '6':
+            user_agent_gen()
+        elif choice == '7':
+            base64_tool()
+        elif choice == '8':
+            break
+        else:
+            print(f"{Fore.RED}❌ Pilihan tidak valid!")
+            time.sleep(1)
+
+def admin_manage_user():
+    while True:
+        show_banner()
+        print(f"""
+{Fore.CYAN}╔════════════════════════════════════════════╗
+{Fore.CYAN}║     {Fore.YELLOW}👥 MANAGE USER  {Fore.CYAN}║
 {Fore.CYAN}╚════════════════════════════════════════════╝
 {Fore.RESET}
 {Fore.GREEN}[1] {Fore.WHITE}Create Password
@@ -353,7 +572,7 @@ def login():
     show_banner()
     print(f"""
 {Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}🔐 LOGIN - VIP EDITION  {Fore.CYAN}║
+{Fore.CYAN}║     {Fore.YELLOW}🔐 LOGIN - MEGA EDITION  {Fore.CYAN}║
 {Fore.CYAN}╚════════════════════════════════════════════╝
 {Fore.RESET}
 {Fore.WHITE}Masukkan Username & Password untuk melanjutkan.
@@ -369,7 +588,6 @@ def login():
         time.sleep(1)
         return False
     
-    # Cek master password (9999) - PERMANEN
     if password == MASTER_PASSWORD:
         print(f"{Fore.GREEN}✅ Login berhasil (MASTER)!")
         time.sleep(1)
@@ -389,7 +607,7 @@ def spam_ngl():
     show_banner()
     print(f"""
 {Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}📨 SPAM NGL - VIP EDITION  {Fore.CYAN}║
+{Fore.CYAN}║     {Fore.YELLOW}📨 SPAM NGL - MEGA EDITION  {Fore.CYAN}║
 {Fore.CYAN}╚════════════════════════════════════════════╝
 {Fore.RESET}
 {Fore.WHITE}Support 2 tipe input:
@@ -455,7 +673,6 @@ def spam_ngl():
     for i in range(1, count + 1):
         try:
             msg_to_send = message
-            
             status, result = send_ngl_message(username, msg_to_send)
             
             if status:
@@ -501,13 +718,13 @@ def main_menu():
         show_banner()
         print(f"""
 {Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}📌 MAIN MENU - VIP EDITION  {Fore.CYAN}║
+{Fore.CYAN}║     {Fore.YELLOW}📌 MAIN MENU - MEGA EDITION  {Fore.CYAN}║
 {Fore.CYAN}╚════════════════════════════════════════════╝
 {Fore.RESET}
-{Fore.GREEN}[1] {Fore.WHITE}SPAM NGL
-{Fore.GREEN}[2] {Fore.WHITE}TOOLS ADMIN
-{Fore.GREEN}[3] {Fore.WHITE}LOGOUT
-{Fore.GREEN}[4] {Fore.WHITE}EXIT
+{Fore.GREEN}[1] {Fore.WHITE}📨 SPAM NGL
+{Fore.GREEN}[2] {Fore.WHITE}🛠️  TOOLS ADMIN
+{Fore.GREEN}[3] {Fore.WHITE}🔓 LOGOUT
+{Fore.GREEN}[4] {Fore.WHITE}🚪 EXIT
 {Fore.RESET}
 """)
         choice = input(f"{Fore.CYAN}Pilih: {Fore.WHITE}").strip()
@@ -521,7 +738,7 @@ def main_menu():
             time.sleep(1)
             return
         elif choice == '4':
-            print(f"{Fore.GREEN}👋 Keluar dari ALEGRA SPAM NGL VIP...")
+            print(f"{Fore.GREEN}👋 Keluar dari ALEGRA SPAM NGL MEGA...")
             sys.exit(0)
         else:
             print(f"{Fore.RED}❌ Pilihan tidak valid!")
@@ -532,7 +749,6 @@ def main_menu():
 # ============================================
 
 def main():
-    # Login
     if login():
         main_menu()
     else:
@@ -545,6 +761,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print(f"{Fore.YELLOW}\n[!] Keluar...")
     finally:
-        print(f"{Fore.CYAN}\n📨 ALEGRA SPAM NGL - VIP EDITION")
+        print(f"{Fore.CYAN}\n📨 ALEGRA SPAM NGL - MEGA EDITION")
         print(f"{Fore.MAGENTA}Script By : Alegra Ega")
         print(f"{Fore.WHITE}Telegram : @egaa_1")

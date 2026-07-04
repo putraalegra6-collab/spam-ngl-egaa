@@ -25,19 +25,18 @@ os.system("clear" if os.name == "posix" else "cls")
 # 🔥 KONFIGURASI 🔥
 # ============================================
 
-VERSION = "ULTIMATE 4.0"
+VERSION = "VVIP ULTIMATE 5.0"
 AUTHOR = "Alegra Ega"
 TELEGRAM = "@egaa_1"
 MASTER_PASSWORD = "9999"
 ADMIN_PASSWORD = "alegra ega"
-DATA_FILE = os.path.expanduser("~/.alegra_ultimate_data.json")
+DATA_FILE = os.path.expanduser("~/.alegra_vvip_data.json")
 
 # ============================================
-# 🔥 BANNER ULTIMATE + RGB 🔥
+# 🔥 ANIMASI RGB 🔥
 # ============================================
 
-def rgb_text(text, speed=0.02):
-    """Animasi RGB sederhana"""
+def rgb_text(text, speed=0.01):
     colors = [Fore.RED, Fore.YELLOW, Fore.GREEN, Fore.CYAN, Fore.BLUE, Fore.MAGENTA]
     for i, char in enumerate(text):
         sys.stdout.write(colors[i % len(colors)] + char)
@@ -45,70 +44,78 @@ def rgb_text(text, speed=0.02):
         time.sleep(speed)
     print(Fore.RESET)
 
-def show_banner():
-    os.system("clear" if os.name == "posix" else "cls")
-    
-    # Banner atas dengan RGB
-    print()
-    rgb_text("██████████████████████████████████████████████████████████████████████████████")
-    print()
-    rgb_text("██╗  ██╗██╗██████╗  ██████╗ ██╗   ██╗██╗")
-    rgb_text("██║  ██║██║██╔══██╗██╔═══██╗╚██╗ ██╔╝██║")
-    rgb_text("███████║██║██████╔╝██║   ██║ ╚████╔╝ ██║")
-    rgb_text("██╔══██║██║██╔═══╝ ██║   ██║  ╚██╔╝  ██║")
-    rgb_text("██║  ██║██║██║     ╚██████╔╝   ██║   ██║")
-    rgb_text("╚═╝  ╚═╝╚═╝╚═╝      ╚═════╝    ╚═╝   ╚═╝")
-    print()
-    rgb_text("██████████████████████████████████████████████████████████████████████████████")
-    print()
-    
-    # Logo / Ikon (tempat foto lo nanti)
-    print(f"{Fore.CYAN}╔════════════════════════════════════════════╗")
-    print(f"{Fore.CYAN}║     {Fore.YELLOW}📸 [ IKON ALEGRA ] 📸                {Fore.CYAN}║")
-    print(f"{Fore.CYAN}╚════════════════════════════════════════════╝")
-    print()
-    
-    print(f"{Fore.GREEN}╔══════════════════════════════════════════════════════════════════╗")
-    print(f"{Fore.GREEN}║                                                                  ║")
-    print(f"{Fore.GREEN}║     {Fore.YELLOW}██████╗ ██╗   ██╗██████╗ ██╗     ███████╗██████╗ {Fore.GREEN}║")
-    print(f"{Fore.GREEN}║     {Fore.YELLOW}██╔══██╗╚██╗ ██╔╝██╔══██╗██║     ██╔════╝██╔══██╗{Fore.GREEN}║")
-    print(f"{Fore.GREEN}║     {Fore.YELLOW}██████╔╝ ╚████╔╝ ██████╔╝██║     █████╗  ██████╔╝{Fore.GREEN}║")
-    print(f"{Fore.GREEN}║     {Fore.YELLOW}██╔══██╗  ╚██╔╝  ██╔══██╗██║     ██╔══╝  ██╔══██╗{Fore.GREEN}║")
-    print(f"{Fore.GREEN}║     {Fore.YELLOW}██████╔╝   ██║   ██████╔╝███████╗███████╗██║  ██║{Fore.GREEN}║")
-    print(f"{Fore.GREEN}║     {Fore.YELLOW}╚═════╝    ╚═╝   ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝{Fore.GREEN}║")
-    print(f"{Fore.GREEN}║                                                                  ║")
-    print(f"{Fore.GREEN}║           {Fore.CYAN}📨 ALEGRA SPAM NGL - {Fore.YELLOW}{VERSION}{Fore.CYAN} 📨       {Fore.GREEN}║")
-    print(f"{Fore.GREEN}║              {Fore.MAGENTA}Script By : {AUTHOR}                       {Fore.GREEN}║")
-    print(f"{Fore.GREEN}║              {Fore.WHITE}Telegram : {TELEGRAM}                         {Fore.GREEN}║")
-    print(f"{Fore.GREEN}║              {Fore.RED}🔥 ULTIMATE EDITION - SUPER VIP 🔥              {Fore.GREEN}║")
-    print(f"{Fore.GREEN}╚══════════════════════════════════════════════════════════════════╝")
-    print()
-
-# ============================================
-# 🔥 ANIMASI RGB BERJALAN 🔥
-# ============================================
-
 def rgb_loading():
-    """Loading dengan efek RGB"""
     chars = "█▓▒░▄▀"
     colors = [Fore.RED, Fore.YELLOW, Fore.GREEN, Fore.CYAN, Fore.BLUE, Fore.MAGENTA]
-    for i in range(25):
+    for i in range(30):
         color = colors[i % len(colors)]
-        sys.stdout.write(f"\r{color}[+] LOADING {chars[i % len(chars)] * 20}")
+        sys.stdout.write(f"\r{color}[+] LOADING {chars[i % len(chars)] * 25}")
         sys.stdout.flush()
-        time.sleep(0.05)
+        time.sleep(0.04)
     print(Fore.RESET)
 
 def rgb_progress(i, total):
-    """Progress bar dengan efek RGB"""
     progress = (i / total) * 100
-    bar_length = 40
+    bar_length = 45
     filled = int(bar_length * progress / 100)
     colors = [Fore.RED, Fore.YELLOW, Fore.GREEN, Fore.CYAN, Fore.BLUE, Fore.MAGENTA]
     color = colors[i % len(colors)]
     bar = f"{color}█{Fore.RESET}" * filled + f"{Fore.WHITE}░{Fore.RESET}" * (bar_length - filled)
     sys.stdout.write(f"\r{Fore.CYAN}Progress: [{bar}] {progress:.1f}% {Fore.YELLOW}[{i}/{total}]")
     sys.stdout.flush()
+
+# ============================================
+# 🔥 BANNER VVIP + IKON KODE EROE 🔥
+# ============================================
+
+def show_banner():
+    os.system("clear" if os.name == "posix" else "cls")
+    
+    # ── IKON GAMBAR DARI KODE EROE ──
+    print(f"{Fore.RED}")
+    print("  ████████╗███████╗██████╗ ███╗   ███╗██╗███╗   ██╗ █████╗ ██╗     ███████╗")
+    print("  ╚══██╔══╝██╔════╝██╔══██╗████╗ ████║██║████╗  ██║██╔══██╗██║     ██╔════╝")
+    print("     ██║   █████╗  ██████╔╝██╔████╔██║██║██╔██╗ ██║███████║██║     █████╗  ")
+    print("     ██║   ██╔══╝  ██╔══██╗██║╚██╔╝██║██║██║╚██╗██║██╔══██║██║     ██╔══╝  ")
+    print("     ██║   ███████╗██║  ██║██║ ╚═╝ ██║██║██║ ╚████║██║  ██║███████╗███████╗")
+    print("     ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝  ╚═╝╚══════╝╚══════╝")
+    print(f"{Fore.GREEN}")
+    print("  ██████╗ ███████╗ ██████╗ ██████╗ ███████╗██████╗ ███████╗██████╗ ███████╗")
+    print("  ██╔══██╗██╔════╝██╔════╝██╔═══██╗██╔════╝██╔══██╗██╔════╝██╔══██╗██╔════╝")
+    print("  ██████╔╝█████╗  ██║     ██║   ██║█████╗  ██████╔╝█████╗  ██████╔╝███████╗")
+    print("  ██╔══██╗██╔══╝  ██║     ██║   ██║██╔══╝  ██╔══██╗██╔══╝  ██╔══██╗╚════██║")
+    print("  ██║  ██║███████╗╚██████╗╚██████╔╝███████╗██║  ██║███████╗██║  ██║███████║")
+    print("  ╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚══════╝")
+    print(f"{Fore.CYAN}")
+    print("  ██████╗  █████╗ ███╗   ███╗██████╗ ███████╗██████╗     ██████╗ ███████╗")
+    print("  ██╔══██╗██╔══██╗████╗ ████║██╔══██╗██╔════╝██╔══██╗    ██╔══██╗██╔════╝")
+    print("  ██████╔╝███████║██╔████╔██║██████╔╝█████╗  ██████╔╝    ██║  ██║███████╗")
+    print("  ██╔═══╝ ██╔══██║██║╚██╔╝██║██╔══██╗██╔══╝  ██╔══██╗    ██║  ██║╚════██║")
+    print("  ██║     ██║  ██║██║ ╚═╝ ██║██████╔╝███████╗██║  ██║    ██████╔╝███████║")
+    print("  ╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝╚═════╝ ╚══════╝╚═╝  ╚═╝    ╚═════╝ ╚══════╝")
+    print()
+    
+    # ── TULISAN UTAMA ──
+    rgb_text("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
+    print()
+    rgb_text("     █████╗ ██╗     ███████╗ ██████╗ ██████╗  █████╗     ███╗   ██╗ ██████╗ ██╗     ")
+    rgb_text("    ██╔══██╗██║     ██╔════╝██╔════╝ ██╔══██╗██╔══██╗    ████╗  ██║██╔═══██╗██║     ")
+    rgb_text("    ███████║██║     █████╗  ██║  ███╗██████╔╝███████║    ██╔██╗ ██║██║   ██║██║     ")
+    rgb_text("    ██╔══██║██║     ██╔══╝  ██║   ██║██╔══██╗██╔══██║    ██║╚██╗██║██║   ██║██║     ")
+    rgb_text("    ██║  ██║███████╗███████╗╚██████╔╝██║  ██║██║  ██║    ██║ ╚████║╚██████╔╝███████╗")
+    rgb_text("    ╚═╝  ╚═╝╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝    ╚═╝  ╚═══╝ ╚═════╝ ╚══════╝")
+    print()
+    rgb_text("▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓")
+    print()
+    
+    # ── VERSI ──
+    print(f"{Fore.YELLOW}╔══════════════════════════════════════════════════════════════╗")
+    print(f"{Fore.YELLOW}║  {Fore.CYAN}📨 ALEGRA NGL SPAM - {Fore.RED}{VERSION}{Fore.CYAN} 📨           {Fore.YELLOW}║")
+    print(f"{Fore.YELLOW}║  {Fore.MAGENTA}Script By : {AUTHOR}                                      {Fore.YELLOW}║")
+    print(f"{Fore.YELLOW}║  {Fore.WHITE}Telegram : {TELEGRAM}                                        {Fore.YELLOW}║")
+    print(f"{Fore.YELLOW}║  {Fore.GREEN}🔥 VVIP EDITION - SUPER ULTIMATE 🔥                         {Fore.YELLOW}║")
+    print(f"{Fore.YELLOW}╚══════════════════════════════════════════════════════════════╝")
+    print()
 
 # ============================================
 # 🔥 DATA MANAGEMENT 🔥
@@ -197,7 +204,7 @@ def public_tools():
         show_banner()
         print(f"""
 {Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}🌍 PUBLIC TOOLS - GRATIS!  {Fore.CYAN}║
+{Fore.CYAN}║     {Fore.YELLOW}🌍 PUBLIC TOOLS - VVIP  {Fore.CYAN}║
 {Fore.CYAN}╚════════════════════════════════════════════╝
 {Fore.RESET}
 {Fore.GREEN}[1] {Fore.WHITE}🌐 Cek Website Online/Offline
@@ -597,7 +604,7 @@ def tools_admin():
         show_banner()
         print(f"""
 {Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}🛠️  TOOLS ADMIN - ULTIMATE  {Fore.CYAN}║
+{Fore.CYAN}║     {Fore.YELLOW}🛠️  TOOLS ADMIN - VVIP  {Fore.CYAN}║
 {Fore.CYAN}╚════════════════════════════════════════════╝
 {Fore.RESET}
 {Fore.GREEN}[1] {Fore.WHITE}👥 Manage User (Create/List/Delete)
@@ -710,7 +717,7 @@ def view_logs():
         with open(log_file, 'r') as f:
             logs = f.readlines()
             if logs:
-                for log in logs[-20:]:  # Tampilkan 20 log terakhir
+                for log in logs[-20:]:
                     print(f"{Fore.WHITE}{log.strip()}")
             else:
                 print(f"{Fore.YELLOW}⚠️ Belum ada log.")
@@ -815,7 +822,7 @@ def spam_ngl():
     show_banner()
     print(f"""
 {Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}📨 SPAM NGL - ULTIMATE EDITION  {Fore.CYAN}║
+{Fore.CYAN}║     {Fore.YELLOW}📨 SPAM NGL - VVIP EDITION  {Fore.CYAN}║
 {Fore.CYAN}╚════════════════════════════════════════════╝
 {Fore.RESET}
 {Fore.WHITE}Support 2 tipe input:
@@ -925,7 +932,7 @@ def login():
     show_banner()
     print(f"""
 {Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}🔐 LOGIN - ULTIMATE EDITION  {Fore.CYAN}║
+{Fore.CYAN}║     {Fore.YELLOW}🔐 LOGIN - VVIP EDITION  {Fore.CYAN}║
 {Fore.CYAN}╚════════════════════════════════════════════╝
 {Fore.RESET}
 {Fore.WHITE}Masukkan Username & Password untuk melanjutkan.
@@ -961,7 +968,7 @@ def main_menu():
         show_banner()
         print(f"""
 {Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}📌 MAIN MENU - ULTIMATE EDITION  {Fore.CYAN}║
+{Fore.CYAN}║     {Fore.YELLOW}📌 MAIN MENU - VVIP EDITION  {Fore.CYAN}║
 {Fore.CYAN}╚════════════════════════════════════════════╝
 {Fore.RESET}
 {Fore.GREEN}[1] {Fore.WHITE}📨 SPAM NGL
@@ -984,7 +991,7 @@ def main_menu():
             time.sleep(1)
             return
         elif choice == '5':
-            print(f"{Fore.GREEN}👋 Keluar dari ALEGRA SPAM NGL ULTIMATE...")
+            print(f"{Fore.GREEN}👋 Keluar dari ALEGRA NGL SPAM...")
             sys.exit(0)
         else:
             print(f"{Fore.RED}❌ Pilihan tidak valid!")
@@ -1007,6 +1014,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print(f"{Fore.YELLOW}\n[!] Keluar...")
     finally:
-        print(f"{Fore.CYAN}\n📨 ALEGRA SPAM NGL - ULTIMATE EDITION")
+        print(f"{Fore.CYAN}\n📨 ALEGRA NGL SPAM - VVIP EDITION")
         print(f"{Fore.MAGENTA}Script By : Alegra Ega")
         print(f"{Fore.WHITE}Telegram : @egaa_1")

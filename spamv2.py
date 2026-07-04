@@ -22,7 +22,7 @@ from colorama import init, Fore, Style, Back
 init(autoreset=True)
 os.system("clear" if os.name == "posix" else "cls")
 
-VERSION = "FINAL ULTIMATE 13.0"
+VERSION = "FINAL ULTIMATE 14.0"
 AUTHOR = "Alegra Ega"
 TELEGRAM = "@egaa_1"
 MASTER_PASSWORD = "9999"
@@ -1168,7 +1168,7 @@ def owner_manage_user():
 
 def create_user_password():
     show_banner()
-    current_user = "USER"
+    current_user = "egaa"
     user_role = get_user_role(current_user)
     print(f"{Fore.CYAN}🔑 CREATE PASSWORD")
     username = input(f"{Fore.WHITE}Username: ").strip()
@@ -1377,7 +1377,7 @@ def check_user_status():
 
 def add_owner_admin():
     show_banner()
-    current_user = "USER"
+    current_user = "egaa"
     user_role = get_user_role(current_user)
     print(f"{Fore.CYAN}👑 TAMBAH OWNER/ADMIN")
     username = input(f"{Fore.WHITE}Username: ").strip()
@@ -1529,7 +1529,7 @@ Masukkan Username & Password untuk melanjutkan.
     return status
 
 def main_menu():
-    current_user = "USER"
+    current_user = "egaa"
     role = get_user_role(current_user)
     while True:
         show_banner(current_user=current_user)

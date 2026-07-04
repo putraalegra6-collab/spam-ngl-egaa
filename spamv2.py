@@ -1529,7 +1529,7 @@ Masukkan Username & Password untuk melanjutkan.
     return status
 
 def main_menu():
-    current_user = "egaa"
+    current_user = "egaa"  # ← FIX: role DEVELOPER muncul di banner
     role = get_user_role(current_user)
     while True:
         show_banner(current_user=current_user)

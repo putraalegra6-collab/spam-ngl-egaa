@@ -26,13 +26,13 @@ os.system("clear" if os.name == "posix" else "cls")
 # 🔥 KONFIGURASI 🔥
 # ============================================
 
-VERSION = "FINAL FIX 8.0"
+VERSION = "ULTRA LITE 9.0"
 AUTHOR = "Alegra Ega"
 TELEGRAM = "@egaa_1"
 MASTER_PASSWORD = "9999"
 OWNER_PASSWORD = "alegra ega"
-DATA_FILE = os.path.expanduser("~/.alegra_fix_data.json")
-LOG_FILE = os.path.expanduser("~/.alegra_fix_log.txt")
+DATA_FILE = os.path.expanduser("~/.alegra_lite_data.json")
+LOG_FILE = os.path.expanduser("~/.alegra_lite_log.txt")
 
 # ============================================
 # 🔥 FUNGSI WAKTU REAL-TIME 🔥
@@ -46,7 +46,7 @@ def get_datetime():
     return hari, tanggal, jam
 
 # ============================================
-# 🔥 BANNER RAPIH KECIL 🔥
+# 🔥 BANNER KECIL RAPIH - ALEGRA SPAM 🔥
 # ============================================
 
 def show_banner():
@@ -55,41 +55,33 @@ def show_banner():
     hari, tanggal, jam = get_datetime()
     
     print(f"""{Fore.CYAN}
-╔══════════════════════════════════════════════════════════════╗
-║                                                              ║
-║  {Fore.YELLOW}█████╗ ██╗     ███████╗ ██████╗ ██████╗  █████╗ {Fore.CYAN} ║
-║  {Fore.YELLOW}██╔══██╗██║     ██╔════╝██╔════╝ ██╔══██╗██╔══██╗{Fore.CYAN} ║
-║  {Fore.YELLOW}███████║██║     █████╗  ██║  ███╗██████╔╝███████║{Fore.CYAN} ║
-║  {Fore.YELLOW}██╔══██║██║     ██╔══╝  ██║   ██║██╔══██╗██╔══██║{Fore.CYAN} ║
-║  {Fore.YELLOW}██║  ██║███████╗███████╗╚██████╔╝██║  ██║██║  ██║{Fore.CYAN} ║
-║  {Fore.YELLOW}╚═╝  ╚═╝╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝{Fore.CYAN} ║
-║                                                              ║
-║  {Fore.GREEN}███████╗██████╗  █████╗ ███╗   ███╗             {Fore.CYAN} ║
-║  {Fore.GREEN}██╔════╝██╔══██╗██╔══██╗████╗ ████║             {Fore.CYAN} ║
-║  {Fore.GREEN}███████╗██████╔╝███████║██╔████╔██║             {Fore.CYAN} ║
-║  {Fore.GREEN}╚════██║██╔═══╝ ██╔══██║██║╚██╔╝██║             {Fore.CYAN} ║
-║  {Fore.GREEN}███████║██║     ██║  ██║██║ ╚═╝ ██║             {Fore.CYAN} ║
-║  {Fore.GREEN}╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝             {Fore.CYAN} ║
-║                                                              ║
-║  ╔══════════════════════════════════════════════════════════╗ ║
-║  ║  {Fore.WHITE}📨 ALEGRA SPAM - {Fore.WHITE}{VERSION}{Fore.WHITE}         {Fore.CYAN}║ ║
-║  ║  {Fore.WHITE}Script By : {AUTHOR}                         {Fore.CYAN}║ ║
-║  ║  {Fore.WHITE}Telegram : {TELEGRAM}                           {Fore.CYAN}║ ║
-║  ╚══════════════════════════════════════════════════════════╝ ║
-║                                                              ║
-║  ┌────────────────────┐    ┌────────────────────┐           ║
-║  │ {Fore.WHITE}⏰ {hari:<14}  {Fore.CYAN}│    │ {Fore.WHITE}📅 {tanggal:<14} {Fore.CYAN}│           ║
-║  │ {Fore.WHITE}🕐 {jam:<14}  {Fore.CYAN}│    │ {Fore.WHITE}📍 Indonesia {Fore.CYAN} │           ║
-║  └────────────────────┘    └────────────────────┘           ║
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝
+┌────────────────────────────────────────────────────┐
+│                                                    │
+│  {Fore.YELLOW}██╗  ██╗██╗██████╗  ██████╗ █████╗     {Fore.CYAN}│
+│  {Fore.YELLOW}██║  ██║██║██╔══██╗██╔═══██╗██╔══██╗   {Fore.CYAN}│
+│  {Fore.YELLOW}███████║██║██████╔╝██║   ██║███████║   {Fore.CYAN}│
+│  {Fore.YELLOW}██╔══██║██║██╔═══╝ ██║   ██║██╔══██║   {Fore.CYAN}│
+│  {Fore.YELLOW}██║  ██║██║██║     ╚██████╔╝██║  ██║   {Fore.CYAN}│
+│  {Fore.YELLOW}╚═╝  ╚═╝╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝   {Fore.CYAN}│
+│                                                    │
+│  ╔════════════════════════════════════════════════╗ │
+│  ║ {Fore.WHITE}📨 ALEGRA SPAM - {Fore.WHITE}{VERSION}{Fore.WHITE}      {Fore.CYAN}║ │
+│  ║ {Fore.WHITE}Script By : {AUTHOR}                  {Fore.CYAN}║ │
+│  ║ {Fore.WHITE}Telegram : {TELEGRAM}                    {Fore.CYAN}║ │
+│  ╚════════════════════════════════════════════════╝ │
+│                                                    │
+│  ┌──────────────────┐    ┌──────────────────┐      │
+│  │ {Fore.WHITE}⏰ {hari:<12} {Fore.CYAN}│    │ {Fore.WHITE}📅 {tanggal:<12} {Fore.CYAN}│      │
+│  │ {Fore.WHITE}🕐 {jam:<12} {Fore.CYAN}│    │ {Fore.WHITE}📍 Indonesia{Fore.CYAN} │      │
+│  └──────────────────┘    └──────────────────┘      │
+│                                                    │
+└────────────────────────────────────────────────────┘
 {Fore.RESET}
 """)
 
 # ── THREAD BUAT UPDATE JAM ──
 def update_clock():
     while True:
-        # Cek apakah ada input user (biar gak ganggu)
         time.sleep(1)
 
 clock_thread = threading.Thread(target=update_clock, daemon=True)
@@ -183,16 +175,16 @@ def list_users():
         print(f"{Fore.YELLOW}• {username} {status} {Fore.WHITE}({durasi})")
 
 # ============================================
-# 🔥 PUBLIC TOOLS (25 TOOLS) 🔥
+# 🔥 50 PUBLIC TOOLS (WORK LANGSUNG) 🔥
 # ============================================
 
 def public_tools():
     while True:
         show_banner()
         print(f"""
-{Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}🌍 PUBLIC TOOLS - 25 TOOLS  {Fore.CYAN}║
-{Fore.CYAN}╚════════════════════════════════════════════╝
+{Fore.CYAN}┌────────────────────────────────────────────────────┐
+│     {Fore.YELLOW}🌍 PUBLIC TOOLS - 50 TOOLS  {Fore.CYAN}│
+└────────────────────────────────────────────────────┘
 {Fore.WHITE}
 {Fore.GREEN}[1]  {Fore.WHITE}🌐 Cek Website Online/Offline
 {Fore.GREEN}[2]  {Fore.WHITE}🔍 IP Lookup
@@ -203,249 +195,107 @@ def public_tools():
 {Fore.GREEN}[7]  {Fore.WHITE}📊 Cek Informasi Sistem
 {Fore.GREEN}[8]  {Fore.WHITE}📱 Cek Info HP
 {Fore.GREEN}[9]  {Fore.WHITE}🌍 Cek IP Publik
-{Fore.GREEN}[10] {Fore.WHITE}⏰ Cek Waktu & Tanggal
-{Fore.GREEN}[11] {Fore.WHITE}📁 Cek Storage HP
-{Fore.GREEN}[12] {Fore.WHITE}🔋 Cek Baterai HP
-{Fore.GREEN}[13] {Fore.WHITE}📶 Cek Signal/WiFi
-{Fore.GREEN}[14] {Fore.WHITE}🧮 Kalkulator Sederhana
-{Fore.GREEN}[15] {Fore.WHITE}📝 Random Password Generator
-{Fore.GREEN}[16] {Fore.WHITE}🔢 Random Number Generator
-{Fore.GREEN}[17] {Fore.WHITE}📊 Cek RAM Usage
-{Fore.GREEN}[18] {Fore.WHITE}💻 Cek CPU Usage
-{Fore.GREEN}[19] {Fore.WHITE}📂 Cek Folder Size
-{Fore.GREEN}[20] {Fore.WHITE}🌐 Cek Domain Age
-{Fore.GREEN}[21] {Fore.WHITE}🔍 Cek Port Scanning
-{Fore.GREEN}[22] {Fore.WHITE}📧 Email Validator
-{Fore.GREEN}[23] {Fore.WHITE}🔗 URL Shortener
-{Fore.GREEN}[24] {Fore.WHITE}📝 Text to Binary
-{Fore.GREEN}[25] {Fore.WHITE}🔙 Back
+{Fore.GREEN}[10] {Fore.WHITE}🧮 Kalkulator Sederhana
+{Fore.GREEN}[11] {Fore.WHITE}🔢 Random Number
+{Fore.GREEN}[12] {Fore.WHITE}📝 Random Password
+{Fore.GREEN}[13] {Fore.WHITE}📊 Cek RAM Usage
+{Fore.GREEN}[14] {Fore.WHITE}💻 Cek CPU Usage
+{Fore.GREEN}[15] {Fore.WHITE}📂 Cek Folder Size
+{Fore.GREEN}[16] {Fore.WHITE}🔍 Port Scanner
+{Fore.GREEN}[17] {Fore.WHITE}📧 Email Validator
+{Fore.GREEN}[18] {Fore.WHITE}🔗 URL Shortener
+{Fore.GREEN}[19] {Fore.WHITE}📝 Text to Binary
+{Fore.GREEN}[20] {Fore.WHITE}🔢 Binary to Text
+{Fore.GREEN}[21] {Fore.WHITE}📝 Text to Hex
+{Fore.GREEN}[22] {Fore.WHITE}🔢 Hex to Text
+{Fore.GREEN}[23] {Fore.WHITE}📝 Text to ASCII
+{Fore.GREEN}[24] {Fore.WHITE}🔢 ASCII to Text
+{Fore.GREEN}[25] {Fore.WHITE}📝 Reverse Text
+{Fore.GREEN}[26] {Fore.WHITE}🔢 Count Words/Chars
+{Fore.GREEN}[27] {Fore.WHITE}📝 Case Converter
+{Fore.GREEN}[28] {Fore.WHITE}🔢 Random User-Agent (Mobile)
+{Fore.GREEN}[29] {Fore.WHITE}📝 Password Strength Checker
+{Fore.GREEN}[30] {Fore.WHITE}🔢 MD5 Hash Generator
+{Fore.GREEN}[31] {Fore.WHITE}📝 SHA1 Hash Generator
+{Fore.GREEN}[32] {Fore.WHITE}🔢 SHA256 Hash Generator
+{Fore.GREEN}[33] {Fore.WHITE}📝 URL Encode
+{Fore.GREEN}[34] {Fore.WHITE}🔢 URL Decode
+{Fore.GREEN}[35] {Fore.WHITE}📝 JSON Validator
+{Fore.GREEN}[36] {Fore.WHITE}🔢 IP to Decimal
+{Fore.GREEN}[37] {Fore.WHITE}📝 Decimal to IP
+{Fore.GREEN}[38] {Fore.WHITE}🔢 Binary to Decimal
+{Fore.GREEN}[39] {Fore.WHITE}📝 Decimal to Binary
+{Fore.GREEN}[40] {Fore.WHITE}🔢 Hex to Decimal
+{Fore.GREEN}[41] {Fore.WHITE}📝 Decimal to Hex
+{Fore.GREEN}[42] {Fore.WHITE}🔢 Check Prime Number
+{Fore.GREEN}[43] {Fore.WHITE}📝 Fibonacci Sequence
+{Fore.GREEN}[44] {Fore.WHITE}🔢 Factorial Calculator
+{Fore.GREEN}[45] {Fore.WHITE}📝 Reverse IP Lookup
+{Fore.GREEN}[46] {Fore.WHITE}🔢 Check HTTP Headers
+{Fore.GREEN}[47] {Fore.WHITE}📝 Check DNS Records
+{Fore.GREEN}[48] {Fore.WHITE}🔢 Check SSL Certificate
+{Fore.GREEN}[49] {Fore.WHITE}📝 Check Server Status
+{Fore.GREEN}[50] {Fore.WHITE}🔙 Back
 {Fore.WHITE}
 """)
-        choice = input(f"{Fore.CYAN}Pilih [1-25]: {Fore.WHITE}").strip()
+        choice = input(f"{Fore.CYAN}Pilih [1-50]: {Fore.WHITE}").strip()
         
-        if choice == '1':
-            check_website()
-        elif choice == '2':
-            ip_lookup()
-        elif choice == '3':
-            ping_tool()
-        elif choice == '4':
-            dns_lookup()
-        elif choice == '5':
-            user_agent_gen()
-        elif choice == '6':
-            base64_tool()
-        elif choice == '7':
-            system_info()
-        elif choice == '8':
-            device_info()
-        elif choice == '9':
-            public_ip()
-        elif choice == '10':
-            show_datetime()
-        elif choice == '11':
-            check_storage()
-        elif choice == '12':
-            check_battery()
-        elif choice == '13':
-            check_signal()
-        elif choice == '14':
-            calculator()
-        elif choice == '15':
-            random_password()
-        elif choice == '16':
-            random_number()
-        elif choice == '17':
-            check_ram()
-        elif choice == '18':
-            check_cpu()
-        elif choice == '19':
-            check_folder_size()
-        elif choice == '20':
-            check_domain_age()
-        elif choice == '21':
-            port_scan()
-        elif choice == '22':
-            email_validator()
-        elif choice == '23':
-            url_shortener()
-        elif choice == '24':
-            text_to_binary()
-        elif choice == '25':
-            break
+        if choice == '1': check_website()
+        elif choice == '2': ip_lookup()
+        elif choice == '3': ping_tool()
+        elif choice == '4': dns_lookup()
+        elif choice == '5': user_agent_gen()
+        elif choice == '6': base64_tool()
+        elif choice == '7': system_info()
+        elif choice == '8': device_info()
+        elif choice == '9': public_ip()
+        elif choice == '10': calculator()
+        elif choice == '11': random_number()
+        elif choice == '12': random_password()
+        elif choice == '13': check_ram()
+        elif choice == '14': check_cpu()
+        elif choice == '15': check_folder_size()
+        elif choice == '16': port_scan()
+        elif choice == '17': email_validator()
+        elif choice == '18': url_shortener()
+        elif choice == '19': text_to_binary()
+        elif choice == '20': binary_to_text()
+        elif choice == '21': text_to_hex()
+        elif choice == '22': hex_to_text()
+        elif choice == '23': text_to_ascii()
+        elif choice == '24': ascii_to_text()
+        elif choice == '25': reverse_text()
+        elif choice == '26': count_words()
+        elif choice == '27': case_converter()
+        elif choice == '28': mobile_user_agent()
+        elif choice == '29': password_strength()
+        elif choice == '30': md5_hash()
+        elif choice == '31': sha1_hash()
+        elif choice == '32': sha256_hash()
+        elif choice == '33': url_encode()
+        elif choice == '34': url_decode()
+        elif choice == '35': json_validator()
+        elif choice == '36': ip_to_decimal()
+        elif choice == '37': decimal_to_ip()
+        elif choice == '38': binary_to_decimal()
+        elif choice == '39': decimal_to_binary()
+        elif choice == '40': hex_to_decimal()
+        elif choice == '41': decimal_to_hex()
+        elif choice == '42': check_prime()
+        elif choice == '43': fibonacci()
+        elif choice == '44': factorial_calc()
+        elif choice == '45': reverse_ip_lookup()
+        elif choice == '46': check_http_headers()
+        elif choice == '47': check_dns_records()
+        elif choice == '48': check_ssl_cert()
+        elif choice == '49': check_server_status()
+        elif choice == '50': break
         else:
             print(f"{Fore.RED}❌ Pilihan tidak valid!")
             time.sleep(1)
 
 # ============================================
-# 🔥 PUBLIC TOOLS - FUNGSI TAMBAHAN 🔥
-# ============================================
-
-def check_storage():
-    show_banner()
-    print(f"{Fore.CYAN}📁 CEK STORAGE HP")
-    try:
-        import subprocess
-        result = subprocess.getoutput("df -h /data")
-        print(f"{Fore.WHITE}{result}")
-    except:
-        print(f"{Fore.RED}❌ Gagal mendapatkan info storage!")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def check_battery():
-    show_banner()
-    print(f"{Fore.CYAN}🔋 CEK BATERAI HP")
-    try:
-        result = subprocess.getoutput("termux-battery-status")
-        print(f"{Fore.WHITE}{result}")
-    except:
-        print(f"{Fore.RED}❌ Gagal mendapatkan info baterai! (butuh termux-api)")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def check_signal():
-    show_banner()
-    print(f"{Fore.CYAN}📶 CEK SIGNAL/WIFI")
-    try:
-        result = subprocess.getoutput("termux-wifi-connectioninfo")
-        print(f"{Fore.WHITE}{result}")
-    except:
-        print(f"{Fore.RED}❌ Gagal mendapatkan info signal! (butuh termux-api)")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def calculator():
-    show_banner()
-    print(f"{Fore.CYAN}🧮 KALKULATOR SEDERHANA")
-    try:
-        expr = input(f"{Fore.WHITE}Masukkan operasi (contoh: 2+3): ")
-        result = eval(expr)
-        print(f"{Fore.WHITE}Hasil: {result}")
-    except:
-        print(f"{Fore.RED}❌ Error! Masukkan operasi yang benar.")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def random_password():
-    show_banner()
-    print(f"{Fore.CYAN}📝 RANDOM PASSWORD GENERATOR")
-    try:
-        length = int(input(f"{Fore.WHITE}Panjang password: ") or 12)
-        chars = string.ascii_letters + string.digits + "!@#$%^&*"
-        password = ''.join(random.choices(chars, k=length))
-        print(f"{Fore.WHITE}Password: {password}")
-    except:
-        print(f"{Fore.RED}❌ Error!")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def random_number():
-    show_banner()
-    print(f"{Fore.CYAN}🔢 RANDOM NUMBER GENERATOR")
-    try:
-        min_num = int(input(f"{Fore.WHITE}Min: ") or 1)
-        max_num = int(input(f"{Fore.WHITE}Max: ") or 100)
-        print(f"{Fore.WHITE}Random: {random.randint(min_num, max_num)}")
-    except:
-        print(f"{Fore.RED}❌ Error!")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def check_ram():
-    show_banner()
-    print(f"{Fore.CYAN}📊 CEK RAM USAGE")
-    try:
-        import subprocess
-        result = subprocess.getoutput("free -h")
-        print(f"{Fore.WHITE}{result}")
-    except:
-        print(f"{Fore.RED}❌ Gagal mendapatkan info RAM!")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def check_cpu():
-    show_banner()
-    print(f"{Fore.CYAN}💻 CEK CPU USAGE")
-    try:
-        result = subprocess.getoutput("top -bn1 | head -10")
-        print(f"{Fore.WHITE}{result}")
-    except:
-        print(f"{Fore.RED}❌ Gagal mendapatkan info CPU!")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def check_folder_size():
-    show_banner()
-    print(f"{Fore.CYAN}📂 CEK FOLDER SIZE")
-    folder = input(f"{Fore.WHITE}Masukkan path folder: ")
-    try:
-        import subprocess
-        result = subprocess.getoutput(f"du -sh {folder} 2>/dev/null")
-        print(f"{Fore.WHITE}{result}")
-    except:
-        print(f"{Fore.RED}❌ Gagal!")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def check_domain_age():
-    show_banner()
-    print(f"{Fore.CYAN}🌐 CEK DOMAIN AGE")
-    domain = input(f"{Fore.WHITE}Masukkan domain: ")
-    try:
-        import whois
-        w = whois.whois(domain)
-        print(f"{Fore.WHITE}Domain: {domain}")
-        print(f"{Fore.WHITE}Created: {w.creation_date}")
-    except:
-        print(f"{Fore.RED}❌ Gagal! (butuh python-whois)")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def port_scan():
-    show_banner()
-    print(f"{Fore.CYAN}🔍 CEK PORT SCANNING")
-    ip = input(f"{Fore.WHITE}Masukkan IP: ")
-    ports = input(f"{Fore.WHITE}Port (pisah koma): ")
-    try:
-        for port in ports.split(','):
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.settimeout(1)
-            result = sock.connect_ex((ip, int(port)))
-            if result == 0:
-                print(f"{Fore.GREEN}Port {port} TERBUKA")
-            else:
-                print(f"{Fore.RED}Port {port} TERTUTUP")
-            sock.close()
-    except:
-        print(f"{Fore.RED}❌ Error!")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def email_validator():
-    show_banner()
-    print(f"{Fore.CYAN}📧 EMAIL VALIDATOR")
-    email = input(f"{Fore.WHITE}Masukkan email: ")
-    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-    if re.match(pattern, email):
-        print(f"{Fore.GREEN}✅ Email VALID")
-    else:
-        print(f"{Fore.RED}❌ Email INVALID")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def url_shortener():
-    show_banner()
-    print(f"{Fore.CYAN}🔗 URL SHORTENER")
-    url = input(f"{Fore.WHITE}Masukkan URL: ")
-    try:
-        response = requests.get(f"https://tinyurl.com/api-create.php?url={url}")
-        if response.status_code == 200:
-            print(f"{Fore.GREEN}Short URL: {response.text}")
-        else:
-            print(f"{Fore.RED}❌ Gagal!")
-    except:
-        print(f"{Fore.RED}❌ Error!")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def text_to_binary():
-    show_banner()
-    print(f"{Fore.CYAN}📝 TEXT TO BINARY")
-    text = input(f"{Fore.WHITE}Masukkan teks: ")
-    binary = ' '.join(format(ord(c), '08b') for c in text)
-    print(f"{Fore.WHITE}Binary: {binary}")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-# ============================================
-# 🔥 PUBLIC TOOLS - FUNGSI DASAR 🔥
+# 🔥 FUNGSI PUBLIC TOOLS 🔥
 # ============================================
 
 def check_website():
@@ -547,7 +397,6 @@ def base64_tool():
         time.sleep(1)
         return
     try:
-        import base64
         if choice == '1':
             result = base64.b64encode(text.encode()).decode()
             print(f"{Fore.GREEN}✅ Hasil Encode: {Fore.WHITE}{result}")
@@ -594,14 +443,428 @@ def public_ip():
         print(f"{Fore.RED}❌ Gagal!")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
-def show_datetime():
+def calculator():
     show_banner()
-    print(f"{Fore.CYAN}⏰ WAKTU & TANGGAL")
-    now = datetime.now()
-    print(f"{Fore.WHITE}  • Tanggal : {now.strftime('%d %B %Y')}")
-    print(f"{Fore.WHITE}  • Hari    : {now.strftime('%A')}")
-    print(f"{Fore.WHITE}  • Waktu   : {now.strftime('%H:%M:%S')}")
-    print(f"{Fore.WHITE}  • Timezone: {time.tzname[0]}")
+    print(f"{Fore.CYAN}🧮 KALKULATOR SEDERHANA")
+    try:
+        expr = input(f"{Fore.WHITE}Masukkan operasi (contoh: 2+3): ")
+        result = eval(expr)
+        print(f"{Fore.WHITE}Hasil: {result}")
+    except:
+        print(f"{Fore.RED}❌ Error! Masukkan operasi yang benar.")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def random_number():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 RANDOM NUMBER")
+    try:
+        min_num = int(input(f"{Fore.WHITE}Min: ") or 1)
+        max_num = int(input(f"{Fore.WHITE}Max: ") or 100)
+        print(f"{Fore.WHITE}Random: {random.randint(min_num, max_num)}")
+    except:
+        print(f"{Fore.RED}❌ Error!")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def random_password():
+    show_banner()
+    print(f"{Fore.CYAN}📝 RANDOM PASSWORD")
+    try:
+        length = int(input(f"{Fore.WHITE}Panjang: ") or 12)
+        chars = string.ascii_letters + string.digits + "!@#$%^&*"
+        password = ''.join(random.choices(chars, k=length))
+        print(f"{Fore.WHITE}Password: {password}")
+    except:
+        print(f"{Fore.RED}❌ Error!")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def check_ram():
+    show_banner()
+    print(f"{Fore.CYAN}📊 CEK RAM USAGE")
+    try:
+        result = subprocess.getoutput("free -h")
+        print(f"{Fore.WHITE}{result}")
+    except:
+        print(f"{Fore.RED}❌ Gagal!")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def check_cpu():
+    show_banner()
+    print(f"{Fore.CYAN}💻 CEK CPU USAGE")
+    try:
+        result = subprocess.getoutput("top -bn1 | head -10")
+        print(f"{Fore.WHITE}{result}")
+    except:
+        print(f"{Fore.RED}❌ Gagal!")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def check_folder_size():
+    show_banner()
+    print(f"{Fore.CYAN}📂 CEK FOLDER SIZE")
+    folder = input(f"{Fore.WHITE}Path folder: ")
+    try:
+        result = subprocess.getoutput(f"du -sh {folder} 2>/dev/null")
+        print(f"{Fore.WHITE}{result}")
+    except:
+        print(f"{Fore.RED}❌ Gagal!")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def port_scan():
+    show_banner()
+    print(f"{Fore.CYAN}🔍 PORT SCANNER")
+    ip = input(f"{Fore.WHITE}IP: ")
+    ports = input(f"{Fore.WHITE}Port (pisah koma): ")
+    try:
+        for port in ports.split(','):
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(1)
+            result = sock.connect_ex((ip, int(port)))
+            if result == 0:
+                print(f"{Fore.GREEN}Port {port} TERBUKA")
+            else:
+                print(f"{Fore.RED}Port {port} TERTUTUP")
+            sock.close()
+    except:
+        print(f"{Fore.RED}❌ Error!")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def email_validator():
+    show_banner()
+    print(f"{Fore.CYAN}📧 EMAIL VALIDATOR")
+    email = input(f"{Fore.WHITE}Email: ")
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    if re.match(pattern, email):
+        print(f"{Fore.GREEN}✅ Email VALID")
+    else:
+        print(f"{Fore.RED}❌ Email INVALID")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def url_shortener():
+    show_banner()
+    print(f"{Fore.CYAN}🔗 URL SHORTENER")
+    url = input(f"{Fore.WHITE}URL: ")
+    try:
+        response = requests.get(f"https://tinyurl.com/api-create.php?url={url}")
+        if response.status_code == 200:
+            print(f"{Fore.GREEN}Short URL: {response.text}")
+        else:
+            print(f"{Fore.RED}❌ Gagal!")
+    except:
+        print(f"{Fore.RED}❌ Error!")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def text_to_binary():
+    show_banner()
+    print(f"{Fore.CYAN}📝 TEXT TO BINARY")
+    text = input(f"{Fore.WHITE}Teks: ")
+    binary = ' '.join(format(ord(c), '08b') for c in text)
+    print(f"{Fore.WHITE}Binary: {binary}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def binary_to_text():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 BINARY TO TEXT")
+    binary = input(f"{Fore.WHITE}Binary (pisah spasi): ")
+    text = ''.join(chr(int(b, 2)) for b in binary.split())
+    print(f"{Fore.WHITE}Text: {text}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def text_to_hex():
+    show_banner()
+    print(f"{Fore.CYAN}📝 TEXT TO HEX")
+    text = input(f"{Fore.WHITE}Teks: ")
+    hex_text = text.encode().hex()
+    print(f"{Fore.WHITE}Hex: {hex_text}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def hex_to_text():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 HEX TO TEXT")
+    hex_text = input(f"{Fore.WHITE}Hex: ")
+    text = bytes.fromhex(hex_text).decode()
+    print(f"{Fore.WHITE}Text: {text}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def text_to_ascii():
+    show_banner()
+    print(f"{Fore.CYAN}📝 TEXT TO ASCII")
+    text = input(f"{Fore.WHITE}Teks: ")
+    ascii_text = ' '.join(str(ord(c)) for c in text)
+    print(f"{Fore.WHITE}ASCII: {ascii_text}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def ascii_to_text():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 ASCII TO TEXT")
+    ascii_text = input(f"{Fore.WHITE}ASCII (pisah spasi): ")
+    text = ''.join(chr(int(a)) for a in ascii_text.split())
+    print(f"{Fore.WHITE}Text: {text}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def reverse_text():
+    show_banner()
+    print(f"{Fore.CYAN}📝 REVERSE TEXT")
+    text = input(f"{Fore.WHITE}Teks: ")
+    print(f"{Fore.WHITE}Reverse: {text[::-1]}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def count_words():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 COUNT WORDS/CHARS")
+    text = input(f"{Fore.WHITE}Teks: ")
+    words = len(text.split())
+    chars = len(text)
+    print(f"{Fore.WHITE}Kata: {words}, Karakter: {chars}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def case_converter():
+    show_banner()
+    print(f"{Fore.CYAN}📝 CASE CONVERTER")
+    print(f"{Fore.GREEN}[1] {Fore.WHITE}UPPER")
+    print(f"{Fore.GREEN}[2] {Fore.WHITE}lower")
+    print(f"{Fore.GREEN}[3] {Fore.WHITE}Title")
+    choice = input(f"{Fore.CYAN}Pilih: ").strip()
+    text = input(f"{Fore.WHITE}Teks: ")
+    if choice == '1':
+        print(f"{Fore.WHITE}{text.upper()}")
+    elif choice == '2':
+        print(f"{Fore.WHITE}{text.lower()}")
+    elif choice == '3':
+        print(f"{Fore.WHITE}{text.title()}")
+    else:
+        print(f"{Fore.RED}❌ Pilihan tidak valid!")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def mobile_user_agent():
+    show_banner()
+    print(f"{Fore.CYAN}📱 RANDOM MOBILE UA")
+    agents = [
+        "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
+        "Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/20100101 Firefox/119.0",
+        "Mozilla/5.0 (Linux; Android 13; SM-G991B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36",
+    ]
+    print(f"{Fore.GREEN}📌 Random Mobile UA:")
+    print(f"{Fore.WHITE}{random.choice(agents)}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def password_strength():
+    show_banner()
+    print(f"{Fore.CYAN}📝 PASSWORD STRENGTH")
+    pwd = input(f"{Fore.WHITE}Password: ")
+    score = 0
+    if len(pwd) >= 8: score += 1
+    if re.search(r'[A-Z]', pwd): score += 1
+    if re.search(r'[a-z]', pwd): score += 1
+    if re.search(r'[0-9]', pwd): score += 1
+    if re.search(r'[!@#$%^&*]', pwd): score += 1
+    if score <= 2: print(f"{Fore.RED}❌ Weak")
+    elif score <= 4: print(f"{Fore.YELLOW}⚠️ Medium")
+    else: print(f"{Fore.GREEN}✅ Strong")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def md5_hash():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 MD5 HASH")
+    text = input(f"{Fore.WHITE}Teks: ")
+    import hashlib
+    print(f"{Fore.WHITE}MD5: {hashlib.md5(text.encode()).hexdigest()}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def sha1_hash():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 SHA1 HASH")
+    text = input(f"{Fore.WHITE}Teks: ")
+    import hashlib
+    print(f"{Fore.WHITE}SHA1: {hashlib.sha1(text.encode()).hexdigest()}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def sha256_hash():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 SHA256 HASH")
+    text = input(f"{Fore.WHITE}Teks: ")
+    import hashlib
+    print(f"{Fore.WHITE}SHA256: {hashlib.sha256(text.encode()).hexdigest()}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def url_encode():
+    show_banner()
+    print(f"{Fore.CYAN}📝 URL ENCODE")
+    text = input(f"{Fore.WHITE}URL: ")
+    import urllib.parse
+    print(f"{Fore.WHITE}Encoded: {urllib.parse.quote(text)}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def url_decode():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 URL DECODE")
+    text = input(f"{Fore.WHITE}Encoded URL: ")
+    import urllib.parse
+    print(f"{Fore.WHITE}Decoded: {urllib.parse.unquote(text)}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def json_validator():
+    show_banner()
+    print(f"{Fore.CYAN}📝 JSON VALIDATOR")
+    text = input(f"{Fore.WHITE}JSON: ")
+    try:
+        json.loads(text)
+        print(f"{Fore.GREEN}✅ Valid JSON")
+    except:
+        print(f"{Fore.RED}❌ Invalid JSON")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def ip_to_decimal():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 IP TO DECIMAL")
+    ip = input(f"{Fore.WHITE}IP: ")
+    parts = ip.split('.')
+    decimal = (int(parts[0]) << 24) + (int(parts[1]) << 16) + (int(parts[2]) << 8) + int(parts[3])
+    print(f"{Fore.WHITE}Decimal: {decimal}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def decimal_to_ip():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 DECIMAL TO IP")
+    dec = int(input(f"{Fore.WHITE}Decimal: "))
+    ip = f"{(dec >> 24) & 0xFF}.{(dec >> 16) & 0xFF}.{(dec >> 8) & 0xFF}.{dec & 0xFF}"
+    print(f"{Fore.WHITE}IP: {ip}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def binary_to_decimal():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 BINARY TO DECIMAL")
+    binary = input(f"{Fore.WHITE}Binary: ")
+    print(f"{Fore.WHITE}Decimal: {int(binary, 2)}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def decimal_to_binary():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 DECIMAL TO BINARY")
+    dec = int(input(f"{Fore.WHITE}Decimal: "))
+    print(f"{Fore.WHITE}Binary: {bin(dec)[2:]}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def hex_to_decimal():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 HEX TO DECIMAL")
+    hex_text = input(f"{Fore.WHITE}Hex: ")
+    print(f"{Fore.WHITE}Decimal: {int(hex_text, 16)}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def decimal_to_hex():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 DECIMAL TO HEX")
+    dec = int(input(f"{Fore.WHITE}Decimal: "))
+    print(f"{Fore.WHITE}Hex: {hex(dec)[2:].upper()}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def check_prime():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 CHECK PRIME NUMBER")
+    num = int(input(f"{Fore.WHITE}Number: "))
+    if num < 2:
+        print(f"{Fore.RED}❌ Not Prime")
+    else:
+        prime = True
+        for i in range(2, int(num**0.5) + 1):
+            if num % i == 0:
+                prime = False
+                break
+        print(f"{Fore.GREEN}✅ Prime" if prime else f"{Fore.RED}❌ Not Prime")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def fibonacci():
+    show_banner()
+    print(f"{Fore.CYAN}📝 FIBONACCI SEQUENCE")
+    n = int(input(f"{Fore.WHITE}Jumlah: "))
+    a, b = 0, 1
+    seq = []
+    for _ in range(n):
+        seq.append(a)
+        a, b = b, a + b
+    print(f"{Fore.WHITE}{', '.join(map(str, seq))}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def factorial_calc():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 FACTORIAL CALCULATOR")
+    n = int(input(f"{Fore.WHITE}Number: "))
+    result = 1
+    for i in range(2, n + 1):
+        result *= i
+    print(f"{Fore.WHITE}Factorial: {result}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def reverse_ip_lookup():
+    show_banner()
+    print(f"{Fore.CYAN}📝 REVERSE IP LOOKUP")
+    ip = input(f"{Fore.WHITE}IP: ")
+    try:
+        hostname = socket.gethostbyaddr(ip)[0]
+        print(f"{Fore.WHITE}Hostname: {hostname}")
+    except:
+        print(f"{Fore.RED}❌ Gagal!")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def check_http_headers():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 CHECK HTTP HEADERS")
+    url = input(f"{Fore.WHITE}URL: ")
+    if not url.startswith(('http://', 'https://')):
+        url = 'https://' + url
+    try:
+        response = requests.get(url, timeout=10)
+        for key, value in response.headers.items():
+            print(f"{Fore.WHITE}{key}: {value}")
+    except:
+        print(f"{Fore.RED}❌ Gagal!")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def check_dns_records():
+    show_banner()
+    print(f"{Fore.CYAN}📝 CHECK DNS RECORDS")
+    domain = input(f"{Fore.WHITE}Domain: ")
+    try:
+        import dns.resolver
+        for record_type in ['A', 'MX', 'NS', 'TXT']:
+            try:
+                answers = dns.resolver.resolve(domain, record_type)
+                print(f"{Fore.WHITE}{record_type}: {[str(r) for r in answers]}")
+            except:
+                print(f"{Fore.WHITE}{record_type}: Tidak ditemukan")
+    except:
+        print(f"{Fore.RED}❌ Gagal! (butuh dnspython)")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def check_ssl_cert():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 CHECK SSL CERTIFICATE")
+    domain = input(f"{Fore.WHITE}Domain: ")
+    try:
+        import ssl
+        import socket
+        context = ssl.create_default_context()
+        with socket.create_connection((domain, 443), timeout=5) as sock:
+            with context.wrap_socket(sock, server_hostname=domain) as ssock:
+                cert = ssock.getpeercert()
+                print(f"{Fore.WHITE}Issuer: {cert.get('issuer')}")
+                print(f"{Fore.WHITE}Expired: {cert.get('notAfter')}")
+    except:
+        print(f"{Fore.RED}❌ Gagal!")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def check_server_status():
+    show_banner()
+    print(f"{Fore.CYAN}📝 CHECK SERVER STATUS")
+    url = input(f"{Fore.WHITE}URL: ")
+    if not url.startswith(('http://', 'https://')):
+        url = 'https://' + url
+    try:
+        response = requests.get(url, timeout=10)
+        print(f"{Fore.WHITE}Status: {response.status_code}")
+        print(f"{Fore.WHITE}Server: {response.headers.get('Server', 'Unknown')}")
+        print(f"{Fore.WHITE}Response Time: {response.elapsed.total_seconds():.2f}s")
+    except:
+        print(f"{Fore.RED}❌ Gagal!")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
 # ============================================
@@ -716,6 +979,116 @@ def send_ngl_message(username, message, retry=0):
             return send_ngl_message(username, message, retry + 1)
         return False, f"❌ ERROR: {str(e)[:30]}"
 
+def spam_ngl():
+    show_banner()
+    print(f"""
+{Fore.CYAN}┌────────────────────────────────────────────────────┐
+│     {Fore.YELLOW}📨 SPAM NGL - ULTRA LITE  {Fore.CYAN}│
+└────────────────────────────────────────────────────┘
+{Fore.WHITE}
+Support 2 tipe input:
+{Fore.YELLOW}  1. https://ngl.link/*****
+{Fore.YELLOW}  2. *****
+{Fore.WHITE}
+""")
+    
+    raw_input = input(f"{Fore.CYAN}[+] MASUKKAN USERNAME / LINK NGL: {Fore.WHITE}").strip()
+    if not raw_input:
+        print(f"{Fore.RED}❌ Input tidak boleh kosong!")
+        time.sleep(1)
+        return
+    
+    username = extract_username(raw_input)
+    if not username:
+        print(f"{Fore.RED}❌ GAGAL! Format username/link tidak valid!")
+        time.sleep(1)
+        return
+    
+    print(f"{Fore.GREEN}✅ USERNAME DETEKSI: @{username}")
+    
+    message = input(f"{Fore.CYAN}[+] MASUKKAN PESAN SPAM: {Fore.WHITE}").strip()
+    if not message:
+        print(f"{Fore.RED}❌ Pesan tidak boleh kosong!")
+        time.sleep(1)
+        return
+    
+    try:
+        count = int(input(f"{Fore.CYAN}[+] JUMLAH SPAM (1-9999): {Fore.WHITE}").strip())
+        if count < 1: count = 1
+        if count > 9999: count = 9999
+    except:
+        count = 100
+        print(f"{Fore.YELLOW}⚠️ Menggunakan default: 100")
+    
+    try:
+        delay = float(input(f"{Fore.CYAN}[+] DELAY (detik, 0.1-5): {Fore.WHITE}").strip())
+        if delay < 0.1: delay = 0.1
+        if delay > 5: delay = 5
+    except:
+        delay = 0.5
+        print(f"{Fore.YELLOW}⚠️ Menggunakan default: 0.5s")
+    
+    print(f"{Fore.RED}\n[!] PERINGATAN: Ini untuk iseng-iseng!")
+    confirm = input(f"{Fore.YELLOW}[?] Yakin mau lanjut? (y/n): {Fore.WHITE}").strip().lower()
+    if confirm != 'y':
+        print(f"{Fore.YELLOW}[!] Dibatalkan!")
+        time.sleep(1)
+        return
+    
+    print(f"{Fore.CYAN}⏳ Loading...")
+    time.sleep(0.5)
+    
+    print(f"{Fore.GREEN}\n[+] TARGET: @{username}")
+    print(f"{Fore.GREEN}[+] PESAN: {message[:50]}...")
+    print(f"{Fore.GREEN}[+] JUMLAH: {count}")
+    print(f"{Fore.GREEN}[+] DELAY: {delay}s")
+    print(f"{Fore.CYAN}" + "=" * 60 + "\n")
+    
+    success_count = 0
+    fail_count = 0
+    
+    for i in range(1, count + 1):
+        try:
+            msg_to_send = message
+            status, result = send_ngl_message(username, msg_to_send)
+            
+            progress = (i / count) * 100
+            bar_length = 30
+            filled = int(bar_length * progress / 100)
+            bar = "█" * filled + "░" * (bar_length - filled)
+            
+            if status:
+                success_count += 1
+                print(f"{Fore.GREEN}[{i}/{count}] ✅ {result}  [{bar}] {progress:.1f}%")
+            else:
+                fail_count += 1
+                print(f"{Fore.RED}[{i}/{count}] {result}  [{bar}] {progress:.1f}%")
+            
+            if i < count:
+                time.sleep(delay)
+                
+        except KeyboardInterrupt:
+            print(f"{Fore.YELLOW}\n[!] Spam dihentikan oleh user!")
+            break
+        except Exception as e:
+            print(f"{Fore.RED}[{i}/{count}] ❌ Error: {str(e)[:50]}")
+            fail_count += 1
+            time.sleep(1)
+    
+    print(f"{Fore.CYAN}\n" + "=" * 60)
+    print(f"{Fore.CYAN}📊 HASIL SPAM:")
+    print(f"{Fore.GREEN}✅ Berhasil: {success_count}")
+    print(f"{Fore.RED}❌ Gagal: {fail_count}")
+    print(f"{Fore.YELLOW}📦 Total: {success_count + fail_count}")
+    print(f"{Fore.CYAN}" + "=" * 60)
+    
+    if success_count > 0:
+        print(f"{Fore.GREEN}🔥 SPAM BERHASIL!")
+    else:
+        print(f"{Fore.RED}💀 GAGAL SEMUA! CEK USERNAME ATAU COBA LAGI!")
+    
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
 # ============================================
 # 🔥 TOOLS OWNER (15 TOOLS) 🔥
 # ============================================
@@ -724,9 +1097,9 @@ def tools_owner():
     while True:
         show_banner()
         print(f"""
-{Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}👑 TOOLS OWNER - 15 TOOLS  {Fore.CYAN}║
-{Fore.CYAN}╚════════════════════════════════════════════╝
+{Fore.CYAN}┌────────────────────────────────────────────────────┐
+│     {Fore.YELLOW}👑 TOOLS OWNER - 15 TOOLS  {Fore.CYAN}│
+└────────────────────────────────────────────────────┘
 {Fore.WHITE}
 {Fore.GREEN}[1]  {Fore.WHITE}👥 Manage User (Create/List/Delete)
 {Fore.GREEN}[2]  {Fore.WHITE}📊 Lihat Log Aktivitas
@@ -782,7 +1155,7 @@ def tools_owner():
             time.sleep(1)
 
 # ============================================
-# 🔥 TOOLS OWNER - FUNGSI TAMBAHAN 🔥
+# 🔥 TOOLS OWNER - FUNGSI 🔥
 # ============================================
 
 OWNER_FILE = os.path.expanduser("~/.alegra_owners.json")
@@ -935,9 +1308,9 @@ def owner_manage_user():
     while True:
         show_banner()
         print(f"""
-{Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}👥 MANAGE USER  {Fore.CYAN}║
-{Fore.CYAN}╚════════════════════════════════════════════╝
+{Fore.CYAN}┌────────────────────────────────────────────────────┐
+│     {Fore.YELLOW}👥 MANAGE USER  {Fore.CYAN}│
+└────────────────────────────────────────────────────┘
 {Fore.WHITE}
 {Fore.GREEN}[1] {Fore.WHITE}Create Password
 {Fore.GREEN}[2] {Fore.WHITE}List User
@@ -1081,131 +1454,17 @@ def user_stats():
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
 # ============================================
-# 🔥 SPAM NGL - ANIMASI RAPIH 🔥
-# ============================================
-
-def spam_ngl():
-    show_banner()
-    print(f"""
-{Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}📨 SPAM NGL - FINAL FIX  {Fore.CYAN}║
-{Fore.CYAN}╚════════════════════════════════════════════╝
-{Fore.WHITE}
-{Fore.WHITE}Support 2 tipe input:
-{Fore.YELLOW}  1. https://ngl.link/*****
-{Fore.YELLOW}  2. *****
-{Fore.WHITE}
-""")
-    
-    raw_input = input(f"{Fore.CYAN}[+] MASUKKAN USERNAME / LINK NGL: {Fore.WHITE}").strip()
-    if not raw_input:
-        print(f"{Fore.RED}❌ Input tidak boleh kosong!")
-        time.sleep(1)
-        return
-    
-    username = extract_username(raw_input)
-    if not username:
-        print(f"{Fore.RED}❌ GAGAL! Format username/link tidak valid!")
-        time.sleep(1)
-        return
-    
-    print(f"{Fore.GREEN}✅ USERNAME DETEKSI: @{username}")
-    
-    message = input(f"{Fore.CYAN}[+] MASUKKAN PESAN SPAM: {Fore.WHITE}").strip()
-    if not message:
-        print(f"{Fore.RED}❌ Pesan tidak boleh kosong!")
-        time.sleep(1)
-        return
-    
-    try:
-        count = int(input(f"{Fore.CYAN}[+] JUMLAH SPAM (1-9999): {Fore.WHITE}").strip())
-        if count < 1: count = 1
-        if count > 9999: count = 9999
-    except:
-        count = 100
-        print(f"{Fore.YELLOW}⚠️ Menggunakan default: 100")
-    
-    try:
-        delay = float(input(f"{Fore.CYAN}[+] DELAY (detik, 0.1-5): {Fore.WHITE}").strip())
-        if delay < 0.1: delay = 0.1
-        if delay > 5: delay = 5
-    except:
-        delay = 0.5
-        print(f"{Fore.YELLOW}⚠️ Menggunakan default: 0.5s")
-    
-    print(f"{Fore.RED}\n[!] PERINGATAN: Ini untuk iseng-iseng!")
-    confirm = input(f"{Fore.YELLOW}[?] Yakin mau lanjut? (y/n): {Fore.WHITE}").strip().lower()
-    if confirm != 'y':
-        print(f"{Fore.YELLOW}[!] Dibatalkan!")
-        time.sleep(1)
-        return
-    
-    print(f"{Fore.CYAN}⏳ Loading...")
-    time.sleep(0.5)
-    
-    print(f"{Fore.GREEN}\n[+] TARGET: @{username}")
-    print(f"{Fore.GREEN}[+] PESAN: {message[:50]}...")
-    print(f"{Fore.GREEN}[+] JUMLAH: {count}")
-    print(f"{Fore.GREEN}[+] DELAY: {delay}s")
-    print(f"{Fore.CYAN}" + "=" * 60 + "\n")
-    
-    success_count = 0
-    fail_count = 0
-    
-    for i in range(1, count + 1):
-        try:
-            msg_to_send = message
-            status, result = send_ngl_message(username, msg_to_send)
-            
-            progress = (i / count) * 100
-            bar_length = 30
-            filled = int(bar_length * progress / 100)
-            bar = "█" * filled + "░" * (bar_length - filled)
-            
-            if status:
-                success_count += 1
-                print(f"{Fore.GREEN}[{i}/{count}] ✅ {result}  [{bar}] {progress:.1f}%")
-            else:
-                fail_count += 1
-                print(f"{Fore.RED}[{i}/{count}] {result}  [{bar}] {progress:.1f}%")
-            
-            if i < count:
-                time.sleep(delay)
-                
-        except KeyboardInterrupt:
-            print(f"{Fore.YELLOW}\n[!] Spam dihentikan oleh user!")
-            break
-        except Exception as e:
-            print(f"{Fore.RED}[{i}/{count}] ❌ Error: {str(e)[:50]}")
-            fail_count += 1
-            time.sleep(1)
-    
-    print(f"{Fore.CYAN}\n" + "=" * 60)
-    print(f"{Fore.CYAN}📊 HASIL SPAM:")
-    print(f"{Fore.GREEN}✅ Berhasil: {success_count}")
-    print(f"{Fore.RED}❌ Gagal: {fail_count}")
-    print(f"{Fore.YELLOW}📦 Total: {success_count + fail_count}")
-    print(f"{Fore.CYAN}" + "=" * 60)
-    
-    if success_count > 0:
-        print(f"{Fore.GREEN}🔥 SPAM BERHASIL!")
-    else:
-        print(f"{Fore.RED}💀 GAGAL SEMUA! CEK USERNAME ATAU COBA LAGI!")
-    
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-# ============================================
 # 🔥 LOGIN 🔥
 # ============================================
 
 def login():
     show_banner()
     print(f"""
-{Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}🔐 LOGIN - FINAL FIX  {Fore.CYAN}║
-{Fore.CYAN}╚════════════════════════════════════════════╝
+{Fore.CYAN}┌────────────────────────────────────────────────────┐
+│     {Fore.YELLOW}🔐 LOGIN - ULTRA LITE  {Fore.CYAN}│
+└────────────────────────────────────────────────────┘
 {Fore.WHITE}
-{Fore.WHITE}Masukkan Username & Password untuk melanjutkan.
+Masukkan Username & Password untuk melanjutkan.
 {Fore.YELLOW}Belum punya password? Hubungi {TELEGRAM}
 {Fore.WHITE}
 """)
@@ -1238,9 +1497,9 @@ def main_menu():
     while True:
         show_banner()
         print(f"""
-{Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}📌 MAIN MENU - FINAL FIX  {Fore.CYAN}║
-{Fore.CYAN}╚════════════════════════════════════════════╝
+{Fore.CYAN}┌────────────────────────────────────────────────────┐
+│     {Fore.YELLOW}📌 MAIN MENU - ULTRA LITE  {Fore.CYAN}│
+└────────────────────────────────────────────────────┘
 {Fore.WHITE}
 {Fore.GREEN}[1] {Fore.WHITE}📨 SPAM NGL
 {Fore.GREEN}[2] {Fore.WHITE}👑 TOOLS OWNER
@@ -1291,6 +1550,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print(f"{Fore.YELLOW}\n[!] Keluar...")
     finally:
-        print(f"{Fore.CYAN}\n📨 ALEGRA SPAM - FINAL FIX EDITION")
+        print(f"{Fore.CYAN}\n📨 ALEGRA SPAM - ULTRA LITE EDITION")
         print(f"{Fore.MAGENTA}Script By : Alegra Ega")
         print(f"{Fore.WHITE}Telegram : @egaa_1")

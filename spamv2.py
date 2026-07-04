@@ -22,7 +22,7 @@ from colorama import init, Fore, Style, Back
 init(autoreset=True)
 os.system("clear" if os.name == "posix" else "cls")
 
-VERSION = "FINAL CLEAN 16.0"
+VERSION = "FINAL CLEAN 17.0"
 AUTHOR = "Alegra Ega"
 TELEGRAM = "@egaa_1"
 MASTER_PASSWORD = "9999"
@@ -223,26 +223,29 @@ def public_tools():
     while True:
         show_banner()
         print(f"""
-{Fore.CYAN}┌──────────────────────────────────────────────┐
-│     {Fore.YELLOW}🌍 PUBLIC TOOLS - 25 TOOLS  {Fore.CYAN}│
-├──────────────────────────────────────────────┤
-│ {Fore.GREEN}[1] {Fore.WHITE}🌐 Cek Website    {Fore.GREEN}[14] {Fore.WHITE}🔢 Random Number    {Fore.CYAN}│
-│ {Fore.GREEN}[2] {Fore.WHITE}🔍 IP Lookup      {Fore.GREEN}[15] {Fore.WHITE}📝 Random Password  {Fore.CYAN}│
-│ {Fore.GREEN}[3] {Fore.WHITE}📡 Ping Test      {Fore.GREEN}[16] {Fore.WHITE}📊 RAM Usage        {Fore.CYAN}│
-│ {Fore.GREEN}[4] {Fore.WHITE}🌐 DNS Lookup     {Fore.GREEN}[17] {Fore.WHITE}💻 CPU Usage        {Fore.CYAN}│
-│ {Fore.GREEN}[5] {Fore.WHITE}🎭 Random UA      {Fore.GREEN}[18] {Fore.WHITE}📂 Folder Size      {Fore.CYAN}│
-│ {Fore.GREEN}[6] {Fore.WHITE}🔐 Base64         {Fore.GREEN}[19] {Fore.WHITE}🔍 Port Scanner     {Fore.CYAN}│
-│ {Fore.GREEN}[7] {Fore.WHITE}📊 Info Sistem    {Fore.GREEN}[20] {Fore.WHITE}📧 Email Validator  {Fore.CYAN}│
-│ {Fore.GREEN}[8] {Fore.WHITE}📱 Info HP        {Fore.GREEN}[21] {Fore.WHITE}🔗 URL Shortener    {Fore.CYAN}│
-│ {Fore.GREEN}[9] {Fore.WHITE}🌍 IP Publik      {Fore.GREEN}[22] {Fore.WHITE}📝 Text to Binary   {Fore.CYAN}│
-│ {Fore.GREEN}[10]{Fore.WHITE}🧮 Kalkulator     {Fore.GREEN}[23] {Fore.WHITE}🔢 Binary to Text   {Fore.CYAN}│
-│ {Fore.GREEN}[11]{Fore.WHITE}📝 Reverse Text   {Fore.GREEN}[24] {Fore.WHITE}🔢 Count Words      {Fore.CYAN}│
-│ {Fore.GREEN}[12]{Fore.WHITE}📝 Case Converter {Fore.GREEN}[25] {Fore.WHITE}📱 Mobile UA        {Fore.CYAN}│
-│ {Fore.GREEN}[13]{Fore.WHITE}📝 Pass Strength  {Fore.CYAN}│
-└──────────────────────────────────────────────┘
+{Fore.CYAN}┌────────────────────────────────────────────────────┐
+│     {Fore.YELLOW}🌍 PUBLIC TOOLS - 30 TOOLS  {Fore.CYAN}│
+├────────────────────────────────────────────────────┤
+│ {Fore.GREEN}[1] {Fore.WHITE}🌐 Cek Website       {Fore.GREEN}[11] {Fore.WHITE}🧮 Kalkulator         {Fore.CYAN}│
+│ {Fore.GREEN}[2] {Fore.WHITE}🔍 IP Lookup         {Fore.GREEN}[12] {Fore.WHITE}📝 Reverse Text       {Fore.CYAN}│
+│ {Fore.GREEN}[3] {Fore.WHITE}📡 Ping Test         {Fore.GREEN}[13] {Fore.WHITE}📝 Case Converter    {Fore.CYAN}│
+│ {Fore.GREEN}[4] {Fore.WHITE}🌐 DNS Lookup        {Fore.GREEN}[14] {Fore.WHITE}📝 Pass Strength     {Fore.CYAN}│
+│ {Fore.GREEN}[5] {Fore.WHITE}🎭 Random UA         {Fore.GREEN}[15] {Fore.WHITE}🔢 Random Number     {Fore.CYAN}│
+│ {Fore.GREEN}[6] {Fore.WHITE}🔐 Base64            {Fore.GREEN}[16] {Fore.WHITE}📝 Random Password   {Fore.CYAN}│
+│ {Fore.GREEN}[7] {Fore.WHITE}📊 Info Sistem       {Fore.GREEN}[17] {Fore.WHITE}📊 RAM Usage         {Fore.CYAN}│
+│ {Fore.GREEN}[8] {Fore.WHITE}📱 Info HP           {Fore.GREEN}[18] {Fore.WHITE}💻 CPU Usage         {Fore.CYAN}│
+│ {Fore.GREEN}[9] {Fore.WHITE}🌍 IP Publik         {Fore.GREEN}[19] {Fore.WHITE}📂 Folder Size       {Fore.CYAN}│
+│ {Fore.GREEN}[10]{Fore.WHITE}📧 Email Validator   {Fore.GREEN}[20] {Fore.WHITE}🔍 Port Scanner      {Fore.CYAN}│
+├────────────────────────────────────────────────────┤
+│ {Fore.GREEN}[21] {Fore.WHITE}🔗 URL Shortener     {Fore.GREEN}[26] {Fore.WHITE}🔐 MD5 Hash          {Fore.CYAN}│
+│ {Fore.GREEN}[22] {Fore.WHITE}📝 Text to Binary    {Fore.GREEN}[27] {Fore.WHITE}🔐 SHA1 Hash         {Fore.CYAN}│
+│ {Fore.GREEN}[23] {Fore.WHITE}🔢 Binary to Text    {Fore.GREEN}[28] {Fore.WHITE}🔐 SHA256 Hash       {Fore.CYAN}│
+│ {Fore.GREEN}[24] {Fore.WHITE}📝 URL Encode        {Fore.GREEN}[29] {Fore.WHITE}📝 JSON Validator    {Fore.CYAN}│
+│ {Fore.GREEN}[25] {Fore.WHITE}🔢 URL Decode        {Fore.GREEN}[30] {Fore.WHITE}🔙 EXIT              {Fore.CYAN}│
+└────────────────────────────────────────────────────┘
 {Fore.WHITE}
 """)
-        choice = input(f"{Fore.CYAN}Pilih [1-25]: {Fore.WHITE}").strip()
+        choice = input(f"{Fore.CYAN}Pilih [1-30]: {Fore.WHITE}").strip()
         if choice == '1': check_website()
         elif choice == '2': ip_lookup()
         elif choice == '3': ping_tool()
@@ -252,22 +255,29 @@ def public_tools():
         elif choice == '7': system_info()
         elif choice == '8': device_info()
         elif choice == '9': public_ip()
-        elif choice == '10': calculator()
-        elif choice == '11': reverse_text()
-        elif choice == '12': case_converter()
-        elif choice == '13': password_strength()
-        elif choice == '14': random_number()
-        elif choice == '15': random_password()
-        elif choice == '16': check_ram()
-        elif choice == '17': check_cpu()
-        elif choice == '18': check_folder_size()
-        elif choice == '19': port_scan()
-        elif choice == '20': email_validator()
+        elif choice == '10': email_validator()
+        elif choice == '11': calculator()
+        elif choice == '12': reverse_text()
+        elif choice == '13': case_converter()
+        elif choice == '14': password_strength()
+        elif choice == '15': random_number()
+        elif choice == '16': random_password()
+        elif choice == '17': check_ram()
+        elif choice == '18': check_cpu()
+        elif choice == '19': check_folder_size()
+        elif choice == '20': port_scan()
         elif choice == '21': url_shortener()
         elif choice == '22': text_to_binary()
         elif choice == '23': binary_to_text()
-        elif choice == '24': count_words()
-        elif choice == '25': mobile_user_agent()
+        elif choice == '24': url_encode()
+        elif choice == '25': url_decode()
+        elif choice == '26': md5_hash()
+        elif choice == '27': sha1_hash()
+        elif choice == '28': sha256_hash()
+        elif choice == '29': json_validator()
+        elif choice == '30':
+            print(f"{Fore.YELLOW}🔙 Kembali ke menu utama...")
+            break
         else:
             print(f"{Fore.RED}❌ Pilihan tidak valid!")
             time.sleep(1)
@@ -417,6 +427,17 @@ def public_ip():
         print(f"{Fore.RED}❌ Gagal!")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
+def email_validator():
+    show_banner()
+    print(f"{Fore.CYAN}📧 EMAIL VALIDATOR")
+    email = input(f"{Fore.WHITE}Email: ")
+    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    if re.match(pattern, email):
+        print(f"{Fore.GREEN}✅ VALID")
+    else:
+        print(f"{Fore.RED}❌ INVALID")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
 def calculator():
     show_banner()
     print(f"{Fore.CYAN}🧮 KALKULATOR")
@@ -499,17 +520,6 @@ def port_scan():
             sock.close()
     except:
         print(f"{Fore.RED}❌ Error!")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def email_validator():
-    show_banner()
-    print(f"{Fore.CYAN}📧 EMAIL VALIDATOR")
-    email = input(f"{Fore.WHITE}Email: ")
-    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-    if re.match(pattern, email):
-        print(f"{Fore.GREEN}✅ VALID")
-    else:
-        print(f"{Fore.RED}❌ INVALID")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
 def url_shortener():
@@ -601,6 +611,54 @@ def password_strength():
     if score <= 2: print(f"{Fore.RED}❌ Weak")
     elif score <= 4: print(f"{Fore.YELLOW}⚠️ Medium")
     else: print(f"{Fore.GREEN}✅ Strong")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def url_encode():
+    show_banner()
+    print(f"{Fore.CYAN}📝 URL ENCODE")
+    text = input(f"{Fore.WHITE}URL: ")
+    import urllib.parse
+    print(f"{Fore.WHITE}Encoded: {urllib.parse.quote(text)}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def url_decode():
+    show_banner()
+    print(f"{Fore.CYAN}🔢 URL DECODE")
+    text = input(f"{Fore.WHITE}Encoded: ")
+    import urllib.parse
+    print(f"{Fore.WHITE}Decoded: {urllib.parse.unquote(text)}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def md5_hash():
+    show_banner()
+    print(f"{Fore.CYAN}🔐 MD5 HASH")
+    text = input(f"{Fore.WHITE}Teks: ")
+    print(f"{Fore.WHITE}MD5: {hashlib.md5(text.encode()).hexdigest()}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def sha1_hash():
+    show_banner()
+    print(f"{Fore.CYAN}🔐 SHA1 HASH")
+    text = input(f"{Fore.WHITE}Teks: ")
+    print(f"{Fore.WHITE}SHA1: {hashlib.sha1(text.encode()).hexdigest()}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def sha256_hash():
+    show_banner()
+    print(f"{Fore.CYAN}🔐 SHA256 HASH")
+    text = input(f"{Fore.WHITE}Teks: ")
+    print(f"{Fore.WHITE}SHA256: {hashlib.sha256(text.encode()).hexdigest()}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def json_validator():
+    show_banner()
+    print(f"{Fore.CYAN}📝 JSON VALIDATOR")
+    text = input(f"{Fore.WHITE}JSON: ")
+    try:
+        json.loads(text)
+        print(f"{Fore.GREEN}✅ Valid JSON")
+    except:
+        print(f"{Fore.RED}❌ Invalid JSON")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
 USER_AGENTS = [

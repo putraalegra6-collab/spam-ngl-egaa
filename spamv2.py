@@ -15,6 +15,7 @@ import subprocess
 import platform
 import base64
 import socket
+import threading
 from datetime import datetime, timedelta
 from colorama import init, Fore, Style, Back
 
@@ -25,16 +26,16 @@ os.system("clear" if os.name == "posix" else "cls")
 # 🔥 KONFIGURASI 🔥
 # ============================================
 
-VERSION = "FINAL CLEAN 7.0"
+VERSION = "FINAL FIX 8.0"
 AUTHOR = "Alegra Ega"
 TELEGRAM = "@egaa_1"
 MASTER_PASSWORD = "9999"
 OWNER_PASSWORD = "alegra ega"
-DATA_FILE = os.path.expanduser("~/.alegra_clean_data.json")
-LOG_FILE = os.path.expanduser("~/.alegra_clean_log.txt")
+DATA_FILE = os.path.expanduser("~/.alegra_fix_data.json")
+LOG_FILE = os.path.expanduser("~/.alegra_fix_log.txt")
 
 # ============================================
-# 🔥 FUNGSI WAKTU 🔥
+# 🔥 FUNGSI WAKTU REAL-TIME 🔥
 # ============================================
 
 def get_datetime():
@@ -45,7 +46,7 @@ def get_datetime():
     return hari, tanggal, jam
 
 # ============================================
-# 🔥 BANNER KECIL RAPIH 🔥
+# 🔥 BANNER RAPIH KECIL 🔥
 # ============================================
 
 def show_banner():
@@ -54,36 +55,45 @@ def show_banner():
     hari, tanggal, jam = get_datetime()
     
     print(f"""{Fore.CYAN}
-╔══════════════════════════════════════════════════════════════════╗
-║                                                                  ║
-║  {Fore.YELLOW}█████╗ ██╗     ███████╗ ██████╗ ██████╗  █████╗     {Fore.CYAN}║
-║  {Fore.YELLOW}██╔══██╗██║     ██╔════╝██╔════╝ ██╔══██╗██╔══██╗    {Fore.CYAN}║
-║  {Fore.YELLOW}███████║██║     █████╗  ██║  ███╗██████╔╝███████║    {Fore.CYAN}║
-║  {Fore.YELLOW}██╔══██║██║     ██╔══╝  ██║   ██║██╔══██╗██╔══██║    {Fore.CYAN}║
-║  {Fore.YELLOW}██║  ██║███████╗███████╗╚██████╔╝██║  ██║██║  ██║    {Fore.CYAN}║
-║  {Fore.YELLOW}╚═╝  ╚═╝╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝    {Fore.CYAN}║
-║                                                                  ║
-║  {Fore.GREEN}███████╗██████╗  █████╗ ███╗   ███╗                 {Fore.CYAN}║
-║  {Fore.GREEN}██╔════╝██╔══██╗██╔══██╗████╗ ████║                 {Fore.CYAN}║
-║  {Fore.GREEN}███████╗██████╔╝███████║██╔████╔██║                 {Fore.CYAN}║
-║  {Fore.GREEN}╚════██║██╔═══╝ ██╔══██║██║╚██╔╝██║                 {Fore.CYAN}║
-║  {Fore.GREEN}███████║██║     ██║  ██║██║ ╚═╝ ██║                 {Fore.CYAN}║
-║  {Fore.GREEN}╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝                 {Fore.CYAN}║
-║                                                                  ║
-║  ╔══════════════════════════════════════════════════════════════╗ ║
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║  {Fore.YELLOW}█████╗ ██╗     ███████╗ ██████╗ ██████╗  █████╗ {Fore.CYAN} ║
+║  {Fore.YELLOW}██╔══██╗██║     ██╔════╝██╔════╝ ██╔══██╗██╔══██╗{Fore.CYAN} ║
+║  {Fore.YELLOW}███████║██║     █████╗  ██║  ███╗██████╔╝███████║{Fore.CYAN} ║
+║  {Fore.YELLOW}██╔══██║██║     ██╔══╝  ██║   ██║██╔══██╗██╔══██║{Fore.CYAN} ║
+║  {Fore.YELLOW}██║  ██║███████╗███████╗╚██████╔╝██║  ██║██║  ██║{Fore.CYAN} ║
+║  {Fore.YELLOW}╚═╝  ╚═╝╚══════╝╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝{Fore.CYAN} ║
+║                                                              ║
+║  {Fore.GREEN}███████╗██████╗  █████╗ ███╗   ███╗             {Fore.CYAN} ║
+║  {Fore.GREEN}██╔════╝██╔══██╗██╔══██╗████╗ ████║             {Fore.CYAN} ║
+║  {Fore.GREEN}███████╗██████╔╝███████║██╔████╔██║             {Fore.CYAN} ║
+║  {Fore.GREEN}╚════██║██╔═══╝ ██╔══██║██║╚██╔╝██║             {Fore.CYAN} ║
+║  {Fore.GREEN}███████║██║     ██║  ██║██║ ╚═╝ ██║             {Fore.CYAN} ║
+║  {Fore.GREEN}╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝     ╚═╝             {Fore.CYAN} ║
+║                                                              ║
+║  ╔══════════════════════════════════════════════════════════╗ ║
 ║  ║  {Fore.WHITE}📨 ALEGRA SPAM - {Fore.WHITE}{VERSION}{Fore.WHITE}         {Fore.CYAN}║ ║
-║  ║  {Fore.WHITE}Script By : {AUTHOR}                            {Fore.CYAN}║ ║
-║  ║  {Fore.WHITE}Telegram : {TELEGRAM}                              {Fore.CYAN}║ ║
-║  ╚══════════════════════════════════════════════════════════════╝ ║
-║                                                                  ║
-║  ┌────────────────────────┐    ┌────────────────────────┐       ║
-║  │  {Fore.WHITE}⏰ {hari:<16} {Fore.CYAN}│    │  {Fore.WHITE}📅 {tanggal:<16} {Fore.CYAN}│       ║
-║  │  {Fore.WHITE}🕐 {jam:<16} {Fore.CYAN}│    │  {Fore.WHITE}📍 Indonesia{Fore.CYAN}        │       ║
-║  └────────────────────────┘    └────────────────────────┘       ║
-║                                                                  ║
-╚══════════════════════════════════════════════════════════════════╝
+║  ║  {Fore.WHITE}Script By : {AUTHOR}                         {Fore.CYAN}║ ║
+║  ║  {Fore.WHITE}Telegram : {TELEGRAM}                           {Fore.CYAN}║ ║
+║  ╚══════════════════════════════════════════════════════════╝ ║
+║                                                              ║
+║  ┌────────────────────┐    ┌────────────────────┐           ║
+║  │ {Fore.WHITE}⏰ {hari:<14}  {Fore.CYAN}│    │ {Fore.WHITE}📅 {tanggal:<14} {Fore.CYAN}│           ║
+║  │ {Fore.WHITE}🕐 {jam:<14}  {Fore.CYAN}│    │ {Fore.WHITE}📍 Indonesia {Fore.CYAN} │           ║
+║  └────────────────────┘    └────────────────────┘           ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
 {Fore.RESET}
 """)
+
+# ── THREAD BUAT UPDATE JAM ──
+def update_clock():
+    while True:
+        # Cek apakah ada input user (biar gak ganggu)
+        time.sleep(1)
+
+clock_thread = threading.Thread(target=update_clock, daemon=True)
+clock_thread.start()
 
 # ============================================
 # 🔥 DATA MANAGEMENT 🔥
@@ -1078,7 +1088,7 @@ def spam_ngl():
     show_banner()
     print(f"""
 {Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}📨 SPAM NGL - FINAL CLEAN  {Fore.CYAN}║
+{Fore.CYAN}║     {Fore.YELLOW}📨 SPAM NGL - FINAL FIX  {Fore.CYAN}║
 {Fore.CYAN}╚════════════════════════════════════════════╝
 {Fore.WHITE}
 {Fore.WHITE}Support 2 tipe input:
@@ -1147,7 +1157,6 @@ def spam_ngl():
             msg_to_send = message
             status, result = send_ngl_message(username, msg_to_send)
             
-            # ── ANIMASI RAPIH ──
             progress = (i / count) * 100
             bar_length = 30
             filled = int(bar_length * progress / 100)
@@ -1193,7 +1202,7 @@ def login():
     show_banner()
     print(f"""
 {Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}🔐 LOGIN - FINAL CLEAN  {Fore.CYAN}║
+{Fore.CYAN}║     {Fore.YELLOW}🔐 LOGIN - FINAL FIX  {Fore.CYAN}║
 {Fore.CYAN}╚════════════════════════════════════════════╝
 {Fore.WHITE}
 {Fore.WHITE}Masukkan Username & Password untuk melanjutkan.
@@ -1230,7 +1239,7 @@ def main_menu():
         show_banner()
         print(f"""
 {Fore.CYAN}╔════════════════════════════════════════════╗
-{Fore.CYAN}║     {Fore.YELLOW}📌 MAIN MENU - FINAL CLEAN  {Fore.CYAN}║
+{Fore.CYAN}║     {Fore.YELLOW}📌 MAIN MENU - FINAL FIX  {Fore.CYAN}║
 {Fore.CYAN}╚════════════════════════════════════════════╝
 {Fore.WHITE}
 {Fore.GREEN}[1] {Fore.WHITE}📨 SPAM NGL
@@ -1282,6 +1291,6 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print(f"{Fore.YELLOW}\n[!] Keluar...")
     finally:
-        print(f"{Fore.CYAN}\n📨 ALEGRA SPAM - FINAL CLEAN EDITION")
+        print(f"{Fore.CYAN}\n📨 ALEGRA SPAM - FINAL FIX EDITION")
         print(f"{Fore.MAGENTA}Script By : Alegra Ega")
         print(f"{Fore.WHITE}Telegram : @egaa_1")

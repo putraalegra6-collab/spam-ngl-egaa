@@ -1,2 +1,2 @@
-# spam-ngl-egaa
+# spamv2.py
 spammer

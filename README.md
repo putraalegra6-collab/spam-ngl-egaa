@@ -19,7 +19,8 @@ python spamv2.py
 
 [ jika sudah menginstall semua nya dan kalian keluar dari apk terus tampilan hilang tinggal pake command ini]
 
-
 cd spam-ngl-egaa
+
 git pull
+
 python spamv2.py

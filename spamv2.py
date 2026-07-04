@@ -22,7 +22,7 @@ from colorama import init, Fore, Style, Back
 init(autoreset=True)
 os.system("clear" if os.name == "posix" else "cls")
 
-VERSION = "FINAL ULTIMATE 11.0"
+VERSION = "FINAL ULTIMATE 12.0"
 AUTHOR = "Alegra Ega"
 TELEGRAM = "@egaa_1"
 MASTER_PASSWORD = "9999"
@@ -30,6 +30,7 @@ OWNER_PASSWORD = "alegra ega"
 DATA_FILE = os.path.expanduser("~/.alegra_final_data.json")
 LOG_FILE = os.path.expanduser("~/.alegra_final_log.txt")
 OWNER_FILE = os.path.expanduser("~/.alegra_owners.json")
+HEAD_OWNER = "egaa"  # Username head owner
 
 def get_datetime():
     now = datetime.now()
@@ -38,27 +39,28 @@ def get_datetime():
     jam = now.strftime('%H:%M:%S')
     return hari, tanggal, jam
 
-def show_banner():
+def show_banner(current_user=None):
     os.system("clear" if os.name == "posix" else "cls")
     hari, tanggal, jam = get_datetime()
+    role = get_user_role(current_user) if current_user else "GUEST"
     print(f"""{Fore.CYAN}
-┌──────────────────────────────────────┐
-│ {Fore.YELLOW}██╗  ██╗██╗██████╗  ██████╗ █████╗{Fore.CYAN} │
-│ {Fore.YELLOW}██║  ██║██║██╔══██╗██╔═══██╗██╔══██╗{Fore.CYAN}│
-│ {Fore.YELLOW}███████║██║██████╔╝██║   ██║███████║{Fore.CYAN}│
-│ {Fore.YELLOW}██╔══██║██║██╔═══╝ ██║   ██║██╔══██║{Fore.CYAN}│
-│ {Fore.YELLOW}██║  ██║██║██║     ╚██████╔╝██║  ██║{Fore.CYAN}│
-│ {Fore.YELLOW}╚═╝  ╚═╝╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝{Fore.CYAN}│
-│ ╔══════════════════════════════════╗ │
-│ ║ {Fore.WHITE}📨 ALEGRA SPAM {Fore.WHITE}{VERSION}{Fore.CYAN} ║ │
-│ ║ {Fore.WHITE}By {AUTHOR}              {Fore.CYAN}║ │
-│ ║ {Fore.WHITE}Telegram {TELEGRAM}        {Fore.CYAN}║ │
-│ ╚══════════════════════════════════╝ │
-│ ┌────────────┐  ┌────────────┐      │
-│ │ {Fore.WHITE}⏰ {hari[:8]:<6} {Fore.CYAN}│  │ {Fore.WHITE}📅 {tanggal[:8]:<6} {Fore.CYAN}│      │
-│ │ {Fore.WHITE}🕐 {jam:<6} {Fore.CYAN}│  │ {Fore.WHITE}📍 ID{Fore.CYAN} │      │
-│ └────────────┘  └────────────┘      │
-└──────────────────────────────────────┘
+┌──────────────────────────────────────────────────┐
+│ {Fore.YELLOW}██╗  ██╗██╗██████╗  ██████╗ █████╗        {Fore.CYAN}│
+│ {Fore.YELLOW}██║  ██║██║██╔══██╗██╔═══██╗██╔══██╗      {Fore.CYAN}│
+│ {Fore.YELLOW}███████║██║██████╔╝██║   ██║███████║      {Fore.CYAN}│
+│ {Fore.YELLOW}██╔══██║██║██╔═══╝ ██║   ██║██╔══██║      {Fore.CYAN}│
+│ {Fore.YELLOW}██║  ██║██║██║     ╚██████╔╝██║  ██║      {Fore.CYAN}│
+│ {Fore.YELLOW}╚═╝  ╚═╝╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝      {Fore.CYAN}│
+│ ╔══════════════════════════════════════════════╗ │
+│ ║ {Fore.WHITE}📨 ALEGRA SPAM {Fore.WHITE}{VERSION}{Fore.CYAN}  {Fore.WHITE}Role: {Fore.CYAN}{role}{Fore.WHITE}           ║ │
+│ ║ {Fore.WHITE}By {AUTHOR}                                {Fore.CYAN}║ │
+│ ║ {Fore.WHITE}Telegram {TELEGRAM}                          {Fore.CYAN}║ │
+│ ╚══════════════════════════════════════════════╝ │
+│ ┌────────────┐  ┌────────────┐                  │
+│ │ {Fore.WHITE}⏰ {hari[:8]:<6} {Fore.CYAN}│  │ {Fore.WHITE}📅 {tanggal[:8]:<6} {Fore.CYAN}│                  │
+│ │ {Fore.WHITE}🕐 {jam:<6} {Fore.CYAN}│  │ {Fore.WHITE}📍 ID{Fore.CYAN} │                  │
+│ └────────────┘  └────────────┘                  │
+└──────────────────────────────────────────────────┘
 {Fore.RESET}
 """)
 
@@ -103,13 +105,18 @@ def save_owners(data):
         json.dump(data, f, indent=2)
 
 def get_user_role(username):
+    if username == HEAD_OWNER:
+        return "HEAD OWNER"
     owners = load_owners()
     if username in owners:
         return owners[username].get('role', 'ADMIN')
-    return 'MEMBER'
+    data = load_data()
+    if username in data:
+        return data[username].get('role', 'MEMBER')
+    return "GUEST"
 
 def is_owner_or_admin(username):
-    if username == "MASTER":
+    if username == HEAD_OWNER:
         return True
     owners = load_owners()
     if username in owners:
@@ -144,6 +151,9 @@ def create_password(username, duration_hours, role='MEMBER'):
     return password, f"✅ Username: {username}\n   Password: {password}\n   Role: {role}\n   Expired: {durasi_text}"
 
 def verify_password(username, password):
+    if username == HEAD_OWNER and password == MASTER_PASSWORD:
+        log_activity(f"Head Owner login: {username}")
+        return True, f"✅ Login berhasil! Role: HEAD OWNER"
     data = load_data()
     if username not in data:
         return False, "❌ Username tidak terdaftar!"
@@ -200,6 +210,7 @@ def list_owners():
     if not owners:
         print(f"{Fore.YELLOW}⚠️ Belum ada owner/admin terdaftar.")
     else:
+        print(f"{Fore.CYAN}📋 DAFTAR OWNER/ADMIN:")
         for username, info in owners.items():
             created = datetime.fromisoformat(info['created']).strftime('%d-%m-%Y %H:%M')
             role = info.get('role', 'ADMIN')
@@ -814,7 +825,7 @@ def check_http_headers():
         for key, value in response.headers.items():
             print(f"{Fore.WHITE}{key}: {value}")
     except:
-        print(f"{Fore.RED}❌ GagAL!")
+        print(f"{Fore.RED}❌ Gagal!")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
 def check_dns_records():
@@ -1458,11 +1469,6 @@ Masukkan Username & Password untuk melanjutkan.
         print(f"{Fore.RED}❌ Username dan password tidak boleh kosong!")
         time.sleep(1)
         return False
-    if password == MASTER_PASSWORD:
-        print(f"{Fore.GREEN}✅ Login berhasil (MASTER)!")
-        log_activity(f"Login master: {username}")
-        time.sleep(1)
-        return True
     status, msg = verify_password(username, password)
     print(f"{Fore.GREEN if '✅' in msg else Fore.RED}{msg}")
     time.sleep(1)
@@ -1471,10 +1477,9 @@ Masukkan Username & Password untuk melanjutkan.
 def main_menu():
     username = "USER"
     while True:
-        show_banner()
-        # Cek role user
-        is_owner = is_owner_or_admin(username)
-        if is_owner:
+        show_banner(current_user="USER")
+        role = get_user_role("USER")
+        if role in ["HEAD OWNER", "OWNER", "ADMIN"]:
             print(f"""
 {Fore.CYAN}┌──────────────────────────────────────────────┐
 │     {Fore.YELLOW}📌 MAIN MENU - FINAL ULTIMATE  {Fore.CYAN}│
@@ -1489,13 +1494,7 @@ def main_menu():
             if choice == '1':
                 spam_ngl()
             elif choice == '2':
-                print(f"{Fore.YELLOW}🔑 Masukkan Password Owner/Admin:")
-                pw = input(f"{Fore.WHITE}Password: ").strip()
-                if pw == OWNER_PASSWORD:
-                    tools_owner_admin()
-                else:
-                    print(f"{Fore.RED}❌ Password salah!")
-                    time.sleep(1)
+                tools_owner_admin()
             elif choice == '3':
                 public_tools()
             elif choice == '4':

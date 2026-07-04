@@ -22,7 +22,7 @@ from colorama import init, Fore, Style, Back
 init(autoreset=True)
 os.system("clear" if os.name == "posix" else "cls")
 
-VERSION = "FINAL ULTIMATE 10.0"
+VERSION = "FINAL ULTIMATE 11.0"
 AUTHOR = "Alegra Ega"
 TELEGRAM = "@egaa_1"
 MASTER_PASSWORD = "9999"
@@ -102,11 +102,22 @@ def save_owners(data):
     with open(OWNER_FILE, 'w') as f:
         json.dump(data, f, indent=2)
 
-def is_owner(username):
+def get_user_role(username):
     owners = load_owners()
-    return username in owners
+    if username in owners:
+        return owners[username].get('role', 'ADMIN')
+    return 'MEMBER'
 
-def create_password(username, duration_hours):
+def is_owner_or_admin(username):
+    if username == "MASTER":
+        return True
+    owners = load_owners()
+    if username in owners:
+        role = owners[username].get('role', 'ADMIN')
+        return role in ['OWNER', 'ADMIN']
+    return False
+
+def create_password(username, duration_hours, role='MEMBER'):
     data = load_data()
     if username in data:
         expired = datetime.fromisoformat(data[username]['expired'])
@@ -125,11 +136,12 @@ def create_password(username, duration_hours):
         'password': hashed,
         'expired': expired_time.isoformat(),
         'created': datetime.now().isoformat(),
-        'duration': durasi_text
+        'duration': durasi_text,
+        'role': role
     }
     save_data(data)
-    log_activity(f"Create password untuk {username} ({durasi_text})")
-    return password, f"✅ Password dibuat: {password}  Expired: {durasi_text}"
+    log_activity(f"Create password untuk {username} ({durasi_text}) role: {role}")
+    return password, f"✅ Username: {username}\n   Password: {password}\n   Role: {role}\n   Expired: {durasi_text}"
 
 def verify_password(username, password):
     data = load_data()
@@ -142,7 +154,8 @@ def verify_password(username, password):
     hashed = hashlib.sha256(password.encode()).hexdigest()
     if hashed == user_data['password']:
         log_activity(f"Login berhasil: {username}")
-        return True, "✅ Login berhasil!"
+        role = user_data.get('role', 'MEMBER')
+        return True, f"✅ Login berhasil! Role: {role}"
     else:
         return False, "❌ Password salah!"
 
@@ -157,19 +170,21 @@ def list_users():
         expired = datetime.fromisoformat(info['expired'])
         status = f"{Fore.GREEN}AKTIF" if expired > datetime.now() else f"{Fore.RED}EXPIRED"
         durasi = info.get('duration', 'Unknown')
-        print(f"{Fore.YELLOW}• {username} {status} {Fore.WHITE}({durasi})")
+        role = info.get('role', 'MEMBER')
+        print(f"{Fore.YELLOW}• {username} {status} {Fore.WHITE}({durasi}) {Fore.CYAN}[{role}]")
 
-def add_owner(username, password):
+def add_owner(username, password, role='ADMIN'):
     owners = load_owners()
     if username in owners:
-        return False, "❌ Username sudah menjadi owner!"
+        return False, "❌ Username sudah menjadi owner/admin!"
     owners[username] = {
         'password': hashlib.sha256(password.encode()).hexdigest(),
-        'created': datetime.now().isoformat()
+        'created': datetime.now().isoformat(),
+        'role': role
     }
     save_owners(owners)
-    log_activity(f"Owner baru: {username}")
-    return True, f"✅ Owner {username} berhasil ditambahkan!"
+    log_activity(f"Owner/Admin baru: {username} role: {role}")
+    return True, f"✅ {username} berhasil ditambahkan sebagai {role}!"
 
 def remove_owner(username):
     owners = load_owners()
@@ -177,17 +192,18 @@ def remove_owner(username):
         return False, "❌ Username tidak ditemukan!"
     del owners[username]
     save_owners(owners)
-    log_activity(f"Owner dihapus: {username}")
-    return True, f"✅ Owner {username} berhasil dihapus!"
+    log_activity(f"Owner/Admin dihapus: {username}")
+    return True, f"✅ {username} berhasil dihapus!"
 
 def list_owners():
     owners = load_owners()
     if not owners:
-        print(f"{Fore.YELLOW}⚠️ Belum ada owner terdaftar.")
+        print(f"{Fore.YELLOW}⚠️ Belum ada owner/admin terdaftar.")
     else:
         for username, info in owners.items():
             created = datetime.fromisoformat(info['created']).strftime('%d-%m-%Y %H:%M')
-            print(f"{Fore.WHITE}• {username} (created: {created})")
+            role = info.get('role', 'ADMIN')
+            print(f"{Fore.WHITE}• {username} {Fore.CYAN}[{role}] {Fore.WHITE}(created: {created})")
 
 def public_tools():
     while True:
@@ -798,7 +814,7 @@ def check_http_headers():
         for key, value in response.headers.items():
             print(f"{Fore.WHITE}{key}: {value}")
     except:
-        print(f"{Fore.RED}❌ Gagal!")
+        print(f"{Fore.RED}❌ GagAL!")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
 def check_dns_records():
@@ -1038,48 +1054,50 @@ Support 2 tipe input:
         print(f"{Fore.RED}💀 GAGAL SEMUA! CEK USERNAME ATAU COBA LAGI!")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
-def tools_owner():
+def tools_owner_admin():
     while True:
         show_banner()
         print(f"""
 {Fore.CYAN}┌──────────────────────────────────────────────┐
-│     {Fore.YELLOW}👑 TOOLS OWNER - 15 TOOLS  {Fore.CYAN}│
+│     {Fore.YELLOW}👑 TOOLS OWNER/ADMIN - 20 TOOLS  {Fore.CYAN}│
 ├──────────────────────────────────────────────┤
-│ {Fore.GREEN}[1] {Fore.WHITE}👥 Manage User      {Fore.GREEN}[9]  {Fore.WHITE}🗑️  Hapus Owner        {Fore.CYAN}│
-│ {Fore.GREEN}[2] {Fore.WHITE}📊 Log Aktivitas    {Fore.GREEN}[10] {Fore.WHITE}🔄 Ganti Pass Owner   {Fore.CYAN}│
-│ {Fore.GREEN}[3] {Fore.WHITE}🔑 Ganti Pass User  {Fore.GREEN}[11] {Fore.WHITE}📊 Log Owner          {Fore.CYAN}│
-│ {Fore.GREEN}[4] {Fore.WHITE}📋 Backup Data      {Fore.GREEN}[12] {Fore.WHITE}🔒 Lock Tools         {Fore.CYAN}│
-│ {Fore.GREEN}[5] {Fore.WHITE}🗑️  Reset Data      {Fore.GREEN}[13] {Fore.WHITE}🔓 Unlock Tools       {Fore.CYAN}│
-│ {Fore.GREEN}[6] {Fore.WHITE}📈 Statistik User   {Fore.GREEN}[14] {Fore.WHITE}📋 Cek Status Tools   {Fore.CYAN}│
-│ {Fore.GREEN}[7] {Fore.WHITE}👑 Tambah Owner     {Fore.GREEN}[15] {Fore.WHITE}🔙 Back              {Fore.CYAN}│
-│ {Fore.GREEN}[8] {Fore.WHITE}📋 Daftar Owner     {Fore.CYAN}│
+│ {Fore.GREEN}[1] {Fore.WHITE}👥 Manage User      {Fore.GREEN}[11] {Fore.WHITE}📊 Log Aktivitas     {Fore.CYAN}│
+│ {Fore.GREEN}[2] {Fore.WHITE}🔑 Create Password   {Fore.GREEN}[12] {Fore.WHITE}🔒 Lock Tools         {Fore.CYAN}│
+│ {Fore.GREEN}[3] {Fore.WHITE}📋 List User        {Fore.GREEN}[13] {Fore.WHITE}🔓 Unlock Tools       {Fore.CYAN}│
+│ {Fore.GREEN}[4] {Fore.WHITE}🗑️  Delete User      {Fore.GREEN}[14] {Fore.WHITE}📋 Cek Status Tools   {Fore.CYAN}│
+│ {Fore.GREEN}[5] {Fore.WHITE}🔑 Ganti Pass User  {Fore.GREEN}[15] {Fore.WHITE}👑 Tambah Owner/Admin{Fore.CYAN}│
+│ {Fore.GREEN}[6] {Fore.WHITE}📋 Backup Data      {Fore.GREEN}[16] {Fore.WHITE}📋 Daftar Owner/Admin{Fore.CYAN}│
+│ {Fore.GREEN}[7] {Fore.WHITE}🗑️  Reset Data      {Fore.GREEN}[17] {Fore.WHITE}🗑️  Hapus Owner/Admin {Fore.CYAN}│
+│ {Fore.GREEN}[8] {Fore.WHITE}📈 Statistik User   {Fore.GREEN}[18] {Fore.WHITE}🔄 Ganti Pass Owner   {Fore.CYAN}│
+│ {Fore.GREEN}[9] {Fore.WHITE}📋 Cek Role User    {Fore.GREEN}[19] {Fore.WHITE}📊 Log Owner/Admin    {Fore.CYAN}│
+│ {Fore.GREEN}[10]{Fore.WHITE}🔍 Cek Status User  {Fore.GREEN}[20] {Fore.WHITE}🔙 Back              {Fore.CYAN}│
 └──────────────────────────────────────────────┘
 {Fore.WHITE}
 """)
-        choice = input(f"{Fore.CYAN}Pilih [1-15]: {Fore.WHITE}").strip()
+        choice = input(f"{Fore.CYAN}Pilih [1-20]: {Fore.WHITE}").strip()
         if choice == '1':
             owner_manage_user()
         elif choice == '2':
-            view_logs()
+            create_user_password()
         elif choice == '3':
-            change_user_password()
-        elif choice == '4':
-            backup_data()
-        elif choice == '5':
-            reset_all_data()
-        elif choice == '6':
-            user_stats()
-        elif choice == '7':
-            add_owner_menu()
-        elif choice == '8':
-            list_owners()
+            list_users()
             input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+        elif choice == '4':
+            delete_user()
+        elif choice == '5':
+            change_user_password()
+        elif choice == '6':
+            backup_data()
+        elif choice == '7':
+            reset_all_data()
+        elif choice == '8':
+            user_stats()
         elif choice == '9':
-            remove_owner_menu()
+            check_user_role()
         elif choice == '10':
-            change_owner_password()
+            check_user_status()
         elif choice == '11':
-            owner_logs()
+            view_logs()
         elif choice == '12':
             lock_tools()
         elif choice == '13':
@@ -1087,6 +1105,17 @@ def tools_owner():
         elif choice == '14':
             check_tools_status()
         elif choice == '15':
+            add_owner_admin()
+        elif choice == '16':
+            list_owners()
+            input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+        elif choice == '17':
+            remove_owner_admin()
+        elif choice == '18':
+            change_owner_password()
+        elif choice == '19':
+            owner_logs()
+        elif choice == '20':
             break
         else:
             print(f"{Fore.RED}❌ Pilihan tidak valid!")
@@ -1106,51 +1135,73 @@ def owner_manage_user():
 """)
         choice = input(f"{Fore.CYAN}Pilih: {Fore.WHITE}").strip()
         if choice == '1':
-            username = input(f"{Fore.WHITE}Username: ").strip()
-            if not username:
-                print(f"{Fore.RED}❌ Username tidak boleh kosong!")
-                time.sleep(1)
-                continue
-            print(f"{Fore.YELLOW}Durasi:")
-            print(f"  {Fore.WHITE}[1] 24 Jam")
-            print(f"  {Fore.WHITE}[2] 2 Hari")
-            print(f"  {Fore.WHITE}[3] 7 Hari")
-            print(f"  {Fore.WHITE}[4] PERMANEN")
-            durasi_choice = input(f"{Fore.CYAN}Pilih durasi [1-4]: ").strip()
-            if durasi_choice == '1':
-                hours = 24
-            elif durasi_choice == '2':
-                hours = 48
-            elif durasi_choice == '3':
-                hours = 168
-            elif durasi_choice == '4':
-                hours = 0
-            else:
-                print(f"{Fore.RED}❌ Pilihan tidak valid! Menggunakan default: 24 jam")
-                hours = 24
-            result, msg = create_password(username, hours)
-            print(f"{Fore.GREEN if '✅' in msg else Fore.RED}{msg}")
-            time.sleep(2)
+            create_user_password()
         elif choice == '2':
             list_users()
             input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
         elif choice == '3':
-            username = input(f"{Fore.WHITE}Username yang akan dihapus: ").strip()
-            if username:
-                data = load_data()
-                if username in data:
-                    del data[username]
-                    save_data(data)
-                    log_activity(f"User dihapus: {username}")
-                    print(f"{Fore.GREEN}✅ User {username} berhasil dihapus!")
-                else:
-                    print(f"{Fore.RED}❌ User tidak ditemukan!")
-                time.sleep(1)
+            delete_user()
         elif choice == '4':
             break
         else:
             print(f"{Fore.RED}❌ Pilihan tidak valid!")
             time.sleep(1)
+
+def create_user_password():
+    show_banner()
+    print(f"{Fore.CYAN}🔑 CREATE PASSWORD")
+    username = input(f"{Fore.WHITE}Username: ").strip()
+    if not username:
+        print(f"{Fore.RED}❌ Username tidak boleh kosong!")
+        time.sleep(1)
+        return
+    print(f"{Fore.YELLOW}Durasi:")
+    print(f"  {Fore.WHITE}[1] 24 Jam")
+    print(f"  {Fore.WHITE}[2] 2 Hari")
+    print(f"  {Fore.WHITE}[3] 7 Hari")
+    print(f"  {Fore.WHITE}[4] PERMANEN")
+    durasi_choice = input(f"{Fore.CYAN}Pilih durasi [1-4]: ").strip()
+    if durasi_choice == '1':
+        hours = 24
+    elif durasi_choice == '2':
+        hours = 48
+    elif durasi_choice == '3':
+        hours = 168
+    elif durasi_choice == '4':
+        hours = 0
+    else:
+        print(f"{Fore.RED}❌ Pilihan tidak valid! Menggunakan default: 24 jam")
+        hours = 24
+    print(f"{Fore.YELLOW}Pilih Role:")
+    print(f"  {Fore.WHITE}[1] MEMBER")
+    print(f"  {Fore.WHITE}[2] ADMIN")
+    role_choice = input(f"{Fore.CYAN}Pilih role [1-2]: ").strip()
+    if role_choice == '1':
+        role = 'MEMBER'
+    elif role_choice == '2':
+        role = 'ADMIN'
+    else:
+        print(f"{Fore.RED}❌ Pilihan tidak valid! Menggunakan default: MEMBER")
+        role = 'MEMBER'
+    result, msg = create_password(username, hours, role)
+    print(f"{Fore.GREEN if '✅' in msg else Fore.RED}{msg}")
+    print(f"{Fore.YELLOW}\n📌 SIMPAN PASSWORD INI!")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def delete_user():
+    show_banner()
+    print(f"{Fore.CYAN}🗑️  DELETE USER")
+    username = input(f"{Fore.WHITE}Username yang akan dihapus: ").strip()
+    if username:
+        data = load_data()
+        if username in data:
+            del data[username]
+            save_data(data)
+            log_activity(f"User dihapus: {username}")
+            print(f"{Fore.GREEN}✅ User {username} berhasil dihapus!")
+        else:
+            print(f"{Fore.RED}❌ User tidak ditemukan!")
+        time.sleep(1)
 
 def view_logs():
     show_banner()
@@ -1221,20 +1272,65 @@ def user_stats():
     total = len(data)
     aktif = 0
     expired = 0
+    member = 0
+    admin = 0
     for info in data.values():
         if datetime.fromisoformat(info['expired']) > datetime.now():
             aktif += 1
         else:
             expired += 1
+        role = info.get('role', 'MEMBER')
+        if role == 'MEMBER':
+            member += 1
+        else:
+            admin += 1
     print(f"{Fore.GREEN}📌 Statistik:")
     print(f"{Fore.WHITE}  • Total User : {total}")
     print(f"{Fore.WHITE}  • User Aktif : {Fore.GREEN}{aktif}")
     print(f"{Fore.WHITE}  • User Expired: {Fore.RED}{expired}")
+    print(f"{Fore.WHITE}  • MEMBER     : {Fore.CYAN}{member}")
+    print(f"{Fore.WHITE}  • ADMIN      : {Fore.MAGENTA}{admin}")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
-def add_owner_menu():
+def check_user_role():
     show_banner()
-    print(f"{Fore.CYAN}👑 TAMBAH OWNER BARU")
+    print(f"{Fore.CYAN}📋 CEK ROLE USER")
+    username = input(f"{Fore.WHITE}Username: ").strip()
+    if not username:
+        print(f"{Fore.RED}❌ Username tidak boleh kosong!")
+        time.sleep(1)
+        return
+    data = load_data()
+    if username not in data:
+        print(f"{Fore.RED}❌ User tidak ditemukan!")
+        time.sleep(1)
+        return
+    role = data[username].get('role', 'MEMBER')
+    print(f"{Fore.GREEN}✅ {username} → {Fore.CYAN}{role}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def check_user_status():
+    show_banner()
+    print(f"{Fore.CYAN}🔍 CEK STATUS USER")
+    username = input(f"{Fore.WHITE}Username: ").strip()
+    if not username:
+        print(f"{Fore.RED}❌ Username tidak boleh kosong!")
+        time.sleep(1)
+        return
+    data = load_data()
+    if username not in data:
+        print(f"{Fore.RED}❌ User tidak ditemukan!")
+        time.sleep(1)
+        return
+    expired = datetime.fromisoformat(data[username]['expired'])
+    status = f"{Fore.GREEN}AKTIF" if expired > datetime.now() else f"{Fore.RED}EXPIRED"
+    role = data[username].get('role', 'MEMBER')
+    print(f"{Fore.GREEN}✅ {username} → {status} {Fore.CYAN}[{role}]")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def add_owner_admin():
+    show_banner()
+    print(f"{Fore.CYAN}👑 TAMBAH OWNER/ADMIN")
     username = input(f"{Fore.WHITE}Username: ").strip()
     if not username:
         print(f"{Fore.RED}❌ Username tidak boleh kosong!")
@@ -1245,13 +1341,24 @@ def add_owner_menu():
         print(f"{Fore.RED}❌ Password tidak boleh kosong!")
         time.sleep(1)
         return
-    status, msg = add_owner(username, password)
+    print(f"{Fore.YELLOW}Pilih Role:")
+    print(f"  {Fore.WHITE}[1] ADMIN")
+    print(f"  {Fore.WHITE}[2] OWNER")
+    role_choice = input(f"{Fore.CYAN}Pilih role [1-2]: ").strip()
+    if role_choice == '1':
+        role = 'ADMIN'
+    elif role_choice == '2':
+        role = 'OWNER'
+    else:
+        print(f"{Fore.RED}❌ Pilihan tidak valid! Menggunakan default: ADMIN")
+        role = 'ADMIN'
+    status, msg = add_owner(username, password, role)
     print(f"{Fore.GREEN if '✅' in msg else Fore.RED}{msg}")
     time.sleep(1)
 
-def remove_owner_menu():
+def remove_owner_admin():
     show_banner()
-    print(f"{Fore.CYAN}🗑️  HAPUS OWNER")
+    print(f"{Fore.CYAN}🗑️  HAPUS OWNER/ADMIN")
     username = input(f"{Fore.WHITE}Username: ").strip()
     if not username:
         print(f"{Fore.RED}❌ Username tidak boleh kosong!")
@@ -1263,7 +1370,7 @@ def remove_owner_menu():
 
 def change_owner_password():
     show_banner()
-    print(f"{Fore.CYAN}🔄 GANTI PASSWORD OWNER")
+    print(f"{Fore.CYAN}🔄 GANTI PASSWORD OWNER/ADMIN")
     username = input(f"{Fore.WHITE}Username: ").strip()
     if not username:
         print(f"{Fore.RED}❌ Username tidak boleh kosong!")
@@ -1281,13 +1388,13 @@ def change_owner_password():
         return
     owners[username]['password'] = hashlib.sha256(new_pass.encode()).hexdigest()
     save_owners(owners)
-    log_activity(f"Password owner diubah: {username}")
-    print(f"{Fore.GREEN}✅ Password owner {username} berhasil diubah!")
+    log_activity(f"Password owner/admin diubah: {username}")
+    print(f"{Fore.GREEN}✅ Password {username} berhasil diubah!")
     time.sleep(1)
 
 def owner_logs():
     show_banner()
-    print(f"{Fore.CYAN}📊 LOG AKTIVITAS OWNER")
+    print(f"{Fore.CYAN}📊 LOG OWNER/ADMIN")
     if os.path.exists(LOG_FILE):
         with open(LOG_FILE, 'r') as f:
             logs = f.readlines()
@@ -1362,41 +1469,70 @@ Masukkan Username & Password untuk melanjutkan.
     return status
 
 def main_menu():
+    username = "USER"
     while True:
         show_banner()
-        print(f"""
+        # Cek role user
+        is_owner = is_owner_or_admin(username)
+        if is_owner:
+            print(f"""
 {Fore.CYAN}┌──────────────────────────────────────────────┐
 │     {Fore.YELLOW}📌 MAIN MENU - FINAL ULTIMATE  {Fore.CYAN}│
 ├──────────────────────────────────────────────┤
-│ {Fore.GREEN}[1] {Fore.WHITE}📨 SPAM NGL        {Fore.GREEN}[4] {Fore.WHITE}🔓 LOGOUT             {Fore.CYAN}│
-│ {Fore.GREEN}[2] {Fore.WHITE}👑 TOOLS OWNER     {Fore.GREEN}[5] {Fore.WHITE}🚪 EXIT               {Fore.CYAN}│
-│ {Fore.GREEN}[3] {Fore.WHITE}🌍 PUBLIC TOOLS    {Fore.CYAN}│
+│ {Fore.GREEN}[1] {Fore.WHITE}📨 SPAM NGL        {Fore.GREEN}[3] {Fore.WHITE}🌍 PUBLIC TOOLS      {Fore.CYAN}│
+│ {Fore.GREEN}[2] {Fore.WHITE}👑 TOOLS OWNER/ADMIN {Fore.GREEN}[4] {Fore.WHITE}🔓 LOGOUT             {Fore.CYAN}│
+│ {Fore.GREEN}[5] {Fore.WHITE}🚪 EXIT               {Fore.CYAN}│
 └──────────────────────────────────────────────┘
 {Fore.WHITE}
 """)
-        choice = input(f"{Fore.CYAN}Pilih [1-5]: {Fore.WHITE}").strip()
-        if choice == '1':
-            spam_ngl()
-        elif choice == '2':
-            print(f"{Fore.YELLOW}🔑 Masukkan Password Owner:")
-            pw = input(f"{Fore.WHITE}Password: ").strip()
-            if pw == OWNER_PASSWORD:
-                tools_owner()
-            else:
-                print(f"{Fore.RED}❌ Password salah!")
+            choice = input(f"{Fore.CYAN}Pilih [1-5]: {Fore.WHITE}").strip()
+            if choice == '1':
+                spam_ngl()
+            elif choice == '2':
+                print(f"{Fore.YELLOW}🔑 Masukkan Password Owner/Admin:")
+                pw = input(f"{Fore.WHITE}Password: ").strip()
+                if pw == OWNER_PASSWORD:
+                    tools_owner_admin()
+                else:
+                    print(f"{Fore.RED}❌ Password salah!")
+                    time.sleep(1)
+            elif choice == '3':
+                public_tools()
+            elif choice == '4':
+                print(f"{Fore.YELLOW}🔓 Logout...")
                 time.sleep(1)
-        elif choice == '3':
-            public_tools()
-        elif choice == '4':
-            print(f"{Fore.YELLOW}🔓 Logout...")
-            time.sleep(1)
-            return
-        elif choice == '5':
-            print(f"{Fore.GREEN}👋 Keluar dari ALEGRA SPAM...")
-            sys.exit(0)
+                return
+            elif choice == '5':
+                print(f"{Fore.GREEN}👋 Keluar dari ALEGRA SPAM...")
+                sys.exit(0)
+            else:
+                print(f"{Fore.RED}❌ Pilihan tidak valid!")
+                time.sleep(1)
         else:
-            print(f"{Fore.RED}❌ Pilihan tidak valid!")
-            time.sleep(1)
+            print(f"""
+{Fore.CYAN}┌──────────────────────────────────────────────┐
+│     {Fore.YELLOW}📌 MAIN MENU - FINAL ULTIMATE  {Fore.CYAN}│
+├──────────────────────────────────────────────┤
+│ {Fore.GREEN}[1] {Fore.WHITE}📨 SPAM NGL        {Fore.GREEN}[3] {Fore.WHITE}🌍 PUBLIC TOOLS      {Fore.CYAN}│
+│ {Fore.GREEN}[2] {Fore.WHITE}🔓 LOGOUT          {Fore.GREEN}[4] {Fore.WHITE}🚪 EXIT               {Fore.CYAN}│
+└──────────────────────────────────────────────┘
+{Fore.WHITE}
+""")
+            choice = input(f"{Fore.CYAN}Pilih [1-4]: {Fore.WHITE}").strip()
+            if choice == '1':
+                spam_ngl()
+            elif choice == '2':
+                print(f"{Fore.YELLOW}🔓 Logout...")
+                time.sleep(1)
+                return
+            elif choice == '3':
+                public_tools()
+            elif choice == '4':
+                print(f"{Fore.GREEN}👋 Keluar dari ALEGRA SPAM...")
+                sys.exit(0)
+            else:
+                print(f"{Fore.RED}❌ Pilihan tidak valid!")
+                time.sleep(1)
 
 def main():
     if login():

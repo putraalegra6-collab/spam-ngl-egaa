@@ -22,7 +22,7 @@ from colorama import init, Fore, Style, Back
 init(autoreset=True)
 os.system("clear" if os.name == "posix" else "cls")
 
-VERSION = "FINAL ULTIMATE 14.0"
+VERSION = "FINAL ULTIMATE 15.0"
 AUTHOR = "Alegra Ega"
 TELEGRAM = "@egaa_1"
 MASTER_PASSWORD = "9999"
@@ -105,23 +105,30 @@ def save_owners(data):
         json.dump(data, f, indent=2)
 
 def get_user_role(username):
-    if username == HEAD_OWNER:
-        return "DEVELOPER"
-    owners = load_owners()
-    if username in owners:
-        return owners[username].get('role', 'ADMIN')
+    # Cek data user dulu (prioritas utama)
     data = load_data()
     if username in data:
         return data[username].get('role', 'MEMBER')
+    owners = load_owners()
+    if username in owners:
+        return owners[username].get('role', 'ADMIN')
+    if username == HEAD_OWNER:
+        return "DEVELOPER"
     return "GUEST"
 
 def is_owner_or_admin(username):
-    if username == HEAD_OWNER:
-        return True
+    data = load_data()
+    if username in data:
+        role = data[username].get('role', 'MEMBER')
+        if role in ['DEVELOPER', 'OWNER', 'ADMIN']:
+            return True
     owners = load_owners()
     if username in owners:
         role = owners[username].get('role', 'ADMIN')
-        return role in ['OWNER', 'ADMIN', 'DEVELOPER']
+        if role in ['DEVELOPER', 'OWNER', 'ADMIN']:
+            return True
+    if username == HEAD_OWNER:
+        return True
     return False
 
 def can_create_role(username, target_role):
@@ -159,23 +166,21 @@ def create_password(username, duration_hours, role='MEMBER'):
     return password, f"✅ Username: {username}\n   Password: {password}\n   Role: {role}\n   Expired: {durasi_text}"
 
 def verify_password(username, password):
+    data = load_data()
+    if username in data:
+        user_data = data[username]
+        expired = datetime.fromisoformat(user_data['expired'])
+        if expired < datetime.now():
+            return False, "❌ Password sudah expired!"
+        hashed = hashlib.sha256(password.encode()).hexdigest()
+        if hashed == user_data['password']:
+            log_activity(f"Login berhasil: {username}")
+            role = user_data.get('role', 'MEMBER')
+            return True, f"✅ Login berhasil! Role: {role}"
     if username == HEAD_OWNER and password == MASTER_PASSWORD:
         log_activity(f"Developer login: {username}")
-        return True, f"✅ Login berhasil! Role: DEVELOPER"
-    data = load_data()
-    if username not in data:
-        return False, "❌ Username tidak terdaftar!"
-    user_data = data[username]
-    expired = datetime.fromisoformat(user_data['expired'])
-    if expired < datetime.now():
-        return False, "❌ Password sudah expired!"
-    hashed = hashlib.sha256(password.encode()).hexdigest()
-    if hashed == user_data['password']:
-        log_activity(f"Login berhasil: {username}")
-        role = user_data.get('role', 'MEMBER')
-        return True, f"✅ Login berhasil! Role: {role}"
-    else:
-        return False, "❌ Password salah!"
+        return True, "✅ Login berhasil! Role: DEVELOPER"
+    return False, "❌ Username atau password salah!"
 
 def list_users():
     data = load_data()
@@ -1194,24 +1199,7 @@ def create_user_password():
         print(f"{Fore.RED}❌ Pilihan tidak valid! Menggunakan default: 24 jam")
         hours = 24
     print(f"{Fore.YELLOW}Pilih Role:")
-    if user_role == "DEVELOPER":
-        print(f"  {Fore.WHITE}[1] DEVELOPER")
-        print(f"  {Fore.WHITE}[2] OWNER")
-        print(f"  {Fore.WHITE}[3] ADMIN")
-        print(f"  {Fore.WHITE}[4] MEMBER")
-        role_choice = input(f"{Fore.CYAN}Pilih role [1-4]: ").strip()
-        if role_choice == '1':
-            role = 'DEVELOPER'
-        elif role_choice == '2':
-            role = 'OWNER'
-        elif role_choice == '3':
-            role = 'ADMIN'
-        elif role_choice == '4':
-            role = 'MEMBER'
-        else:
-            print(f"{Fore.RED}❌ Pilihan tidak valid! Menggunakan default: MEMBER")
-            role = 'MEMBER'
-    else:
+    if user_role in ["DEVELOPER", "OWNER", "ADMIN"]:
         print(f"  {Fore.WHITE}[1] ADMIN")
         print(f"  {Fore.WHITE}[2] MEMBER")
         role_choice = input(f"{Fore.CYAN}Pilih role [1-2]: ").strip()
@@ -1222,6 +1210,10 @@ def create_user_password():
         else:
             print(f"{Fore.RED}❌ Pilihan tidak valid! Menggunakan default: MEMBER")
             role = 'MEMBER'
+    else:
+        print(f"  {Fore.WHITE}[1] MEMBER")
+        role_choice = input(f"{Fore.CYAN}Pilih role [1]: ").strip()
+        role = 'MEMBER'
     result, msg = create_password(username, hours, role)
     print(f"{Fore.GREEN if '✅' in msg else Fore.RED}{msg}")
     print(f"{Fore.YELLOW}\n📌 SIMPAN PASSWORD INI!")
@@ -1390,33 +1382,26 @@ def add_owner_admin():
         print(f"{Fore.RED}❌ Password tidak boleh kosong!")
         time.sleep(1)
         return
-    if user_role == "DEVELOPER":
+    if user_role in ["DEVELOPER", "OWNER", "ADMIN"]:
         print(f"{Fore.YELLOW}Pilih Role:")
-        print(f"  {Fore.WHITE}[1] DEVELOPER")
+        print(f"  {Fore.WHITE}[1] ADMIN")
         print(f"  {Fore.WHITE}[2] OWNER")
-        print(f"  {Fore.WHITE}[3] ADMIN")
+        print(f"  {Fore.WHITE}[3] DEVELOPER")
         role_choice = input(f"{Fore.CYAN}Pilih role [1-3]: ").strip()
         if role_choice == '1':
-            role = 'DEVELOPER'
+            role = 'ADMIN'
         elif role_choice == '2':
             role = 'OWNER'
         elif role_choice == '3':
-            role = 'ADMIN'
+            role = 'DEVELOPER'
         else:
             print(f"{Fore.RED}❌ Pilihan tidak valid! Menggunakan default: ADMIN")
             role = 'ADMIN'
     else:
         print(f"{Fore.YELLOW}Pilih Role:")
         print(f"  {Fore.WHITE}[1] ADMIN")
-        print(f"  {Fore.WHITE}[2] OWNER")
-        role_choice = input(f"{Fore.CYAN}Pilih role [1-2]: ").strip()
-        if role_choice == '1':
-            role = 'ADMIN'
-        elif role_choice == '2':
-            role = 'OWNER'
-        else:
-            print(f"{Fore.RED}❌ Pilihan tidak valid! Menggunakan default: ADMIN")
-            role = 'ADMIN'
+        role_choice = input(f"{Fore.CYAN}Pilih role [1]: ").strip()
+        role = 'ADMIN'
     status, msg = add_owner(username, password, role)
     print(f"{Fore.GREEN if '✅' in msg else Fore.RED}{msg}")
     time.sleep(1)
@@ -1529,7 +1514,7 @@ Masukkan Username & Password untuk melanjutkan.
     return status
 
 def main_menu():
-    current_user = "egaa"  # ← FIX: role DEVELOPER muncul di banner
+    current_user = "egaa"
     role = get_user_role(current_user)
     while True:
         show_banner(current_user=current_user)

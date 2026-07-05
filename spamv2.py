@@ -16,9 +16,6 @@ import platform
 import base64
 import socket
 import threading
-import smtplib
-import email.utils
-from email.mime.text import MIMEText
 from datetime import datetime, timedelta
 from colorama import init, Fore, Style, Back
 
@@ -29,7 +26,7 @@ os.system("clear" if os.name == "posix" else "cls")
 # 🔥 KONFIGURASI 🔥
 # ============================================
 
-VERSION = "PREMIUM 18.0"
+VERSION = "PREMIUM 19.0"
 AUTHOR = "Alegra Ega"
 TELEGRAM = "@egaa_1"
 MASTER_PASSWORD = "9999"
@@ -39,6 +36,119 @@ LOG_FILE = os.path.expanduser("~/.alegra_premium_log.txt")
 OWNER_FILE = os.path.expanduser("~/.alegra_owners.json")
 HEAD_OWNER = "egaa"
 VERIF_FILE = os.path.expanduser("~/.alegra_verif.json")
+ACTIVITY_FILE = os.path.expanduser("~/.alegra_activity.json")
+
+# ============================================
+# 🔥 KONFIGURASI API SENDGRID 🔥
+# ============================================
+
+# Daftar gratis di sendgrid.com, dapatkan API Key
+SENDGRID_API_KEY = ""  # Ganti dengan API Key SendGrid lo
+SENDGRID_FROM_EMAIL = "alegra@alegra.com"  # Ganti dengan email terverifikasi di SendGrid
+
+# ============================================
+# 🔥 FUNGSI KIRIM OTP VIA API 🔥
+# ============================================
+
+def send_otp_email(to_email, otp):
+    """Kirim OTP via SendGrid API (beneran masuk inbox)"""
+    try:
+        if not SENDGRID_API_KEY:
+            print(f"{Fore.YELLOW}⚠️ SendGrid API Key belum diset! OTP hanya simulasi.")
+            return True
+        
+        url = "https://api.sendgrid.com/v3/mail/send"
+        headers = {
+            "Authorization": f"Bearer {SENDGRID_API_KEY}",
+            "Content-Type": "application/json"
+        }
+        data = {
+            "personalizations": [
+                {
+                    "to": [{"email": to_email}],
+                    "subject": "🔐 Kode Verifikasi ALEGRA SPAM"
+                }
+            ],
+            "from": {"email": SENDGRID_FROM_EMAIL},
+            "content": [
+                {
+                    "type": "text/plain",
+                    "value": f"""
+🔐 KODE VERIFIKASI ALEGRA SPAM
+
+Kode verifikasi Anda: {otp}
+
+Kode ini berlaku selama 5 menit.
+Jangan berikan kode ini kepada siapapun.
+
+- ALEGRA SPAM TEAM
+"""
+                }
+            ]
+        }
+        response = requests.post(url, headers=headers, json=data)
+        if response.status_code == 202:
+            print(f"{Fore.GREEN}✅ OTP berhasil dikirim ke {to_email}")
+            return True
+        else:
+            print(f"{Fore.RED}❌ Gagal kirim OTP: {response.text}")
+            return False
+    except Exception as e:
+        print(f"{Fore.RED}❌ Error kirim OTP: {e}")
+        return False
+
+# ============================================
+# 🔥 FUNGSI ACTIVITY LOG 🔥
+# ============================================
+
+def load_activity():
+    if os.path.exists(ACTIVITY_FILE):
+        try:
+            with open(ACTIVITY_FILE, 'r') as f:
+                return json.load(f)
+        except:
+            return []
+    return []
+
+def save_activity(data):
+    with open(ACTIVITY_FILE, 'w') as f:
+        json.dump(data, f, indent=2)
+
+def log_activity_entry(email, otp, status):
+    data = load_activity()
+    data.append({
+        "email": email,
+        "otp": otp,
+        "status": status,
+        "time": datetime.now().isoformat()
+    })
+    save_activity(data)
+
+def view_activity():
+    show_banner()
+    print(f"{Fore.CYAN}┌────────────────────────────────────────────────┐")
+    print(f"{Fore.CYAN}│     {Fore.YELLOW}📊 AKTIVITAS LOGIN TOOLS EGAA  {Fore.CYAN}│")
+    print(f"{Fore.CYAN}└────────────────────────────────────────────────┘")
+    print(f"{Fore.WHITE}")
+    
+    data = load_activity()
+    if not data:
+        print(f"{Fore.YELLOW}⚠️ Belum ada aktivitas login.")
+        input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+        return
+    
+    print(f"{Fore.CYAN}┌────┬──────────────────────────┬──────────┬──────────────┐")
+    print(f"{Fore.CYAN}│ No │ Email                    │ OTP      │ Status       │")
+    print(f"{Fore.CYAN}├────┼──────────────────────────┼──────────┼──────────────┤")
+    for i, entry in enumerate(data[-20:], 1):
+        email = entry.get('email', '')[:20]
+        otp = entry.get('otp', '')
+        status = entry.get('status', '')
+        status_color = f"{Fore.GREEN}✅ SUCCESS{Fore.WHITE}" if status == "success" else f"{Fore.RED}❌ FAILED{Fore.WHITE}"
+        print(f"{Fore.CYAN}│ {Fore.WHITE}{i:<2} │ {Fore.WHITE}{email:<24} │ {Fore.WHITE}{otp:<8} │ {status_color} │")
+    print(f"{Fore.CYAN}└────┴──────────────────────────┴──────────┴──────────────┘")
+    print(f"{Fore.YELLOW}\n📌 Total {len(data)} percobaan login")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
 # ============================================
 # 🔥 FUNGSI VERIFIKASI GMAIL + OTP 🔥
@@ -60,21 +170,10 @@ def save_verif(data):
 def generate_otp():
     return ''.join(random.choices(string.digits, k=6))
 
-def send_verification_email(to_email, otp):
-    try:
-        # Simulasi kirim OTP (tanpa SMTP real)
-        # Untuk real, lo bisa ganti dengan SMTP + App Password
-        print(f"{Fore.GREEN}✅ Kode OTP dikirim ke {to_email}")
-        print(f"{Fore.YELLOW}📧 (Simulasi) OTP: {otp}")
-        return True
-    except Exception as e:
-        print(f"{Fore.RED}❌ Gagal kirim email: {e}")
-        return False
-
 def verify_egaa_access():
-    print(f"\n{Fore.CYAN}┌──────────────────────────────────────────────┐")
+    print(f"\n{Fore.CYAN}┌────────────────────────────────────────────────┐")
     print(f"{Fore.CYAN}│     {Fore.YELLOW}🔐 VERIFIKASI GMAIL + OTP  {Fore.CYAN}│")
-    print(f"{Fore.CYAN}└──────────────────────────────────────────────┘")
+    print(f"{Fore.CYAN}└────────────────────────────────────────────────┘")
     print(f"{Fore.WHITE}")
     
     # Step 1: Masukkan Gmail
@@ -92,8 +191,17 @@ def verify_egaa_access():
     data['email'] = email
     save_verif(data)
     
-    # Step 3: Kirim OTP ke Gmail
-    print(f"{Fore.GREEN}✅ Kode verifikasi telah dikirim ke {email}")
+    # Step 3: Kirim OTP via API (beneran)
+    print(f"{Fore.CYAN}⏳ Mengirim kode verifikasi...")
+    if send_otp_email(email, otp):
+        print(f"{Fore.GREEN}✅ Kode verifikasi telah dikirim ke {email}")
+        log_activity_entry(email, otp, "pending")
+    else:
+        print(f"{Fore.YELLOW}⚠️ Gagal mengirim OTP. Coba lagi nanti.")
+        log_activity_entry(email, otp, "failed")
+        time.sleep(1)
+        return False
+    
     print(f"{Fore.YELLOW}📧 Cek email Anda (termasuk spam/junk)")
     
     # Step 4: Masukkan OTP
@@ -105,16 +213,23 @@ def verify_egaa_access():
         expired = datetime.fromisoformat(verif_data.get('expired', datetime.now().isoformat()))
         if expired > datetime.now():
             print(f"{Fore.GREEN}✅ Verifikasi berhasil! Selamat datang di Tools EGAA.")
+            log_activity_entry(email, otp, "success")
             time.sleep(1)
             return True
         else:
             print(f"{Fore.RED}❌ Kode sudah expired! (5 menit)")
+            log_activity_entry(email, otp, "failed")
             time.sleep(1)
             return False
     else:
         print(f"{Fore.RED}❌ Kode salah!")
+        log_activity_entry(email, otp, "failed")
         time.sleep(1)
         return False
+
+# ============================================
+# 🔥 BANNER KECIL & RAPIH 🔥
+# ============================================
 
 def get_datetime():
     now = datetime.now()
@@ -127,23 +242,23 @@ def show_banner():
     os.system("clear" if os.name == "posix" else "cls")
     hari, tanggal, jam = get_datetime()
     print(f"""{Fore.CYAN}
-┌────────────────────────────────────────────────┐
-│ {Fore.YELLOW}██╗  ██╗██╗██████╗  ██████╗ █████╗      {Fore.CYAN}│
-│ {Fore.YELLOW}██║  ██║██║██╔══██╗██╔═══██╗██╔══██╗    {Fore.CYAN}│
-│ {Fore.YELLOW}███████║██║██████╔╝██║   ██║███████║    {Fore.CYAN}│
-│ {Fore.YELLOW}██╔══██║██║██╔═══╝ ██║   ██║██╔══██║    {Fore.CYAN}│
-│ {Fore.YELLOW}██║  ██║██║██║     ╚██████╔╝██║  ██║    {Fore.CYAN}│
-│ {Fore.YELLOW}╚═╝  ╚═╝╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝    {Fore.CYAN}│
-│ ╔══════════════════════════════════════════════╗ │
-│ ║ {Fore.WHITE}📨 ALEGRA SPAM {Fore.WHITE}{VERSION}{Fore.CYAN}              ║ │
-│ ║ {Fore.WHITE}By {AUTHOR}                             {Fore.CYAN}║ │
-│ ║ {Fore.WHITE}Telegram {TELEGRAM}                       {Fore.CYAN}║ │
-│ ╚══════════════════════════════════════════════╝ │
-│ ┌──────────────┐  ┌──────────────┐              │
-│ │ {Fore.WHITE}⏰ {hari[:8]:<8} {Fore.CYAN}│  │ {Fore.WHITE}📅 {tanggal[:8]:<8} {Fore.CYAN}│              │
-│ │ {Fore.WHITE}🕐 {jam:<8} {Fore.CYAN}│  │ {Fore.WHITE}📍 ID{Fore.CYAN} │              │
-│ └──────────────┘  └──────────────┘              │
-└────────────────────────────────────────────────┘
+┌────────────────────────────────────────────┐
+│ {Fore.YELLOW}██╗  ██╗██╗██████╗  ██████╗ █████╗{Fore.CYAN} │
+│ {Fore.YELLOW}██║  ██║██║██╔══██╗██╔═══██╗██╔══██╗{Fore.CYAN}│
+│ {Fore.YELLOW}███████║██║██████╔╝██║   ██║███████║{Fore.CYAN}│
+│ {Fore.YELLOW}██╔══██║██║██╔═══╝ ██║   ██║██╔══██║{Fore.CYAN}│
+│ {Fore.YELLOW}██║  ██║██║██║     ╚██████╔╝██║  ██║{Fore.CYAN}│
+│ {Fore.YELLOW}╚═╝  ╚═╝╚═╝╚═╝      ╚═════╝ ╚═╝  ╚═╝{Fore.CYAN}│
+│ ╔════════════════════════════════════════╗ │
+│ ║ {Fore.WHITE}📨 ALEGRA SPAM {Fore.WHITE}{VERSION}{Fore.CYAN}     ║ │
+│ ║ {Fore.WHITE}By {AUTHOR}                   {Fore.CYAN}║ │
+│ ║ {Fore.WHITE}Telegram {TELEGRAM}             {Fore.CYAN}║ │
+│ ╚════════════════════════════════════════╝ │
+│ ┌──────────────┐  ┌──────────────┐        │
+│ │ {Fore.WHITE}⏰ {hari[:8]:<8} {Fore.CYAN}│  │ {Fore.WHITE}📅 {tanggal[:8]:<8} {Fore.CYAN}│        │
+│ │ {Fore.WHITE}🕐 {jam:<8} {Fore.CYAN}│  │ {Fore.WHITE}📍 ID{Fore.CYAN} │        │
+│ └──────────────┘  └──────────────┘        │
+└────────────────────────────────────────────┘
 {Fore.RESET}
 """)
 
@@ -153,6 +268,10 @@ def update_clock():
 
 clock_thread = threading.Thread(target=update_clock, daemon=True)
 clock_thread.start()
+
+# ============================================
+# 🔥 DATA MANAGEMENT 🔥
+# ============================================
 
 def load_data():
     if os.path.exists(DATA_FILE):
@@ -167,7 +286,7 @@ def save_data(data):
     with open(DATA_FILE, 'w') as f:
         json.dump(data, f, indent=2)
 
-def log_activity(text):
+def log_activity_text(text):
     try:
         with open(LOG_FILE, 'a') as f:
             f.write(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {text}\n")
@@ -236,7 +355,7 @@ def create_password(username, duration_hours, role='MEMBER'):
         'role': role
     }
     save_data(data)
-    log_activity(f"Create password untuk {username} ({durasi_text}) role: {role}")
+    log_activity_text(f"Create password untuk {username} ({durasi_text}) role: {role}")
     return password, f"✅ Username: {username}\n   Password: {password}\n   Role: {role}\n   Expired: {durasi_text}"
 
 def verify_password(username, password):
@@ -248,11 +367,11 @@ def verify_password(username, password):
             return False, "❌ Password sudah expired!"
         hashed = hashlib.sha256(password.encode()).hexdigest()
         if hashed == user_data['password']:
-            log_activity(f"Login berhasil: {username}")
+            log_activity_text(f"Login berhasil: {username}")
             role = user_data.get('role', 'MEMBER')
             return True, f"✅ Login berhasil! Role: {role}"
     if username == HEAD_OWNER and password == MASTER_PASSWORD:
-        log_activity(f"Developer login: {username}")
+        log_activity_text(f"Developer login: {username}")
         return True, "✅ Login berhasil! Role: DEVELOPER"
     return False, "❌ Username atau password salah!"
 
@@ -280,7 +399,7 @@ def add_owner(username, password, role='ADMIN'):
         'role': role
     }
     save_owners(owners)
-    log_activity(f"Owner/Admin baru: {username} role: {role}")
+    log_activity_text(f"Owner/Admin baru: {username} role: {role}")
     return True, f"✅ {username} berhasil ditambahkan sebagai {role}!"
 
 def remove_owner(username):
@@ -289,7 +408,7 @@ def remove_owner(username):
         return False, "❌ Username tidak ditemukan!"
     del owners[username]
     save_owners(owners)
-    log_activity(f"Owner/Admin dihapus: {username}")
+    log_activity_text(f"Owner/Admin dihapus: {username}")
     return True, f"✅ {username} berhasil dihapus!"
 
 def list_owners():
@@ -445,7 +564,7 @@ def game_suit():
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
 # ============================================
-# 🔥 PUBLIC TOOLS - 20 TOOLS + GAMES 🔥
+# 🔥 PUBLIC TOOLS 🔥
 # ============================================
 
 def public_tools():
@@ -919,7 +1038,7 @@ Support 2 tipe input:
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
 # ============================================
-# 🔥 TOOLS EGAA (DENGAN VERIFIKASI GMAIL+OTP) 🔥
+# 🔥 TOOLS EGAA 🔥
 # ============================================
 
 def tools_egaa():
@@ -933,22 +1052,23 @@ def tools_egaa():
         show_banner()
         print(f"""
 {Fore.CYAN}┌────────────────────────────────────────────────┐
-│     {Fore.YELLOW}👑 TOOLS EGAA - 20 TOOLS  {Fore.CYAN}│
+│     {Fore.YELLOW}👑 TOOLS EGAA - 21 TOOLS  {Fore.CYAN}│
 ├────────────────────────────────────────────────┤
-│ {Fore.GREEN}[1] {Fore.WHITE}👥 Manage User      {Fore.GREEN}[11] {Fore.WHITE}📊 Log Aktivitas     {Fore.CYAN}│
-│ {Fore.GREEN}[2] {Fore.WHITE}🔑 Create Password   {Fore.GREEN}[12] {Fore.WHITE}🔒 Lock Tools         {Fore.CYAN}│
-│ {Fore.GREEN}[3] {Fore.WHITE}📋 List User        {Fore.GREEN}[13] {Fore.WHITE}🔓 Unlock Tools       {Fore.CYAN}│
-│ {Fore.GREEN}[4] {Fore.WHITE}🗑️  Delete User      {Fore.GREEN}[14] {Fore.WHITE}📋 Cek Status Tools   {Fore.CYAN}│
-│ {Fore.GREEN}[5] {Fore.WHITE}🔑 Ganti Pass User  {Fore.GREEN}[15] {Fore.WHITE}👑 Tambah Owner/Admin{Fore.CYAN}│
-│ {Fore.GREEN}[6] {Fore.WHITE}📋 Backup Data      {Fore.GREEN}[16] {Fore.WHITE}📋 Daftar Owner/Admin{Fore.CYAN}│
-│ {Fore.GREEN}[7] {Fore.WHITE}🗑️  Reset Data      {Fore.GREEN}[17] {Fore.WHITE}🗑️  Hapus Owner/Admin {Fore.CYAN}│
-│ {Fore.GREEN}[8] {Fore.WHITE}📈 Statistik User   {Fore.GREEN}[18] {Fore.WHITE}🔄 Ganti Pass Owner   {Fore.CYAN}│
-│ {Fore.GREEN}[9] {Fore.WHITE}📋 Cek Role User    {Fore.GREEN}[19] {Fore.WHITE}📊 Log Owner/Admin    {Fore.CYAN}│
-│ {Fore.GREEN}[10]{Fore.WHITE}🔍 Cek Status User  {Fore.GREEN}[20] {Fore.WHITE}🔙 Back              {Fore.CYAN}│
+│ {Fore.GREEN}[1] {Fore.WHITE}👥 Manage User      {Fore.GREEN}[12] {Fore.WHITE}🔒 Lock Tools         {Fore.CYAN}│
+│ {Fore.GREEN}[2] {Fore.WHITE}🔑 Create Password   {Fore.GREEN}[13] {Fore.WHITE}🔓 Unlock Tools       {Fore.CYAN}│
+│ {Fore.GREEN}[3] {Fore.WHITE}📋 List User        {Fore.GREEN}[14] {Fore.WHITE}📋 Cek Status Tools   {Fore.CYAN}│
+│ {Fore.GREEN}[4] {Fore.WHITE}🗑️  Delete User      {Fore.GREEN}[15] {Fore.WHITE}👑 Tambah Owner/Admin{Fore.CYAN}│
+│ {Fore.GREEN}[5] {Fore.WHITE}🔑 Ganti Pass User  {Fore.GREEN}[16] {Fore.WHITE}📋 Daftar Owner/Admin{Fore.CYAN}│
+│ {Fore.GREEN}[6] {Fore.WHITE}📋 Backup Data      {Fore.GREEN}[17] {Fore.WHITE}🗑️  Hapus Owner/Admin {Fore.CYAN}│
+│ {Fore.GREEN}[7] {Fore.WHITE}🗑️  Reset Data      {Fore.GREEN}[18] {Fore.WHITE}🔄 Ganti Pass Owner   {Fore.CYAN}│
+│ {Fore.GREEN}[8] {Fore.WHITE}📈 Statistik User   {Fore.GREEN}[19] {Fore.WHITE}📊 Log Owner/Admin    {Fore.CYAN}│
+│ {Fore.GREEN}[9] {Fore.WHITE}📋 Cek Role User    {Fore.GREEN}[20] {Fore.WHITE}📊 Aktivitas Login    {Fore.CYAN}│
+│ {Fore.GREEN}[10]{Fore.WHITE}🔍 Cek Status User  {Fore.GREEN}[21] {Fore.WHITE}🔙 Back              {Fore.CYAN}│
+│ {Fore.GREEN}[11]{Fore.WHITE}📊 Log Aktivitas    {Fore.CYAN}│
 └────────────────────────────────────────────────┘
 {Fore.WHITE}
 """)
-        choice = input(f"{Fore.CYAN}Pilih [1-20]: {Fore.WHITE}").strip()
+        choice = input(f"{Fore.CYAN}Pilih [1-21]: {Fore.WHITE}").strip()
         if choice == '1':
             owner_manage_user()
         elif choice == '2':
@@ -990,6 +1110,8 @@ def tools_egaa():
         elif choice == '19':
             owner_logs()
         elif choice == '20':
+            view_activity()
+        elif choice == '21':
             break
         else:
             print(f"{Fore.RED}❌ Pilihan tidak valid!")
@@ -1078,7 +1200,7 @@ def delete_user():
         if username in data:
             del data[username]
             save_data(data)
-            log_activity(f"User dihapus: {username}")
+            log_activity_text(f"User dihapus: {username}")
             print(f"{Fore.GREEN}✅ User {username} berhasil dihapus!")
         else:
             print(f"{Fore.RED}❌ User tidak ditemukan!")
@@ -1115,7 +1237,7 @@ def change_user_password():
     new_pass = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
     data[username]['password'] = hashlib.sha256(new_pass.encode()).hexdigest()
     save_data(data)
-    log_activity(f"Password diubah untuk: {username}")
+    log_activity_text(f"Password diubah untuk: {username}")
     print(f"{Fore.GREEN}✅ Password baru untuk {username}: {Fore.WHITE}{new_pass}")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
@@ -1130,7 +1252,7 @@ def backup_data():
     backup_file = f"backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
     with open(backup_file, 'w') as f:
         json.dump(data, f, indent=2)
-    log_activity(f"Backup data: {backup_file}")
+    log_activity_text(f"Backup data: {backup_file}")
     print(f"{Fore.GREEN}✅ Backup berhasil! File: {backup_file}")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
@@ -1140,7 +1262,7 @@ def reset_all_data():
     confirm = input(f"{Fore.RED}⚠️ Yakin? (y/n): ").strip().lower()
     if confirm == 'y':
         save_data({})
-        log_activity("Semua data direset")
+        log_activity_text("Semua data direset")
         print(f"{Fore.GREEN}✅ Semua data berhasil direset!")
     else:
         print(f"{Fore.YELLOW}⚠️ Dibatalkan.")
@@ -1288,7 +1410,7 @@ def change_owner_password():
         return
     owners[username]['password'] = hashlib.sha256(new_pass.encode()).hexdigest()
     save_owners(owners)
-    log_activity(f"Password owner/admin diubah: {username}")
+    log_activity_text(f"Password owner/admin diubah: {username}")
     print(f"{Fore.GREEN}✅ Password {username} berhasil diubah!")
     time.sleep(1)
 
@@ -1314,7 +1436,7 @@ def lock_tools():
     if confirm == 'y':
         with open(os.path.expanduser("~/.alegra_locked"), 'w') as f:
             f.write("locked")
-        log_activity("Tools di-lock")
+        log_activity_text("Tools di-lock")
         print(f"{Fore.GREEN}✅ Tools berhasil di-lock!")
     else:
         print(f"{Fore.YELLOW}⚠️ Dibatalkan.")
@@ -1326,7 +1448,7 @@ def unlock_tools():
     confirm = input(f"{Fore.YELLOW}Yakin unlock? (y/n): ").strip().lower()
     if confirm == 'y':
         os.remove(os.path.expanduser("~/.alegra_locked"))
-        log_activity("Tools di-unlock")
+        log_activity_text("Tools di-unlock")
         print(f"{Fore.GREEN}✅ Tools berhasil di-unlock!")
     else:
         print(f"{Fore.YELLOW}⚠️ Dibatalkan.")

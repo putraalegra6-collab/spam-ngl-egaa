@@ -27,7 +27,7 @@ os.system("clear" if os.name == "posix" else "cls")
 # ============================================
 
 VERSION = "PREMIUM 21.0"
-AUTHOR = "Alegra Ega"
+AUTHOR = "EGAAXC"
 TELEGRAM = "@egaa_1"
 MASTER_PASSWORD = "9999"
 EGAA_PASSWORD = "alegra123"
@@ -60,8 +60,8 @@ def show_banner():
 ║                          ░                 ║
 ╚═══════════════════════════════════════════╝
 {Fore.YELLOW}     📨 ALEGRA SPAM - PREMIUM EDITION
-{Fore.GREEN}          BY {egaaaXc} | {egaa_1}
-{Fore.CYAN}         GAS LEK GAS! 🔥
+{Fore.GREEN}          BY EGAAXC | @egaa_1
+{Fore.CYAN}         GAS LEK SPAM! 🔥
 {Fore.RESET}""")
 
 # ============================================
@@ -226,7 +226,7 @@ def dns_lookup():
         ip = socket.gethostbyname(domain)
         print(f"{Fore.GREEN}✅ {domain} → {ip}")
     except:
-        print(f"{Fore.RED}❌ Gagal!")
+        print(f"{Fore.RED}❌ GagAL!")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
 def base64_tool():
@@ -651,7 +651,7 @@ Support 2 tipe input:
     print(f"{Fore.YELLOW}📦 Total: {success_count + fail_count}")
     print(f"{Fore.CYAN}" + "═" * 60)
     if success_count > 0:
-        print(f"{Fore.GREEN}🔥 SPAM BERHASIL!")
+        print(f"{Fore.GREEN}🔥 SPAM BERHASIL! GAS LEK SPAM!")
     else:
         print(f"{Fore.RED}💀 GAGAL SEMUA! CEK USERNAME!")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
@@ -882,3 +882,4 @@ if __name__ == "__main__":
         print(f"{Fore.CYAN}\n📨 ALEGRA SPAM - PREMIUM EDITION")
         print(f"{Fore.MAGENTA}Script By : {AUTHOR}")
         print(f"{Fore.WHITE}Telegram : {TELEGRAM}")
+        print(f"{Fore.CYAN}🔥 GAS LEK SPAM! 🔥")

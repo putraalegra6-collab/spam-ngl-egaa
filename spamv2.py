@@ -47,17 +47,21 @@ def show_banner():
     os.system("clear" if os.name == "posix" else "cls")
     print(f"""
 {Fore.CYAN}
-╔══════════════════════════════════════════════════════╗
-║     █████╗ ████████╗████████╗ █████╗  ██████╗██╗  ██╗║
-║    ██╔══██╗╚══██╔══╝╚══██╔══╝██╔══██╗██╔════╝██║ ██╔╝║
-║    ███████║   ██║      ██║   ███████║██║     █████╔╝ ║
-║    ██╔══██║   ██║      ██║   ██╔══██║██║     ██╔═██╗ ║
-║    ██║  ██║   ██║      ██║   ██║  ██║╚██████╗██║  ██╗║
-║    ╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝║
-╚══════════════════════════════════════════════════════╝
+╔═══════════════════════════════════════════╗
+║  █████  ██▓     ██████  ▄████▄   ██▀███  ║
+║ ▒█   ▀ ▓██▒   ▒██    ▒ ▒██▀ ▀█  ▓██ ▒ ██║
+║ ░▒███  ▒██░   ░ ▓██▄   ▒▓█    ▄ ▓██ ░▄█ ▒║
+║ ▒▓█  ▄ ▒██░     ▒   ██▒▒▓▓▄ ▄██▒▒██▀▀█▄  ║
+║ ░▒████▒░██████▒██████▒▒▒ ▓███▀ ░░██▓ ▒██▒║
+║ ░░ ▒░ ░░ ▒░▓  ░▒ ▒▓▒ ▒ ░░ ░▒ ▒  ░░ ▒▓ ░▒▓║
+║  ░ ░  ░░ ░ ▒  ░░ ░▒  ░ ░  ░  ▒    ░▒ ░ ▒║
+║    ░     ░ ░   ░  ░  ░  ░         ░░   ░ ║
+║    ░  ░    ░  ░      ░  ░ ░        ░     ║
+║                          ░                 ║
+╚═══════════════════════════════════════════╝
 {Fore.YELLOW}     📨 ALEGRA SPAM - PREMIUM EDITION
-{Fore.GREEN}          BY {egaaaXc} | KONTOLLL
-{Fore.CYAN}         GAS LEK SPAM! 🔥
+{Fore.GREEN}          BY {egaaaXc} | {@egaa_1}
+{Fore.CYAN}         GAS LEK GAS! 🔥
 {Fore.RESET}""")
 
 # ============================================
@@ -876,5 +880,5 @@ if __name__ == "__main__":
         print(f"{Fore.YELLOW}\n[!] Keluar...")
     finally:
         print(f"{Fore.CYAN}\n📨 ALEGRA SPAM - PREMIUM EDITION")
-        print(f"{Fore.MAGENTA}Script By : Alegra Ega")
-        print(f"{Fore.WHITE}Telegram : @egaa_1")
+        print(f"{Fore.MAGENTA}Script By : {AUTHOR}")
+        print(f"{Fore.WHITE}Telegram : {TELEGRAM}")

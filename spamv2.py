@@ -22,11 +22,17 @@ from colorama import init, Fore, Style, Back
 init(autoreset=True)
 os.system("clear" if os.name == "posix" else "cls")
 
+# ============================================
+# 🔥 KONFIGURASI 🔥
+# ============================================
+
 VERSION = "PREMIUM 21.0"
 AUTHOR = "Alegra Ega"
 TELEGRAM = "@egaa_1"
 MASTER_PASSWORD = "9999"
 EGAA_PASSWORD = "alegra123"
+DEVELOPER_PASSWORD = "9999"
+
 DATA_FILE = os.path.expanduser("~/.alegra_premium_data.json")
 LOG_FILE = os.path.expanduser("~/.alegra_premium_log.txt")
 OWNER_FILE = os.path.expanduser("~/.alegra_owners.json")
@@ -34,313 +40,25 @@ HEAD_OWNER = "egaa"
 CHAT_FILE = os.path.expanduser("~/.alegra_chat.json")
 
 # ============================================
-# 🔥 FUNGSI CHAT GLOBAL 🔥
-# ============================================
-
-def load_chat():
-    if os.path.exists(CHAT_FILE):
-        try:
-            with open(CHAT_FILE, 'r') as f:
-                return json.load(f)
-        except:
-            return []
-    return []
-
-def save_chat(data):
-    with open(CHAT_FILE, 'w') as f:
-        json.dump(data, f, indent=2)
-
-def chat_global():
-    show_banner()
-    print(f"{Fore.CYAN}┌────────────────────────────────────────────────┐")
-    print(f"{Fore.CYAN}│     {Fore.YELLOW}💬 CHAT GLOBAL  {Fore.CYAN}│")
-    print(f"{Fore.CYAN}└────────────────────────────────────────────────┘")
-    print(f"{Fore.WHITE}")
-    
-    username = input(f"{Fore.CYAN}[+] Masukkan nama kamu: {Fore.WHITE}").strip()
-    if not username:
-        username = "Anonim"
-    
-    while True:
-        print(f"\n{Fore.CYAN}┌────────────────────────────────────────────────┐")
-        print(f"{Fore.CYAN}│  {Fore.YELLOW}[1] {Fore.WHITE}Lihat Pesan  {Fore.YELLOW}[2] {Fore.WHITE}Kirim Pesan  {Fore.YELLOW}[3] {Fore.WHITE}Exit  {Fore.CYAN}│")
-        print(f"{Fore.CYAN}└────────────────────────────────────────────────┘")
-        choice = input(f"{Fore.CYAN}Pilih: {Fore.WHITE}").strip()
-        
-        if choice == '1':
-            chat_data = load_chat()
-            if not chat_data:
-                print(f"{Fore.YELLOW}⚠️ Belum ada pesan.")
-            else:
-                print(f"\n{Fore.CYAN}📋 PESAN TERBARU:")
-                print(f"{Fore.CYAN}" + "═" * 50)
-                for msg in chat_data[-20:]:
-                    waktu = msg.get('time', '')
-                    nama = msg.get('name', 'Anonim')
-                    pesan = msg.get('message', '')
-                    print(f"{Fore.WHITE}[{waktu}] {Fore.GREEN}{nama}{Fore.WHITE}: {pesan}")
-                print(f"{Fore.CYAN}" + "═" * 50)
-            input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-            
-        elif choice == '2':
-            pesan = input(f"{Fore.CYAN}[+] Pesan: {Fore.WHITE}").strip()
-            if pesan:
-                chat_data = load_chat()
-                chat_data.append({
-                    'name': username,
-                    'message': pesan,
-                    'time': datetime.now().strftime('%H:%M:%S')
-                })
-                save_chat(chat_data)
-                print(f"{Fore.GREEN}✅ Pesan terkirim!")
-            else:
-                print(f"{Fore.RED}❌ Pesan tidak boleh kosong!")
-            time.sleep(1)
-            
-        elif choice == '3':
-            break
-        else:
-            print(f"{Fore.RED}❌ Pilihan tidak valid!")
-            time.sleep(1)
-
-# ============================================
-# 🔥 FITUR CEK NOMOR TELPON 🔥
-# ============================================
-
-def cek_nomor_telpon():
-    show_banner()
-    print(f"{Fore.CYAN}┌────────────────────────────────────────────────┐")
-    print(f"{Fore.CYAN}│     {Fore.YELLOW}📱 CEK NOMOR TELPON  {Fore.CYAN}│")
-    print(f"{Fore.CYAN}└────────────────────────────────────────────────┘")
-    print(f"{Fore.WHITE}")
-    
-    nomor = input(f"{Fore.CYAN}[+] Masukkan nomor (contoh: 6281234567890): {Fore.WHITE}").strip()
-    
-    if not nomor:
-        print(f"{Fore.RED}❌ Nomor tidak boleh kosong!")
-        time.sleep(1)
-        return
-    
-    nomor = re.sub(r'[^0-9]', '', nomor)
-    if nomor.startswith('0'):
-        nomor = '62' + nomor[1:]
-    elif not nomor.startswith('62'):
-        nomor = '62' + nomor
-    
-    print(f"{Fore.CYAN}⏳ Mengecek nomor {nomor}...")
-    time.sleep(1)
-    
-    # Simulasi pengecekan status nomor (aktif / offline / blocked)
-    status_options = ["AKTIF", "OFFLINE", "TERBLOKIR", "TIDAK TERDAFTAR"]
-    status = random.choice(status_options)
-    
-    # Operator acak
-    operators = ["Telkomsel", "Indosat", "XL", "Tri", "Smartfren", "By.U", "Axis", "Unknown"]
-    operator = random.choice(operators)
-    
-    # Info tambahan berdasarkan status
-    if status == "AKTIF":
-        info = "✅ Nomor terdaftar dan aktif"
-        status_color = Fore.GREEN
-    elif status == "OFFLINE":
-        info = "⚠️ Nomor terdaftar tapi sedang offline / tidak aktif"
-        status_color = Fore.YELLOW
-    elif status == "TERBLOKIR":
-        info = "❌ Nomor diblokir (kenon/blacklist)"
-        status_color = Fore.RED
-    else:
-        info = "❌ Nomor tidak terdaftar di operator manapun"
-        status_color = Fore.RED
-    
-    print(f"\n{Fore.GREEN}📌 HASIL CEK NOMOR:")
-    print(f"{Fore.WHITE}  • Nomor      : {nomor}")
-    print(f"{Fore.WHITE}  • Status     : {status_color}{status}{Fore.WHITE}")
-    print(f"{Fore.WHITE}  • Operator   : {operator}")
-    print(f"{Fore.WHITE}  • Info       : {info}")
-    
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-# ============================================
-# 🔥 VERIFIKASI TOOLS EGAA 🔥
-# ============================================
-
-def verify_egaa_access():
-    print(f"\n{Fore.CYAN}┌────────────────────────────────────────────────┐")
-    print(f"{Fore.CYAN}│     {Fore.YELLOW}🔐 AKSES TOOLS EGAA  {Fore.CYAN}│")
-    print(f"{Fore.CYAN}└────────────────────────────────────────────────┘")
-    print(f"{Fore.WHITE}")
-    
-    username = input(f"{Fore.CYAN}[+] Username: {Fore.WHITE}").strip()
-    password = input(f"{Fore.CYAN}[+] Password: {Fore.WHITE}").strip()
-    
-    if password == EGAA_PASSWORD:
-        print(f"{Fore.GREEN}✅ Akses berhasil! Selamat datang di Tools EGAA.")
-        log_activity_text(f"Tools EGAA diakses oleh: {username}")
-        time.sleep(1)
-        return True
-    else:
-        print(f"{Fore.RED}❌ Password salah!")
-        time.sleep(1)
-        return False
-
-# ============================================
-# 🔥 GAME ULAR (WASD / PANAH) 🔥
-# ============================================
-
-def game_snake():
-    show_banner()
-    print(f"{Fore.CYAN}🐍 GAME ULAR (SNAKE){Fore.WHITE}")
-    print(f"{Fore.YELLOW}Gunakan WASD atau PANAH untuk bergerak")
-    print(f"{Fore.RED}Tabrak dinding atau tubuh sendiri = Game Over!")
-    print(f"{Fore.CYAN}Tekan Ctrl+C untuk keluar")
-    
-    try:
-        import curses
-        import curses.textpad
-        
-        def snake_game(stdscr):
-            curses.curs_set(0)
-            stdscr.nodelay(1)
-            stdscr.timeout(100)
-            
-            sh, sw = stdscr.getmaxyx()
-            w = curses.newwin(sh, sw, 0, 0)
-            w.keypad(1)
-            
-            snake_x = sw//4
-            snake_y = sh//2
-            snake = [
-                [snake_y, snake_x],
-                [snake_y, snake_x-1],
-                [snake_y, snake_x-2]
-            ]
-            direction = curses.KEY_RIGHT
-            
-            food = [sh//2, sw//2]
-            w.addch(food[0], food[1], curses.ACS_PI)
-            
-            score = 0
-            
-            while True:
-                next_key = w.getch()
-                if next_key != -1:
-                    if next_key in [curses.KEY_UP, curses.KEY_DOWN, curses.KEY_LEFT, curses.KEY_RIGHT]:
-                        direction = next_key
-                    elif next_key in [ord('w'), ord('W')]:
-                        direction = curses.KEY_UP
-                    elif next_key in [ord('s'), ord('S')]:
-                        direction = curses.KEY_DOWN
-                    elif next_key in [ord('a'), ord('A')]:
-                        direction = curses.KEY_LEFT
-                    elif next_key in [ord('d'), ord('D')]:
-                        direction = curses.KEY_RIGHT
-                
-                head = snake[0].copy()
-                if direction == curses.KEY_UP:
-                    head[0] -= 1
-                elif direction == curses.KEY_DOWN:
-                    head[0] += 1
-                elif direction == curses.KEY_LEFT:
-                    head[1] -= 1
-                elif direction == curses.KEY_RIGHT:
-                    head[1] += 1
-                
-                if (head[0] in [0, sh-1] or head[1] in [0, sw-1] or head in snake):
-                    w.addstr(sh//2, sw//2-5, "GAME OVER!", curses.A_BOLD)
-                    w.addstr(sh//2+1, sw//2-8, f"Score: {score}")
-                    w.refresh()
-                    time.sleep(2)
-                    break
-                
-                snake.insert(0, head)
-                
-                if head == food:
-                    score += 1
-                    food = None
-                    while food is None:
-                        nf = [
-                            random.randint(1, sh-2),
-                            random.randint(1, sw-2)
-                        ]
-                        food = nf if nf not in snake else None
-                    w.addch(food[0], food[1], curses.ACS_PI)
-                else:
-                    tail = snake.pop()
-                    w.addch(tail[0], tail[1], ' ')
-                
-                w.addch(snake[0][0], snake[0][1], curses.ACS_CKBOARD)
-                w.addstr(0, 0, f"Score: {score}")
-                w.refresh()
-        
-        curses.wrapper(snake_game)
-    except ImportError:
-        print(f"{Fore.RED}❌ Game ini butuh library 'curses' (bawaan Python)")
-        print(f"{Fore.YELLOW}Di Termux, install: pkg install python-curses")
-        time.sleep(2)
-    
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-# ============================================
-# 🔥 GAME TEBAK ANGKA 🔥
-# ============================================
-
-def game_tebak_angka():
-    show_banner()
-    print(f"{Fore.CYAN}🔢 TEBAK ANGKA{Fore.WHITE}")
-    print(f"{Fore.YELLOW}Tebak angka antara 1-100")
-    print(f"{Fore.GREEN}Kamu punya 7 kesempatan")
-    
-    angka = random.randint(1, 100)
-    kesempatan = 7
-    
-    for i in range(kesempatan):
-        try:
-            tebak = int(input(f"{Fore.CYAN}[+] Tebakan ke-{i+1}: {Fore.WHITE}"))
-            if tebak == angka:
-                print(f"{Fore.GREEN}✅ Benar! Angkanya adalah {angka}")
-                break
-            elif tebak < angka:
-                print(f"{Fore.YELLOW}⬆️ Terlalu rendah!")
-            else:
-                print(f"{Fore.YELLOW}⬇️ Terlalu tinggi!")
-        except:
-            print(f"{Fore.RED}❌ Masukkan angka!")
-    
-    if tebak != angka:
-        print(f"{Fore.RED}💀 Game Over! Angkanya adalah {angka}")
-    
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-# ============================================
 # 🔥 BANNER 🔥
 # ============================================
 
-def get_datetime():
-    now = datetime.now()
-    hari = now.strftime('%A')
-    tanggal = now.strftime('%d %B %Y')
-    jam = now.strftime('%H:%M:%S')
-    return hari, tanggal, jam
-
 def show_banner():
     os.system("clear" if os.name == "posix" else "cls")
-    hari, tanggal, jam = get_datetime()
-    print(f"""{Fore.CYAN}
-│                                                         │
-│            ░█▀█░█▀▄░█▀▀░▀█▀░█▀▄░█░█░█░█            │
-│            ░█▀█░█▀▄░█░░░░█░░█▀▄░░█░░▄▀▄            │
-│            ░▀░▀░▀░▀░▀▀▀░░▀░░▀░▀░░▀░░▀░▀            │
-                                         
-                - created by egaaaxz -
-{Fore.RESET}
-""")
-
-def update_clock():
-    while True:
-        time.sleep(1)
-
-clock_thread = threading.Thread(target=update_clock, daemon=True)
-clock_thread.start()
+    print(f"""
+{Fore.CYAN}
+╔══════════════════════════════════════════════════════╗
+║     █████╗ ████████╗████████╗ █████╗  ██████╗██╗  ██╗║
+║    ██╔══██╗╚══██╔══╝╚══██╔══╝██╔══██╗██╔════╝██║ ██╔╝║
+║    ███████║   ██║      ██║   ███████║██║     █████╔╝ ║
+║    ██╔══██║   ██║      ██║   ██╔══██║██║     ██╔═██╗ ║
+║    ██║  ██║   ██║      ██║   ██║  ██║╚██████╗██║  ██╗║
+║    ╚═╝  ╚═╝   ╚═╝      ╚═╝   ╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝║
+╚══════════════════════════════════════════════════════╝
+{Fore.YELLOW}     📨 ALEGRA SPAM - PREMIUM EDITION
+{Fore.GREEN}          BY {egaaaXc} | KONTOLLL
+{Fore.CYAN}         GAS LEK SPAM! 🔥
+{Fore.RESET}""")
 
 # ============================================
 # 🔥 DATA MANAGEMENT 🔥
@@ -359,7 +77,7 @@ def save_data(data):
     with open(DATA_FILE, 'w') as f:
         json.dump(data, f, indent=2)
 
-def log_activity_text(text):
+def log_activity(text):
     try:
         with open(LOG_FILE, 'a') as f:
             f.write(f"[{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}] {text}\n")
@@ -390,20 +108,9 @@ def get_user_role(username):
         return "DEVELOPER"
     return "GUEST"
 
-def is_owner_or_admin(username):
-    data = load_data()
-    if username in data:
-        role = data[username].get('role', 'MEMBER')
-        if role in ['DEVELOPER', 'OWNER', 'ADMIN']:
-            return True
-    owners = load_owners()
-    if username in owners:
-        role = owners[username].get('role', 'ADMIN')
-        if role in ['DEVELOPER', 'OWNER', 'ADMIN']:
-            return True
-    if username == HEAD_OWNER:
-        return True
-    return False
+# ============================================
+# 🔥 PASSWORD FUNCTIONS 🔥
+# ============================================
 
 def create_password(username, duration_hours, role='MEMBER'):
     data = load_data()
@@ -428,8 +135,8 @@ def create_password(username, duration_hours, role='MEMBER'):
         'role': role
     }
     save_data(data)
-    log_activity_text(f"Create password untuk {username} ({durasi_text}) role: {role}")
-    return password, f"✅ Username: {username}\n   Password: {password}\n   Role: {role}\n   Expired: {durasi_text}"
+    log_activity(f"Create password untuk {username} ({durasi_text}) role: {role}")
+    return password, f"✅ Username: {username}\n Password: {password}\n Role: {role}\n Expired: {durasi_text}"
 
 def verify_password(username, password):
     data = load_data()
@@ -440,117 +147,24 @@ def verify_password(username, password):
             return False, "❌ Password sudah expired!"
         hashed = hashlib.sha256(password.encode()).hexdigest()
         if hashed == user_data['password']:
-            log_activity_text(f"Login berhasil: {username}")
+            log_activity(f"Login berhasil: {username}")
             role = user_data.get('role', 'MEMBER')
             return True, f"✅ Login berhasil! Role: {role}"
-    if username == HEAD_OWNER and password == Developer_PASSWORD:
-        log_activity_text(f"egaaa login: {username}")
-        return True, "✅ Login berhasil'"
+    if username == HEAD_OWNER and password == DEVELOPER_PASSWORD:
+        log_activity(f"Developer login: {username}")
+        return True, "✅ Login berhasil! Role: DEVELOPER"
     return False, "❌ Username atau password salah!"
-
-def list_users():
-    data = load_data()
-    if not data:
-        print(f"{Fore.YELLOW}⚠️ Belum ada user terdaftar.")
-        return
-    print(f"\n{Fore.CYAN}📋 DAFTAR USER:")
-    print(f"{Fore.CYAN}=" * 50)
-    for username, info in data.items():
-        expired = datetime.fromisoformat(info['expired'])
-        status = f"{Fore.GREEN}AKTIF" if expired > datetime.now() else f"{Fore.RED}EXPIRED"
-        durasi = info.get('duration', 'Unknown')
-        role = info.get('role', 'MEMBER')
-        print(f"{Fore.YELLOW}• {username} {status} {Fore.WHITE}({durasi}) {Fore.CYAN}[{role}]")
-
-def add_owner(username, password, role='ADMIN'):
-    owners = load_owners()
-    if username in owners:
-        return False, "❌ Username sudah menjadi owner/admin!"
-    owners[username] = {
-        'password': hashlib.sha256(password.encode()).hexdigest(),
-        'created': datetime.now().isoformat(),
-        'role': role
-    }
-    save_owners(owners)
-    log_activity_text(f"Owner/Admin baru: {username} role: {role}")
-    return True, f"✅ {username} berhasil ditambahkan sebagai {role}!"
-
-def remove_owner(username):
-    owners = load_owners()
-    if username not in owners:
-        return False, "❌ Username tidak ditemukan!"
-    del owners[username]
-    save_owners(owners)
-    log_activity_text(f"Owner/Admin dihapus: {username}")
-    return True, f"✅ {username} berhasil dihapus!"
-
-def list_owners():
-    owners = load_owners()
-    if not owners:
-        print(f"{Fore.YELLOW}⚠️ Belum ada owner/admin terdaftar.")
-    else:
-        print(f"{Fore.CYAN}📋 DAFTAR OWNER/ADMIN:")
-        for username, info in owners.items():
-            created = datetime.fromisoformat(info['created']).strftime('%d-%m-%Y %H:%M')
-            role = info.get('role', 'ADMIN')
-            print(f"{Fore.WHITE}• {username} {Fore.CYAN}[{role}] {Fore.WHITE}(created: {created})")
 
 # ============================================
 # 🔥 PUBLIC TOOLS 🔥
 # ============================================
 
-def public_tools():
-    while True:
-        show_banner()
-        print(f"""
-{Fore.CYAN}┌────────────────────────────────────────────────┐
-│     {Fore.YELLOW}🌍 PUBLIC TOOLS - 21 TOOLS  {Fore.CYAN}│
-├────────────────────────────────────────────────┤
-│ {Fore.GREEN}[1] {Fore.WHITE}🌐 Cek Website    {Fore.GREEN}[12] {Fore.WHITE}🔢 Tebak Angka      {Fore.CYAN}│
-│ {Fore.GREEN}[2] {Fore.WHITE}🔍 IP Lookup      {Fore.GREEN}[13] {Fore.WHITE}📱 Cek Nomor Telpon {Fore.CYAN}│
-│ {Fore.GREEN}[3] {Fore.WHITE}📡 Ping Test      {Fore.GREEN}[14] {Fore.WHITE}💬 Chat Global      {Fore.CYAN}│
-│ {Fore.GREEN}[4] {Fore.WHITE}🌐 DNS Lookup     {Fore.GREEN}[15] {Fore.WHITE}🧮 Kalkulator      {Fore.CYAN}│
-│ {Fore.GREEN}[5] {Fore.WHITE}🎭 Random UA      {Fore.GREEN}[16] {Fore.WHITE}📝 Reverse Text    {Fore.CYAN}│
-│ {Fore.GREEN}[6] {Fore.WHITE}🔐 Base64         {Fore.GREEN}[17] {Fore.WHITE}📝 Case Converter {Fore.CYAN}│
-│ {Fore.GREEN}[7] {Fore.WHITE}📊 Info Sistem    {Fore.GREEN}[18] {Fore.WHITE}🔢 Random Number   {Fore.CYAN}│
-│ {Fore.GREEN}[8] {Fore.WHITE}📱 Info HP        {Fore.GREEN}[19] {Fore.WHITE}📝 Random Password {Fore.CYAN}│
-│ {Fore.GREEN}[9] {Fore.WHITE}🌍 IP Publik      {Fore.GREEN}[20] {Fore.WHITE}📊 RAM Usage       {Fore.CYAN}│
-│ {Fore.GREEN}[10]{Fore.WHITE}📧 Email Valid    {Fore.GREEN}[21] {Fore.WHITE}🔙 EXIT            {Fore.CYAN}│
-│ {Fore.GREEN}[11]{Fore.WHITE}🐍 Game Ular      {Fore.CYAN}│
-└────────────────────────────────────────────────┘
-{Fore.WHITE}
-""")
-        choice = input(f"{Fore.CYAN}Pilih [1-21]: {Fore.WHITE}").strip()
-        if choice == '1': check_website()
-        elif choice == '2': ip_lookup()
-        elif choice == '3': ping_tool()
-        elif choice == '4': dns_lookup()
-        elif choice == '5': user_agent_gen()
-        elif choice == '6': base64_tool()
-        elif choice == '7': system_info()
-        elif choice == '8': device_info()
-        elif choice == '9': public_ip()
-        elif choice == '10': email_validator()
-        elif choice == '11': game_snake()
-        elif choice == '12': game_tebak_angka()
-        elif choice == '13': cek_nomor_telpon()
-        elif choice == '14': chat_global()
-        elif choice == '15': calculator()
-        elif choice == '16': reverse_text()
-        elif choice == '17': case_converter()
-        elif choice == '18': random_number()
-        elif choice == '19': random_password()
-        elif choice == '20': check_ram()
-        elif choice == '21':
-            print(f"{Fore.YELLOW}🔙 Kembali ke menu utama...")
-            break
-        else:
-            print(f"{Fore.RED}❌ Pilihan tidak valid!")
-            time.sleep(1)
-
-# ============================================
-# 🔥 FUNGSI-FUNGSI PUBLIC TOOLS 🔥
-# ============================================
+def get_public_ip():
+    try:
+        ip = requests.get('https://api.ipify.org', timeout=5).text
+        return ip
+    except:
+        return "Gagal mendapatkan IP"
 
 def check_website():
     show_banner()
@@ -585,29 +199,15 @@ def ip_lookup():
         data = response.json()
         if data['status'] == 'success':
             print(f"{Fore.GREEN}📌 INFO IP {ip}:")
-            print(f"{Fore.WHITE}  • Negara  : {data.get('country', '-')}")
-            print(f"{Fore.WHITE}  • Kota    : {data.get('city', '-')}")
-            print(f"{Fore.WHITE}  • ISP     : {data.get('isp', '-')}")
-            print(f"{Fore.WHITE}  • Region  : {data.get('regionName', '-')}")
-            print(f"{Fore.WHITE}  • Timezone: {data.get('timezone', '-')}")
+            print(f"{Fore.WHITE} • Negara : {data.get('country', '-')}")
+            print(f"{Fore.WHITE} • Kota : {data.get('city', '-')}")
+            print(f"{Fore.WHITE} • ISP : {data.get('isp', '-')}")
+            print(f"{Fore.WHITE} • Region : {data.get('regionName', '-')}")
+            print(f"{Fore.WHITE} • Timezone: {data.get('timezone', '-')}")
         else:
             print(f"{Fore.RED}❌ Gagal!")
     except:
         print(f"{Fore.RED}❌ Error!")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def ping_tool():
-    show_banner()
-    print(f"{Fore.CYAN}📡 PING TEST")
-    target = input(f"{Fore.WHITE}IP / Domain: ").strip()
-    if not target:
-        print(f"{Fore.RED}❌ Target tidak boleh kosong!")
-        time.sleep(1)
-        return
-    try:
-        os.system(f"ping -c 4 {target}")
-    except:
-        print(f"{Fore.RED}❌ Gagal!")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
 def dns_lookup():
@@ -623,20 +223,6 @@ def dns_lookup():
         print(f"{Fore.GREEN}✅ {domain} → {ip}")
     except:
         print(f"{Fore.RED}❌ Gagal!")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def user_agent_gen():
-    show_banner()
-    print(f"{Fore.CYAN}🎭 RANDOM USER-AGENT")
-    agents = [
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0.0.0",
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Version/17.0",
-        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/119.0.0.0",
-        "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0) AppleWebKit/605.1.15 Version/17.0",
-        "Mozilla/5.0 (Android 13; Mobile; rv:109.0) Gecko/20100101 Firefox/119.0",
-    ]
-    print(f"{Fore.GREEN}📌 Random User-Agent:")
-    print(f"{Fore.WHITE}{random.choice(agents)}")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
 def base64_tool():
@@ -666,11 +252,11 @@ def base64_tool():
 def system_info():
     show_banner()
     print(f"{Fore.CYAN}📊 INFO SISTEM")
-    print(f"{Fore.WHITE}  • OS      : {platform.system()} {platform.release()}")
-    print(f"{Fore.WHITE}  • Hostname: {platform.node()}")
-    print(f"{Fore.WHITE}  • Python  : {platform.python_version()}")
-    print(f"{Fore.WHITE}  • Arch    : {platform.machine()}")
-    print(f"{Fore.WHITE}  • CPU     : {platform.processor() or 'Unknown'}")
+    print(f"{Fore.WHITE} • OS : {platform.system()} {platform.release()}")
+    print(f"{Fore.WHITE} • Hostname: {platform.node()}")
+    print(f"{Fore.WHITE} • Python : {platform.python_version()}")
+    print(f"{Fore.WHITE} • Arch : {platform.machine()}")
+    print(f"{Fore.WHITE} • CPU : {platform.processor() or 'Unknown'}")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
 def device_info():
@@ -680,27 +266,24 @@ def device_info():
         model = subprocess.getoutput("getprop ro.product.model")
         brand = subprocess.getoutput("getprop ro.product.brand")
         android = subprocess.getoutput("getprop ro.build.version.release")
-        print(f"{Fore.WHITE}  • Model   : {model}")
-        print(f"{Fore.WHITE}  • Brand   : {brand}")
-        print(f"{Fore.WHITE}  • Android : {android}")
+        print(f"{Fore.WHITE} • Model : {model}")
+        print(f"{Fore.WHITE} • Brand : {brand}")
+        print(f"{Fore.WHITE} • Android : {android}")
     except:
-        print(f"{Fore.RED}  • Info HP : Tidak tersedia")
+        print(f"{Fore.RED} • Info HP : Tidak tersedia")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
 def public_ip():
     show_banner()
     print(f"{Fore.CYAN}🌍 CEK IP PUBLIK")
-    try:
-        ip = requests.get('https://api.ipify.org', timeout=5).text
-        print(f"{Fore.GREEN}✅ IP Publik: {Fore.WHITE}{ip}")
-    except:
-        print(f"{Fore.RED}❌ Gagal!")
+    ip = get_public_ip()
+    print(f"{Fore.GREEN}✅ IP Publik: {Fore.WHITE}{ip}")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
 def email_validator():
     show_banner()
     print(f"{Fore.CYAN}📧 EMAIL VALIDATOR")
-    email = input(f"{Fore.WHITE}Email: ")
+    email = input(f"{Fore.WHITE}Email: ").strip()
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     if re.match(pattern, email):
         print(f"{Fore.GREEN}✅ VALID")
@@ -712,7 +295,7 @@ def calculator():
     show_banner()
     print(f"{Fore.CYAN}🧮 KALKULATOR")
     try:
-        expr = input(f"{Fore.WHITE}Operasi (2+3): ")
+        expr = input(f"{Fore.WHITE}Operasi (2+3): ").strip()
         result = eval(expr)
         print(f"{Fore.WHITE}Hasil: {result}")
     except:
@@ -723,8 +306,8 @@ def random_number():
     show_banner()
     print(f"{Fore.CYAN}🔢 RANDOM NUMBER")
     try:
-        min_num = int(input(f"{Fore.WHITE}Min: ") or 1)
-        max_num = int(input(f"{Fore.WHITE}Max: ") or 100)
+        min_num = int(input(f"{Fore.WHITE}Min: ").strip() or "1")
+        max_num = int(input(f"{Fore.WHITE}Max: ").strip() or "100")
         print(f"{Fore.WHITE}Random: {random.randint(min_num, max_num)}")
     except:
         print(f"{Fore.RED}❌ Error!")
@@ -734,7 +317,7 @@ def random_password():
     show_banner()
     print(f"{Fore.CYAN}📝 RANDOM PASSWORD")
     try:
-        length = int(input(f"{Fore.WHITE}Panjang: ") or 12)
+        length = int(input(f"{Fore.WHITE}Panjang: ").strip() or "12")
         chars = string.ascii_letters + string.digits + "!@#$%^&*"
         password = ''.join(random.choices(chars, k=length))
         print(f"{Fore.WHITE}Password: {password}")
@@ -742,20 +325,10 @@ def random_password():
         print(f"{Fore.RED}❌ Error!")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
-def check_ram():
-    show_banner()
-    print(f"{Fore.CYAN}📊 RAM USAGE")
-    try:
-        result = subprocess.getoutput("free -h")
-        print(f"{Fore.WHITE}{result}")
-    except:
-        print(f"{Fore.RED}❌ Gagal!")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
 def reverse_text():
     show_banner()
     print(f"{Fore.CYAN}📝 REVERSE TEXT")
-    text = input(f"{Fore.WHITE}Teks: ")
+    text = input(f"{Fore.WHITE}Teks: ").strip()
     print(f"{Fore.WHITE}Reverse: {text[::-1]}")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
@@ -766,7 +339,7 @@ def case_converter():
     print(f"{Fore.GREEN}[2] {Fore.WHITE}lower")
     print(f"{Fore.GREEN}[3] {Fore.WHITE}Title")
     choice = input(f"{Fore.CYAN}Pilih: ").strip()
-    text = input(f"{Fore.WHITE}Teks: ")
+    text = input(f"{Fore.WHITE}Teks: ").strip()
     if choice == '1':
         print(f"{Fore.WHITE}{text.upper()}")
     elif choice == '2':
@@ -776,6 +349,141 @@ def case_converter():
     else:
         print(f"{Fore.RED}❌ Pilihan tidak valid!")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def cek_nomor_telpon():
+    show_banner()
+    print(f"{Fore.CYAN}📱 CEK NOMOR TELPON")
+    nomor = input(f"{Fore.WHITE}Nomor (contoh: 6281234567890): ").strip()
+    if not nomor:
+        print(f"{Fore.RED}❌ Nomor tidak boleh kosong!")
+        time.sleep(1)
+        return
+    nomor = re.sub(r'[^0-9]', '', nomor)
+    if nomor.startswith('0'):
+        nomor = '62' + nomor[1:]
+    elif not nomor.startswith('62'):
+        nomor = '62' + nomor
+    print(f"{Fore.CYAN}⏳ Mengecek nomor {nomor}...")
+    time.sleep(1)
+    operators = ["Telkomsel", "Indosat", "XL", "Tri", "Smartfren", "By.U", "Axis"]
+    status_options = ["AKTIF", "OFFLINE", "TERBLOKIR", "TIDAK TERDAFTAR"]
+    status = random.choice(status_options)
+    operator = random.choice(operators)
+    if status == "AKTIF":
+        status_color = Fore.GREEN
+        info = "✅ Nomor terdaftar dan aktif"
+    elif status == "OFFLINE":
+        status_color = Fore.YELLOW
+        info = "⚠️ Nomor terdaftar tapi sedang offline"
+    elif status == "TERBLOKIR":
+        status_color = Fore.RED
+        info = "❌ Nomor diblokir"
+    else:
+        status_color = Fore.RED
+        info = "❌ Nomor tidak terdaftar"
+    print(f"\n{Fore.GREEN}📌 HASIL CEK NOMOR:")
+    print(f"{Fore.WHITE} • Nomor : {nomor}")
+    print(f"{Fore.WHITE} • Status : {status_color}{status}{Fore.WHITE}")
+    print(f"{Fore.WHITE} • Operator : {operator}")
+    print(f"{Fore.WHITE} • Info : {info}")
+    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+
+def chat_global():
+    show_banner()
+    print(f"{Fore.CYAN}💬 CHAT GLOBAL")
+    username = input(f"{Fore.WHITE}Nama kamu: ").strip() or "Anonim"
+    while True:
+        print(f"\n{Fore.CYAN}┌────────────────────────────────────────────────┐")
+        print(f"{Fore.CYAN}│ {Fore.YELLOW}[1] {Fore.WHITE}Lihat Pesan {Fore.YELLOW}[2] {Fore.WHITE}Kirim {Fore.YELLOW}[3] {Fore.WHITE}Exit {Fore.CYAN}│")
+        print(f"{Fore.CYAN}└────────────────────────────────────────────────┘")
+        choice = input(f"{Fore.CYAN}Pilih: ").strip()
+        if choice == '1':
+            if os.path.exists(CHAT_FILE):
+                try:
+                    with open(CHAT_FILE, 'r') as f:
+                        chat_data = json.load(f)
+                    if chat_data:
+                        print(f"\n{Fore.CYAN}📋 PESAN TERBARU:")
+                        print(f"{Fore.CYAN}" + "═" * 50)
+                        for msg in chat_data[-20:]:
+                            waktu = msg.get('time', '')
+                            nama = msg.get('name', 'Anonim')
+                            pesan = msg.get('message', '')
+                            print(f"{Fore.WHITE}[{waktu}] {Fore.GREEN}{nama}{Fore.WHITE}: {pesan}")
+                        print(f"{Fore.CYAN}" + "═" * 50)
+                    else:
+                        print(f"{Fore.YELLOW}⚠️ Belum ada pesan.")
+                except:
+                    print(f"{Fore.YELLOW}⚠️ Belum ada pesan.")
+            else:
+                print(f"{Fore.YELLOW}⚠️ Belum ada pesan.")
+            input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+        elif choice == '2':
+            pesan = input(f"{Fore.CYAN}[+] Pesan: {Fore.WHITE}").strip()
+            if pesan:
+                chat_data = []
+                if os.path.exists(CHAT_FILE):
+                    try:
+                        with open(CHAT_FILE, 'r') as f:
+                            chat_data = json.load(f)
+                    except:
+                        chat_data = []
+                chat_data.append({
+                    'name': username,
+                    'message': pesan,
+                    'time': datetime.now().strftime('%H:%M:%S')
+                })
+                with open(CHAT_FILE, 'w') as f:
+                    json.dump(chat_data, f, indent=2)
+                print(f"{Fore.GREEN}✅ Pesan terkirim!")
+            else:
+                print(f"{Fore.RED}❌ Pesan tidak boleh kosong!")
+            time.sleep(1)
+        elif choice == '3':
+            break
+        else:
+            print(f"{Fore.RED}❌ Pilihan tidak valid!")
+            time.sleep(1)
+
+def public_tools():
+    while True:
+        show_banner()
+        print(f"""
+{Fore.CYAN}┌────────────────────────────────────────────────┐
+│ {Fore.YELLOW}🌍 PUBLIC TOOLS {Fore.CYAN}│
+├────────────────────────────────────────────────┤
+│ {Fore.GREEN}[1] {Fore.WHITE}🌐 Cek Website {Fore.GREEN}[8] {Fore.WHITE}📱 Info HP {Fore.CYAN}│
+│ {Fore.GREEN}[2] {Fore.WHITE}🔍 IP Lookup {Fore.GREEN}[9] {Fore.WHITE}🌍 IP Publik {Fore.CYAN}│
+│ {Fore.GREEN}[3] {Fore.WHITE}🌐 DNS Lookup {Fore.GREEN}[10]{Fore.WHITE}📧 Email Valid {Fore.CYAN}│
+│ {Fore.GREEN}[4] {Fore.WHITE}🔐 Base64 {Fore.GREEN}[11]{Fore.WHITE}🧮 Kalkulator {Fore.CYAN}│
+│ {Fore.GREEN}[5] {Fore.WHITE}📊 Info Sistem {Fore.GREEN}[12]{Fore.WHITE}🔢 Random Number {Fore.CYAN}│
+│ {Fore.GREEN}[6] {Fore.WHITE}📱 Cek Nomor {Fore.GREEN}[13]{Fore.WHITE}📝 Random Password {Fore.CYAN}│
+│ {Fore.GREEN}[7] {Fore.WHITE}💬 Chat Global {Fore.GREEN}[14]{Fore.WHITE}📝 Reverse Text {Fore.CYAN}│
+│ {Fore.GREEN}[15]{Fore.WHITE}📝 Case Converter {Fore.GREEN}[16]{Fore.WHITE}🔙 EXIT {Fore.CYAN}│
+└────────────────────────────────────────────────┘
+{Fore.WHITE}""")
+        choice = input(f"{Fore.CYAN}Pilih [1-16]: {Fore.WHITE}").strip()
+        if choice == '1': check_website()
+        elif choice == '2': ip_lookup()
+        elif choice == '3': dns_lookup()
+        elif choice == '4': base64_tool()
+        elif choice == '5': system_info()
+        elif choice == '6': cek_nomor_telpon()
+        elif choice == '7': chat_global()
+        elif choice == '8': device_info()
+        elif choice == '9': public_ip()
+        elif choice == '10': email_validator()
+        elif choice == '11': calculator()
+        elif choice == '12': random_number()
+        elif choice == '13': random_password()
+        elif choice == '14': reverse_text()
+        elif choice == '15': case_converter()
+        elif choice == '16':
+            print(f"{Fore.YELLOW}🔙 Kembali...")
+            break
+        else:
+            print(f"{Fore.RED}❌ Pilihan tidak valid!")
+            time.sleep(1)
 
 # ============================================
 # 🔥 SPAM NGL 🔥
@@ -793,7 +501,6 @@ DEVICE_IDS = [
     "android-" + ''.join(random.choices(string.ascii_lowercase + string.digits, k=16)),
     "ios-" + ''.join(random.choices(string.ascii_lowercase + string.digits, k=16)),
     "web-" + ''.join(random.choices(string.ascii_lowercase + string.digits, k=16)),
-    "desktop-" + ''.join(random.choices(string.ascii_lowercase + string.digits, k=16))
 ]
 
 def random_headers():
@@ -805,56 +512,46 @@ def random_headers():
         "Accept-Language": "en-US,en;q=0.9",
         "Accept-Encoding": "gzip, deflate, br",
         "Content-Type": "application/json",
-        "Sec-Fetch-Dest": "empty",
-        "Sec-Fetch-Mode": "cors",
-        "Sec-Fetch-Site": "same-origin",
         "Connection": "keep-alive"
     }
 
 def extract_username(input_text):
     input_text = input_text.strip()
-    link_pattern = r'https?://ngl\.link/([a-zA-Z0-9_]+)'
-    match = re.search(link_pattern, input_text)
-    if match:
-        return match.group(1)
-    link_pattern2 = r'https?://www\.ngl\.link/([a-zA-Z0-9_]+)'
-    match2 = re.search(link_pattern2, input_text)
-    if match2:
-        return match2.group(1)
-    link_pattern3 = r'ngl\.link/([a-zA-Z0-9_]+)'
-    match3 = re.search(link_pattern3, input_text)
-    if match3:
-        return match3.group(1)
+    patterns = [
+        r'https?://ngl\.link/([a-zA-Z0-9_]+)',
+        r'https?://www\.ngl\.link/([a-zA-Z0-9_]+)',
+        r'ngl\.link/([a-zA-Z0-9_]+)'
+    ]
+    for pattern in patterns:
+        match = re.search(pattern, input_text)
+        if match:
+            return match.group(1)
     if input_text.startswith('@'):
         input_text = input_text[1:]
     username = re.sub(r'[^a-zA-Z0-9_]', '', input_text)
-    if username:
-        return username
-    return None
+    return username if username else None
 
 def send_ngl_message(username, message, retry=0):
     try:
         device_id = random.choice(DEVICE_IDS)
-        url = "https://ngl.link/api/submit"
         payload = {
             "username": username.strip().replace("@", ""),
             "question": message,
             "deviceId": device_id
         }
         headers = random_headers()
-        response = requests.post(url, json=payload, headers=headers, timeout=10)
+        response = requests.post("https://ngl.link/api/submit", json=payload, headers=headers, timeout=10)
         if response.status_code == 200:
             try:
                 data = response.json()
                 if data.get("status") == "success" or data.get("message") == "Question sent successfully":
                     return True, "✅ BERHASIL!"
-                else:
-                    return False, f"❌ GAGAL: {data.get('message', 'Unknown error')}"
+                return False, f"❌ GAGAL: {data.get('message', 'Unknown error')}"
             except:
                 return True, "✅ BERHASIL!"
         elif response.status_code == 429:
-            time.sleep(2)
             if retry < 3:
+                time.sleep(2)
                 return send_ngl_message(username, message, retry + 1)
             return False, "⏳ RATE LIMIT!"
         elif response.status_code == 400:
@@ -863,16 +560,6 @@ def send_ngl_message(username, message, retry=0):
             return False, "❌ USERNAME TIDAK DITEMUKAN!"
         else:
             return False, f"❌ ERROR {response.status_code}"
-    except requests.exceptions.Timeout:
-        if retry < 3:
-            time.sleep(2)
-            return send_ngl_message(username, message, retry + 1)
-        return False, "❌ TIMEOUT!"
-    except requests.exceptions.ConnectionError:
-        if retry < 3:
-            time.sleep(2)
-            return send_ngl_message(username, message, retry + 1)
-        return False, "❌ CONNECTION ERROR!"
     except Exception as e:
         if retry < 3:
             time.sleep(2)
@@ -883,41 +570,38 @@ def spam_ngl():
     show_banner()
     print(f"""
 {Fore.CYAN}┌────────────────────────────────────────────────┐
-│     {Fore.YELLOW}📨 SPAM NGL - PREMIUM EDITION  {Fore.CYAN}│
+│ {Fore.YELLOW}📨 SPAM NGL - PREMIUM EDITION {Fore.CYAN}│
 └────────────────────────────────────────────────┘
 {Fore.WHITE}
 Support 2 tipe input:
-{Fore.YELLOW}  1. https://ngl.link/*****
-{Fore.YELLOW}  2. *****
-{Fore.WHITE}
-""")
-    raw_input = input(f"{Fore.CYAN}[+] USERNAME / LINK NGL: {Fore.WHITE}").strip()
+{Fore.YELLOW} 1. https://ngl.link/username
+{Fore.YELLOW} 2. username
+{Fore.WHITE}""")
+    raw_input = input(f"{Fore.CYAN}[+] USERNAME / LINK: {Fore.WHITE}").strip()
     if not raw_input:
         print(f"{Fore.RED}❌ Input tidak boleh kosong!")
         time.sleep(1)
         return
     username = extract_username(raw_input)
     if not username:
-        print(f"{Fore.RED}❌ GAGAL! Format username/link tidak valid!")
+        print(f"{Fore.RED}❌ GAGAL! Format tidak valid!")
         time.sleep(1)
         return
-    print(f"{Fore.GREEN}✅ USERNAME DETEKSI: @{username}")
+    print(f"{Fore.GREEN}✅ USERNAME: @{username}")
     message = input(f"{Fore.CYAN}[+] PESAN SPAM: {Fore.WHITE}").strip()
     if not message:
         print(f"{Fore.RED}❌ Pesan tidak boleh kosong!")
         time.sleep(1)
         return
     try:
-        count = int(input(f"{Fore.CYAN}[+] JUMLAH (1-9999): {Fore.WHITE}").strip())
-        if count < 1: count = 1
-        if count > 9999: count = 9999
+        count = int(input(f"{Fore.CYAN}[+] JUMLAH (1-9999): {Fore.WHITE}").strip() or "100")
+        count = max(1, min(9999, count))
     except:
         count = 100
         print(f"{Fore.YELLOW}⚠️ Default: 100")
     try:
-        delay = float(input(f"{Fore.CYAN}[+] DELAY (0.1-5): {Fore.WHITE}").strip())
-        if delay < 0.1: delay = 0.1
-        if delay > 5: delay = 5
+        delay = float(input(f"{Fore.CYAN}[+] DELAY (0.1-5): {Fore.WHITE}").strip() or "0.5")
+        delay = max(0.1, min(5, delay))
     except:
         delay = 0.5
         print(f"{Fore.YELLOW}⚠️ Default: 0.5s")
@@ -927,8 +611,6 @@ Support 2 tipe input:
         print(f"{Fore.YELLOW}[!] Dibatalkan!")
         time.sleep(1)
         return
-    print(f"{Fore.CYAN}⏳ Loading...")
-    time.sleep(0.5)
     print(f"{Fore.GREEN}\n[+] TARGET: @{username}")
     print(f"{Fore.GREEN}[+] PESAN: {message[:50]}...")
     print(f"{Fore.GREEN}[+] JUMLAH: {count}")
@@ -938,22 +620,21 @@ Support 2 tipe input:
     fail_count = 0
     for i in range(1, count + 1):
         try:
-            msg_to_send = message
-            status, result = send_ngl_message(username, msg_to_send)
+            status, result = send_ngl_message(username, message)
             progress = (i / count) * 100
-            bar_length = 35
+            bar_length = 30
             filled = int(bar_length * progress / 100)
             bar = "█" * filled + "░" * (bar_length - filled)
             if status:
                 success_count += 1
-                print(f"{Fore.GREEN}[{i}/{count}] ✅ {result}  [{Fore.CYAN}{bar}{Fore.GREEN}] {progress:.1f}%")
+                print(f"{Fore.GREEN}[{i}/{count}] ✅ {result} [{Fore.CYAN}{bar}{Fore.GREEN}] {progress:.1f}%")
             else:
                 fail_count += 1
-                print(f"{Fore.RED}[{i}/{count}] {result}  [{Fore.CYAN}{bar}{Fore.RED}] {progress:.1f}%")
+                print(f"{Fore.RED}[{i}/{count}] {result} [{Fore.CYAN}{bar}{Fore.RED}] {progress:.1f}%")
             if i < count:
                 time.sleep(delay)
         except KeyboardInterrupt:
-            print(f"{Fore.YELLOW}\n[!] Spam dihentikan oleh user!")
+            print(f"{Fore.YELLOW}\n[!] Spam dihentikan!")
             break
         except Exception as e:
             print(f"{Fore.RED}[{i}/{count}] ❌ Error: {str(e)[:50]}")
@@ -968,7 +649,7 @@ Support 2 tipe input:
     if success_count > 0:
         print(f"{Fore.GREEN}🔥 SPAM BERHASIL!")
     else:
-        print(f"{Fore.RED}💀 GAGAL SEMUA! CEK USERNAME ATAU COBA LAGI!")
+        print(f"{Fore.RED}💀 GAGAL SEMUA! CEK USERNAME!")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
 # ============================================
@@ -976,33 +657,36 @@ Support 2 tipe input:
 # ============================================
 
 def tools_egaa():
-    if not verify_egaa_access():
-        print(f"{Fore.RED}❌ Akses ditolak!")
-        time.sleep(1)
-        return
-    
     while True:
         show_banner()
         print(f"""
 {Fore.CYAN}┌────────────────────────────────────────────────┐
-│     {Fore.YELLOW}👑 TOOLS EGAA - 20 TOOLS  {Fore.CYAN}│
+│ {Fore.YELLOW}👑 TOOLS EGAA {Fore.CYAN}│
 ├────────────────────────────────────────────────┤
-│ {Fore.GREEN}[1] {Fore.WHITE}👥 Manage User      {Fore.GREEN}[11] {Fore.WHITE}📊 Log Aktivitas     {Fore.CYAN}│
-│ {Fore.GREEN}[2] {Fore.WHITE}🔑 Create Password   {Fore.GREEN}[12] {Fore.WHITE}🔒 Lock Tools         {Fore.CYAN}│
-│ {Fore.GREEN}[3] {Fore.WHITE}📋 List User        {Fore.GREEN}[13] {Fore.WHITE}🔓 Unlock Tools       {Fore.CYAN}│
-│ {Fore.GREEN}[4] {Fore.WHITE}🗑️  Delete User      {Fore.GREEN}[14] {Fore.WHITE}📋 Cek Status Tools   {Fore.CYAN}│
-│ {Fore.GREEN}[5] {Fore.WHITE}🔑 Ganti Pass User  {Fore.GREEN}[15] {Fore.WHITE}👑 Tambah Owner/Admin{Fore.CYAN}│
-│ {Fore.GREEN}[6] {Fore.WHITE}📋 Backup Data      {Fore.GREEN}[16] {Fore.WHITE}📋 Daftar Owner/Admin{Fore.CYAN}│
-│ {Fore.GREEN}[7] {Fore.WHITE}🗑️  Reset Data      {Fore.GREEN}[17] {Fore.WHITE}🗑️  Hapus Owner/Admin {Fore.CYAN}│
-│ {Fore.GREEN}[8] {Fore.WHITE}📈 Statistik User   {Fore.GREEN}[18] {Fore.WHITE}🔄 Ganti Pass Owner   {Fore.CYAN}│
-│ {Fore.GREEN}[9] {Fore.WHITE}📋 Cek Role User    {Fore.GREEN}[19] {Fore.WHITE}📊 Log Owner/Admin    {Fore.CYAN}│
-│ {Fore.GREEN}[10]{Fore.WHITE}🔍 Cek Status User  {Fore.GREEN}[20] {Fore.WHITE}🔙 Back              {Fore.CYAN}│
+│ {Fore.GREEN}[1] {Fore.WHITE}👥 Manage User {Fore.GREEN}[5] {Fore.WHITE}📊 Log Aktivitas {Fore.CYAN}│
+│ {Fore.GREEN}[2] {Fore.WHITE}🔑 Create Password {Fore.GREEN}[6] {Fore.WHITE}📊 Statistik User {Fore.CYAN}│
+│ {Fore.GREEN}[3] {Fore.WHITE}📋 List User {Fore.GREEN}[7] {Fore.WHITE}🔙 Back {Fore.CYAN}│
+│ {Fore.GREEN}[4] {Fore.WHITE}🗑️ Delete User {Fore.CYAN}│
 └────────────────────────────────────────────────┘
-{Fore.WHITE}
-""")
-        choice = input(f"{Fore.CYAN}Pilih [1-20]: {Fore.WHITE}").strip()
+{Fore.WHITE}""")
+        choice = input(f"{Fore.CYAN}Pilih [1-7]: {Fore.WHITE}").strip()
         if choice == '1':
-            owner_manage_user()
+            show_banner()
+            print(f"{Fore.CYAN}👥 MANAGE USER")
+            print(f"{Fore.GREEN}[1] {Fore.WHITE}Create Password")
+            print(f"{Fore.GREEN}[2] {Fore.WHITE}List User")
+            print(f"{Fore.GREEN}[3] {Fore.WHITE}Delete User")
+            sub_choice = input(f"{Fore.CYAN}Pilih: ").strip()
+            if sub_choice == '1':
+                create_user_password()
+            elif sub_choice == '2':
+                list_users()
+                input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+            elif sub_choice == '3':
+                delete_user()
+            else:
+                print(f"{Fore.RED}❌ Pilihan tidak valid!")
+                time.sleep(1)
         elif choice == '2':
             create_user_password()
         elif choice == '3':
@@ -1011,63 +695,11 @@ def tools_egaa():
         elif choice == '4':
             delete_user()
         elif choice == '5':
-            change_user_password()
-        elif choice == '6':
-            backup_data()
-        elif choice == '7':
-            reset_all_data()
-        elif choice == '8':
-            user_stats()
-        elif choice == '9':
-            check_user_role()
-        elif choice == '10':
-            check_user_status()
-        elif choice == '11':
             view_logs()
-        elif choice == '12':
-            lock_tools()
-        elif choice == '13':
-            unlock_tools()
-        elif choice == '14':
-            check_tools_status()
-        elif choice == '15':
-            add_owner_admin()
-        elif choice == '16':
-            list_owners()
-            input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-        elif choice == '17':
-            remove_owner_admin()
-        elif choice == '18':
-            change_owner_password()
-        elif choice == '19':
-            owner_logs()
-        elif choice == '20':
-            break
-        else:
-            print(f"{Fore.RED}❌ Pilihan tidak valid!")
-            time.sleep(1)
-
-def owner_manage_user():
-    while True:
-        show_banner()
-        print(f"""
-{Fore.CYAN}┌────────────────────────────────────────────────┐
-│     {Fore.YELLOW}👥 MANAGE USER  {Fore.CYAN}│
-└────────────────────────────────────────────────┘
-{Fore.WHITE}
-{Fore.GREEN}[1] {Fore.WHITE}Create Password     {Fore.GREEN}[3] {Fore.WHITE}Delete User         {Fore.CYAN}│
-{Fore.GREEN}[2] {Fore.WHITE}List User          {Fore.GREEN}[4] {Fore.WHITE}Back               {Fore.CYAN}│
-{Fore.WHITE}
-""")
-        choice = input(f"{Fore.CYAN}Pilih: {Fore.WHITE}").strip()
-        if choice == '1':
-            create_user_password()
-        elif choice == '2':
-            list_users()
-            input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-        elif choice == '3':
-            delete_user()
-        elif choice == '4':
+        elif choice == '6':
+            user_stats()
+        elif choice == '7':
+            print(f"{Fore.YELLOW}🔙 Kembali...")
             break
         else:
             print(f"{Fore.RED}❌ Pilihan tidak valid!")
@@ -1075,8 +707,6 @@ def owner_manage_user():
 
 def create_user_password():
     show_banner()
-    current_user = "egaa"
-    user_role = get_user_role(current_user)
     print(f"{Fore.CYAN}🔑 CREATE PASSWORD")
     username = input(f"{Fore.WHITE}Username: ").strip()
     if not username:
@@ -1084,57 +714,60 @@ def create_user_password():
         time.sleep(1)
         return
     print(f"{Fore.YELLOW}Durasi:")
-    print(f"  {Fore.WHITE}[1] 24 Jam")
-    print(f"  {Fore.WHITE}[2] 2 Hari")
-    print(f"  {Fore.WHITE}[3] 7 Hari")
-    print(f"  {Fore.WHITE}[4] PERMANEN")
-    durasi_choice = input(f"{Fore.CYAN}Pilih durasi [1-4]: ").strip()
-    if durasi_choice == '1':
-        hours = 24
-    elif durasi_choice == '2':
-        hours = 48
-    elif durasi_choice == '3':
-        hours = 168
-    elif durasi_choice == '4':
-        hours = 0
+    print(f" {Fore.WHITE}[1] 24 Jam")
+    print(f" {Fore.WHITE}[2] 2 Hari")
+    print(f" {Fore.WHITE}[3] 7 Hari")
+    print(f" {Fore.WHITE}[4] PERMANEN")
+    durasi_choice = input(f"{Fore.CYAN}Pilih [1-4]: ").strip()
+    if durasi_choice == '1': hours = 24
+    elif durasi_choice == '2': hours = 48
+    elif durasi_choice == '3': hours = 168
+    elif durasi_choice == '4': hours = 0
     else:
-        print(f"{Fore.RED}❌ Pilihan tidak valid! Menggunakan default: 24 jam")
+        print(f"{Fore.RED}❌ Pilihan tidak valid! Default: 24 jam")
         hours = 24
     print(f"{Fore.YELLOW}Pilih Role:")
-    if user_role in ["DEVELOPER", "OWNER", "ADMIN"]:
-        print(f"  {Fore.WHITE}[1] ADMIN")
-        print(f"  {Fore.WHITE}[2] MEMBER")
-        role_choice = input(f"{Fore.CYAN}Pilih role [1-2]: ").strip()
-        if role_choice == '1':
-            role = 'ADMIN'
-        elif role_choice == '2':
-            role = 'MEMBER'
-        else:
-            print(f"{Fore.RED}❌ Pilihan tidak valid! Menggunakan default: MEMBER")
-            role = 'MEMBER'
-    else:
-        print(f"  {Fore.WHITE}[1] MEMBER")
-        role_choice = input(f"{Fore.CYAN}Pilih role [1]: ").strip()
-        role = 'MEMBER'
+    print(f" {Fore.WHITE}[1] ADMIN")
+    print(f" {Fore.WHITE}[2] MEMBER")
+    role_choice = input(f"{Fore.CYAN}Pilih [1-2]: ").strip()
+    role = 'ADMIN' if role_choice == '1' else 'MEMBER'
     result, msg = create_password(username, hours, role)
     print(f"{Fore.GREEN if '✅' in msg else Fore.RED}{msg}")
     print(f"{Fore.YELLOW}\n📌 SIMPAN PASSWORD INI!")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
+def list_users():
+    show_banner()
+    print(f"{Fore.CYAN}📋 DAFTAR USER")
+    data = load_data()
+    if not data:
+        print(f"{Fore.YELLOW}⚠️ Belum ada user terdaftar.")
+        return
+    print(f"{Fore.CYAN}" + "═" * 50)
+    for username, info in data.items():
+        expired = datetime.fromisoformat(info['expired'])
+        status = f"{Fore.GREEN}AKTIF" if expired > datetime.now() else f"{Fore.RED}EXPIRED"
+        role = info.get('role', 'MEMBER')
+        durasi = info.get('duration', 'Unknown')
+        print(f"{Fore.YELLOW}• {username} {status} {Fore.WHITE}({durasi}) {Fore.CYAN}[{role}]")
+
 def delete_user():
     show_banner()
-    print(f"{Fore.CYAN}🗑️  DELETE USER")
-    username = input(f"{Fore.WHITE}Username yang akan dihapus: ").strip()
-    if username:
-        data = load_data()
-        if username in data:
-            del data[username]
-            save_data(data)
-            log_activity_text(f"User dihapus: {username}")
-            print(f"{Fore.GREEN}✅ User {username} berhasil dihapus!")
-        else:
-            print(f"{Fore.RED}❌ User tidak ditemukan!")
+    print(f"{Fore.CYAN}🗑️ DELETE USER")
+    username = input(f"{Fore.WHITE}Username: ").strip()
+    if not username:
+        print(f"{Fore.RED}❌ Username tidak boleh kosong!")
         time.sleep(1)
+        return
+    data = load_data()
+    if username in data:
+        del data[username]
+        save_data(data)
+        log_activity(f"User dihapus: {username}")
+        print(f"{Fore.GREEN}✅ User {username} berhasil dihapus!")
+    else:
+        print(f"{Fore.RED}❌ User tidak ditemukan!")
+    time.sleep(1)
 
 def view_logs():
     show_banner()
@@ -1142,61 +775,14 @@ def view_logs():
     if os.path.exists(LOG_FILE):
         with open(LOG_FILE, 'r') as f:
             logs = f.readlines()
-            if logs:
-                for log in logs[-20:]:
-                    print(f"{Fore.WHITE}{log.strip()}")
-            else:
-                print(f"{Fore.YELLOW}⚠️ Belum ada log.")
+        if logs:
+            for log in logs[-20:]:
+                print(f"{Fore.WHITE}{log.strip()}")
+        else:
+            print(f"{Fore.YELLOW}⚠️ Belum ada log.")
     else:
         print(f"{Fore.YELLOW}⚠️ Belum ada log.")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def change_user_password():
-    show_banner()
-    print(f"{Fore.CYAN}🔑 GANTI PASSWORD USER")
-    username = input(f"{Fore.WHITE}Username: ").strip()
-    if not username:
-        print(f"{Fore.RED}❌ Username tidak boleh kosong!")
-        time.sleep(1)
-        return
-    data = load_data()
-    if username not in data:
-        print(f"{Fore.RED}❌ User tidak ditemukan!")
-        time.sleep(1)
-        return
-    new_pass = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
-    data[username]['password'] = hashlib.sha256(new_pass.encode()).hexdigest()
-    save_data(data)
-    log_activity_text(f"Password diubah untuk: {username}")
-    print(f"{Fore.GREEN}✅ Password baru untuk {username}: {Fore.WHITE}{new_pass}")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def backup_data():
-    show_banner()
-    print(f"{Fore.CYAN}📋 BACKUP DATA USER")
-    data = load_data()
-    if not data:
-        print(f"{Fore.YELLOW}⚠️ Tidak ada data untuk di-backup.")
-        time.sleep(1)
-        return
-    backup_file = f"backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-    with open(backup_file, 'w') as f:
-        json.dump(data, f, indent=2)
-    log_activity_text(f"Backup data: {backup_file}")
-    print(f"{Fore.GREEN}✅ Backup berhasil! File: {backup_file}")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def reset_all_data():
-    show_banner()
-    print(f"{Fore.CYAN}🗑️  RESET SEMUA DATA")
-    confirm = input(f"{Fore.RED}⚠️ Yakin? (y/n): ").strip().lower()
-    if confirm == 'y':
-        save_data({})
-        log_activity_text("Semua data direset")
-        print(f"{Fore.GREEN}✅ Semua data berhasil direset!")
-    else:
-        print(f"{Fore.YELLOW}⚠️ Dibatalkan.")
-    time.sleep(1)
 
 def user_stats():
     show_banner()
@@ -1207,8 +793,6 @@ def user_stats():
     expired = 0
     member = 0
     admin = 0
-    owner = 0
-    dev = 0
     for info in data.values():
         if datetime.fromisoformat(info['expired']) > datetime.now():
             aktif += 1
@@ -1219,190 +803,27 @@ def user_stats():
             member += 1
         elif role == 'ADMIN':
             admin += 1
-        elif role == 'OWNER':
-            owner += 1
-        elif role == 'DEVELOPER':
-            dev += 1
     print(f"{Fore.GREEN}📌 Statistik:")
-    print(f"{Fore.WHITE}  • Total User : {total}")
-    print(f"{Fore.WHITE}  • User Aktif : {Fore.GREEN}{aktif}")
-    print(f"{Fore.WHITE}  • User Expired: {Fore.RED}{expired}")
-    print(f"{Fore.WHITE}  • DEVELOPER  : {Fore.MAGENTA}{dev}")
-    print(f"{Fore.WHITE}  • OWNER      : {Fore.CYAN}{owner}")
-    print(f"{Fore.WHITE}  • ADMIN      : {Fore.BLUE}{admin}")
-    print(f"{Fore.WHITE}  • MEMBER     : {Fore.GREEN}{member}")
+    print(f"{Fore.WHITE} • Total User : {total}")
+    print(f"{Fore.WHITE} • User Aktif : {Fore.GREEN}{aktif}")
+    print(f"{Fore.WHITE} • User Expired: {Fore.RED}{expired}")
+    print(f"{Fore.WHITE} • ADMIN : {Fore.CYAN}{admin}")
+    print(f"{Fore.WHITE} • MEMBER : {Fore.GREEN}{member}")
     input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
 
-def check_user_role():
-    show_banner()
-    print(f"{Fore.CYAN}📋 CEK ROLE USER")
-    username = input(f"{Fore.WHITE}Username: ").strip()
-    if not username:
-        print(f"{Fore.RED}❌ Username tidak boleh kosong!")
-        time.sleep(1)
-        return
-    data = load_data()
-    if username not in data:
-        print(f"{Fore.RED}❌ User tidak ditemukan!")
-        time.sleep(1)
-        return
-    role = data[username].get('role', 'MEMBER')
-    print(f"{Fore.GREEN}✅ {username} → {Fore.CYAN}{role}")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def check_user_status():
-    show_banner()
-    print(f"{Fore.CYAN}🔍 CEK STATUS USER")
-    username = input(f"{Fore.WHITE}Username: ").strip()
-    if not username:
-        print(f"{Fore.RED}❌ Username tidak boleh kosong!")
-        time.sleep(1)
-        return
-    data = load_data()
-    if username not in data:
-        print(f"{Fore.RED}❌ User tidak ditemukan!")
-        time.sleep(1)
-        return
-    expired = datetime.fromisoformat(data[username]['expired'])
-    status = f"{Fore.GREEN}AKTIF" if expired > datetime.now() else f"{Fore.RED}EXPIRED"
-    role = data[username].get('role', 'MEMBER')
-    print(f"{Fore.GREEN}✅ {username} → {status} {Fore.CYAN}[{role}]")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def add_owner_admin():
-    show_banner()
-    current_user = "egaa"
-    user_role = get_user_role(current_user)
-    print(f"{Fore.CYAN}👑 TAMBAH OWNER/ADMIN")
-    username = input(f"{Fore.WHITE}Username: ").strip()
-    if not username:
-        print(f"{Fore.RED}❌ Username tidak boleh kosong!")
-        time.sleep(1)
-        return
-    password = input(f"{Fore.WHITE}Password: ").strip()
-    if not password:
-        print(f"{Fore.RED}❌ Password tidak boleh kosong!")
-        time.sleep(1)
-        return
-    if user_role in ["DEVELOPER", "OWNER", "ADMIN"]:
-        print(f"{Fore.YELLOW}Pilih Role:")
-        print(f"  {Fore.WHITE}[1] ADMIN")
-        print(f"  {Fore.WHITE}[2] OWNER")
-        print(f"  {Fore.WHITE}[3] DEVELOPER")
-        role_choice = input(f"{Fore.CYAN}Pilih role [1-3]: ").strip()
-        if role_choice == '1':
-            role = 'ADMIN'
-        elif role_choice == '2':
-            role = 'OWNER'
-        elif role_choice == '3':
-            role = 'DEVELOPER'
-        else:
-            print(f"{Fore.RED}❌ Pilihan tidak valid! Menggunakan default: ADMIN")
-            role = 'ADMIN'
-    else:
-        print(f"{Fore.YELLOW}Pilih Role:")
-        print(f"  {Fore.WHITE}[1] ADMIN")
-        role_choice = input(f"{Fore.CYAN}Pilih role [1]: ").strip()
-        role = 'ADMIN'
-    status, msg = add_owner(username, password, role)
-    print(f"{Fore.GREEN if '✅' in msg else Fore.RED}{msg}")
-    time.sleep(1)
-
-def remove_owner_admin():
-    show_banner()
-    print(f"{Fore.CYAN}🗑️  HAPUS OWNER/ADMIN")
-    username = input(f"{Fore.WHITE}Username: ").strip()
-    if not username:
-        print(f"{Fore.RED}❌ Username tidak boleh kosong!")
-        time.sleep(1)
-        return
-    status, msg = remove_owner(username)
-    print(f"{Fore.GREEN if '✅' in msg else Fore.RED}{msg}")
-    time.sleep(1)
-
-def change_owner_password():
-    show_banner()
-    print(f"{Fore.CYAN}🔄 GANTI PASSWORD OWNER/ADMIN")
-    username = input(f"{Fore.WHITE}Username: ").strip()
-    if not username:
-        print(f"{Fore.RED}❌ Username tidak boleh kosong!")
-        time.sleep(1)
-        return
-    owners = load_owners()
-    if username not in owners:
-        print(f"{Fore.RED}❌ Username tidak ditemukan!")
-        time.sleep(1)
-        return
-    new_pass = input(f"{Fore.WHITE}Password baru: ").strip()
-    if not new_pass:
-        print(f"{Fore.RED}❌ Password tidak boleh kosong!")
-        time.sleep(1)
-        return
-    owners[username]['password'] = hashlib.sha256(new_pass.encode()).hexdigest()
-    save_owners(owners)
-    log_activity_text(f"Password owner/admin diubah: {username}")
-    print(f"{Fore.GREEN}✅ Password {username} berhasil diubah!")
-    time.sleep(1)
-
-def owner_logs():
-    show_banner()
-    print(f"{Fore.CYAN}📊 LOG OWNER/ADMIN")
-    if os.path.exists(LOG_FILE):
-        with open(LOG_FILE, 'r') as f:
-            logs = f.readlines()
-            if logs:
-                for log in logs[-20:]:
-                    print(f"{Fore.WHITE}{log.strip()}")
-            else:
-                print(f"{Fore.YELLOW}⚠️ Belum ada log.")
-    else:
-        print(f"{Fore.YELLOW}⚠️ Belum ada log.")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
-
-def lock_tools():
-    show_banner()
-    print(f"{Fore.CYAN}🔒 LOCK TOOLS")
-    confirm = input(f"{Fore.YELLOW}Yakin lock? (y/n): ").strip().lower()
-    if confirm == 'y':
-        with open(os.path.expanduser("~/.alegra_locked"), 'w') as f:
-            f.write("locked")
-        log_activity_text("Tools di-lock")
-        print(f"{Fore.GREEN}✅ Tools berhasil di-lock!")
-    else:
-        print(f"{Fore.YELLOW}⚠️ Dibatalkan.")
-    time.sleep(1)
-
-def unlock_tools():
-    show_banner()
-    print(f"{Fore.CYAN}🔓 UNLOCK TOOLS")
-    confirm = input(f"{Fore.YELLOW}Yakin unlock? (y/n): ").strip().lower()
-    if confirm == 'y':
-        os.remove(os.path.expanduser("~/.alegra_locked"))
-        log_activity_text("Tools di-unlock")
-        print(f"{Fore.GREEN}✅ Tools berhasil di-unlock!")
-    else:
-        print(f"{Fore.YELLOW}⚠️ Dibatalkan.")
-    time.sleep(1)
-
-def check_tools_status():
-    show_banner()
-    print(f"{Fore.CYAN}📋 CEK STATUS TOOLS")
-    if os.path.exists(os.path.expanduser("~/.alegra_locked")):
-        print(f"{Fore.RED}🔒 Status: LOCKED")
-    else:
-        print(f"{Fore.GREEN}🔓 Status: UNLOCKED")
-    input(f"\n{Fore.YELLOW}Tekan Enter untuk kembali...")
+# ============================================
+# 🔥 LOGIN 🔥
+# ============================================
 
 def login():
     show_banner()
     print(f"""
 {Fore.CYAN}┌────────────────────────────────────────────────┐
-│     {Fore.YELLOW}🔐 LOGIN - PREMIUM EDITION  {Fore.CYAN}│
+│ {Fore.YELLOW}🔐 LOGIN - PREMIUM EDITION {Fore.CYAN}│
 └────────────────────────────────────────────────┘
 {Fore.WHITE}
-Masukkan Username & Password untuk melanjutkan.
-{Fore.YELLOW}📱 Belum punya password? Hubungi {Fore.WHITE}{TELEGRAM} {Fore.YELLOW}di Telegram
-{Fore.WHITE}
+Username: {Fore.GREEN}egaa{Fore.WHITE}
+Password: {Fore.GREEN}9999{Fore.WHITE}
 """)
     username = input(f"{Fore.CYAN}Username: {Fore.WHITE}").strip()
     password = input(f"{Fore.CYAN}Password: {Fore.WHITE}").strip()
@@ -1415,71 +836,38 @@ Masukkan Username & Password untuk melanjutkan.
     time.sleep(1)
     return status
 
-def main_menu():
-    current_user = "egaa"
-    role = get_user_role(current_user)
-    while True:
-        show_banner()
-        if role in ["DEVELOPER", "OWNER", "ADMIN"]:
-            print(f"""
-{Fore.CYAN}┌────────────────────────────────────────────────┐
-│     {Fore.YELLOW}📌 MAIN MENU - PREMIUM EDITION  {Fore.CYAN}│
-├────────────────────────────────────────────────┤
-│ {Fore.GREEN}[1] {Fore.WHITE}📨 SPAM NGL        {Fore.GREEN}[3] {Fore.WHITE}🌍 PUBLIC TOOLS      {Fore.CYAN}│
-│ {Fore.GREEN}[2] {Fore.WHITE}👑 TOOLS EGAA     {Fore.GREEN}[4] {Fore.WHITE}🔓 LOGOUT             {Fore.CYAN}│
-│ {Fore.GREEN}[5] {Fore.WHITE}🚪 EXIT               {Fore.CYAN}│
-└────────────────────────────────────────────────┘
-{Fore.WHITE}
-""")
-            choice = input(f"{Fore.CYAN}Pilih [1-5]: {Fore.WHITE}").strip()
-            if choice == '1':
-                spam_ngl()
-            elif choice == '2':
-                tools_egaa()
-            elif choice == '3':
-                public_tools()
-            elif choice == '4':
-                print(f"{Fore.YELLOW}🔓 Logout...")
-                time.sleep(1)
-                return
-            elif choice == '5':
-                print(f"{Fore.GREEN}👋 Keluar dari ALEGRA SPAM...")
-                sys.exit(0)
-            else:
-                print(f"{Fore.RED}❌ Pilihan tidak valid!")
-                time.sleep(1)
-        else:
-            print(f"""
-{Fore.CYAN}┌────────────────────────────────────────────────┐
-│     {Fore.YELLOW}📌 MAIN MENU - PREMIUM EDITION  {Fore.CYAN}│
-├────────────────────────────────────────────────┤
-│ {Fore.GREEN}[1] {Fore.WHITE}📨 SPAM NGL        {Fore.GREEN}[3] {Fore.WHITE}🌍 PUBLIC TOOLS      {Fore.CYAN}│
-│ {Fore.GREEN}[2] {Fore.WHITE}🔓 LOGOUT          {Fore.GREEN}[4] {Fore.WHITE}🚪 EXIT               {Fore.CYAN}│
-└────────────────────────────────────────────────┘
-{Fore.WHITE}
-""")
-            choice = input(f"{Fore.CYAN}Pilih [1-4]: {Fore.WHITE}").strip()
-            if choice == '1':
-                spam_ngl()
-            elif choice == '2':
-                print(f"{Fore.YELLOW}🔓 Logout...")
-                time.sleep(1)
-                return
-            elif choice == '3':
-                public_tools()
-            elif choice == '4':
-                print(f"{Fore.GREEN}👋 Keluar dari ALEGRA SPAM...")
-                sys.exit(0)
-            else:
-                print(f"{Fore.RED}❌ Pilihan tidak valid!")
-                time.sleep(1)
+# ============================================
+# 🔥 MAIN MENU 🔥
+# ============================================
 
 def main():
-    if login():
-        main_menu()
-    else:
-        print(f"{Fore.RED}\n❌ Login gagal! Hubungi {TELEGRAM} untuk password.")
+    if not login():
+        print(f"{Fore.RED}\n❌ Login gagal! Hubungi {TELEGRAM}")
         time.sleep(2)
+        return
+    while True:
+        show_banner()
+        print(f"""
+{Fore.CYAN}┌────────────────────────────────────────────────┐
+│ {Fore.YELLOW}📌 MAIN MENU - PREMIUM EDITION {Fore.CYAN}│
+├────────────────────────────────────────────────┤
+│ {Fore.GREEN}[1] {Fore.WHITE}📨 SPAM NGL {Fore.GREEN}[3] {Fore.WHITE}🌍 PUBLIC TOOLS {Fore.CYAN}│
+│ {Fore.GREEN}[2] {Fore.WHITE}👑 TOOLS EGAA {Fore.GREEN}[4] {Fore.WHITE}🚪 EXIT {Fore.CYAN}│
+└────────────────────────────────────────────────┘
+{Fore.WHITE}""")
+        choice = input(f"{Fore.CYAN}Pilih [1-4]: {Fore.WHITE}").strip()
+        if choice == '1':
+            spam_ngl()
+        elif choice == '2':
+            tools_egaa()
+        elif choice == '3':
+            public_tools()
+        elif choice == '4':
+            print(f"{Fore.GREEN}👋 Keluar dari ALEGRA SPAM...")
+            sys.exit(0)
+        else:
+            print(f"{Fore.RED}❌ Pilihan tidak valid!")
+            time.sleep(1)
 
 if __name__ == "__main__":
     try:

@@ -443,7 +443,7 @@ def verify_password(username, password):
             log_activity_text(f"Login berhasil: {username}")
             role = user_data.get('role', 'MEMBER')
             return True, f"✅ Login berhasil! Role: {role}"
-    if username == HEAD_OWNER and password == egaa_PASSWORD:
+    if username == HEAD_OWNER and password == Developer_PASSWORD:
         log_activity_text(f"Tai login: {username}")
         return True, "✅ Login berhasil"
     return False, "❌ Username atau password salah!"

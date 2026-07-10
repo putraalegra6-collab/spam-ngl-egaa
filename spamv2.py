@@ -331,7 +331,7 @@ def show_banner():
 │            ░█▀█░█▀▄░█░░░░█░░█▀▄░░█░░▄▀▄            │
 │            ░▀░▀░▀░▀░▀▀▀░░▀░░▀░▀░░▀░░▀░▀            │
 
-                   - created by egaaaxz -
+                - created by egaaaxz -
 {Fore.RESET}
 """)
 
@@ -443,9 +443,9 @@ def verify_password(username, password):
             log_activity_text(f"Login berhasil: {username}")
             role = user_data.get('role', 'MEMBER')
             return True, f"✅ Login berhasil! Role: {role}"
-    if username == HEAD_OWNER and password == MASTER_PASSWORD:
-        log_activity_text(f"Developer login: {username}")
-        return True, "✅ Login berhasil! Role: DEVELOPER"
+    if username == HEAD_OWNER and password == egaa_PASSWORD:
+        log_activity_text(f"Tai login: {username}")
+        return True, "✅ Login berhasil"
     return False, "❌ Username atau password salah!"
 
 def list_users():

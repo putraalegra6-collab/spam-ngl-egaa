@@ -60,7 +60,7 @@ def show_banner():
 ║                          ░                 ║
 ╚═══════════════════════════════════════════╝
 {Fore.YELLOW}     📨 ALEGRA SPAM - PREMIUM EDITION
-{Fore.GREEN}          BY {egaaaXc} | {@egaa_1}
+{Fore.GREEN}          BY {egaaaXc} | {egaa_1}
 {Fore.CYAN}         GAS LEK GAS! 🔥
 {Fore.RESET}""")
 
